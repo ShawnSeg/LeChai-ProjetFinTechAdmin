@@ -1,0 +1,117 @@
+
+.loginSection{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: white;
+  margin-top: 5em;
+  margin-bottom: 5em;
+}
+
+.log-form-box{
+  position: relative;
+  width: auto;
+  height: auto;
+  background: rgb(255,250,234);
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4em 2em 4em 2em;
+}
+
+.log-title{
+  font-size: 2em;
+  text-align: center;
+}
+
+.log-inputbox{
+  position: relative;
+  margin: 30px 0;
+  width: 310px;
+  border-bottom: 2px solid black;
+}
+
+.log-inputbox {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.log-inputbox input {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  padding: 0 35px 0 5px;
+}
+
+.log-inputbox .eye-slash{
+  position: absolute;
+  right: 8px;
+  top: 50px;
+}
+
+.log-inputboxErr {
+  border-bottom: 2px solid red;
+}
+.errorLogin{
+  position: absolute;
+  margin-top: -15px;
+  color: red;
+}
+
+.log-forget{
+  a{
+    color: black;
+    font-size: 12px;
+    text-decoration: none;
+  }
+  margin-bottom: 1em;
+
+  a:hover{
+    text-decoration: underline;
+  }
+}
+
+.eye-slash{
+  margin-top: -30px;
+  cursor: pointer;
+}
+
+.log-forget .log-forget-label  .log-forget-a:hover{
+  text-decoration: underline;
+}
+
+.log-btn{
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: white;
+  border: 2px solid grey;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.log-register{
+  font-size: .9em;
+  color: black;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+
+.log-register .log-register-p .log-register-a{
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+}
+
+.log-register .log-register-p .log-register-a:hover{
+  text-decoration: underline;
+}

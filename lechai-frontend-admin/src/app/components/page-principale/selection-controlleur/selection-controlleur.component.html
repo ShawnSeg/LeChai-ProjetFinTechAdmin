@@ -1,0 +1,12 @@
+<h1>Controle des {{ control }}</h1>
+
+<div>
+  <span *ngFor="let controlleur of controlleurs" class="aNom">
+    <a (click)="changerControl(controlleur.nom)">{{controlleur.nom}}</a>
+  </span>
+  <span class="filtreControlleur">
+    <input type="text" placeholder="Rechercher">
+    <!-- <app-filtre-input (activate)="chargeInput("filtreControleur", "", "text", "filtre", "Rechercher")"></app-filtre-input> -->
+  </span>
+</div>
+

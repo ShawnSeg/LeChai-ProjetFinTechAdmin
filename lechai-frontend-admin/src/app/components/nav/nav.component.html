@@ -1,0 +1,27 @@
+<nav class="header">
+  <img src="assets/image/leChaiLogo.png" class="titre" alt="Titre">
+  <div class="cercle">
+    <a routerLink="">
+      <img class="logo"src="assets/image/logo.png" alt="logo">
+    </a>
+  </div>
+
+
+  <ng-container *ngIf="connecter; else notConnected">
+    <p class="nomAdmin">Bonjour {{ nomAdmin }}!</p>
+    <span class="lienDeco">
+      <a (click)="deconnecter()">Déconnexion</a>
+    </span>
+  </ng-container>
+
+  <ng-template #notConnected>
+    <!-- Utilisateur non connecté -->
+    <span *ngIf="!connecter" class="lienCo">
+      <a routerLink="/connexion">Connexion</a>
+    </span>
+  </ng-template>
+
+
+
+
+</nav>

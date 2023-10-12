@@ -1,1 +1,35 @@
-Allo Amé Shawn Antoine Adam
+<div class = "toast-container" *ngIf="showToast" [ngClass]="{
+  success: toastType == 'success',
+  error: toastType == 'error',
+  warn: toastType == 'warn',
+  info: toastType == 'info',
+
+  'top-left': toastPosition == 'top-left',
+  'top-right': toastPosition == 'top-right',
+  'top-center': toastPosition == 'top-center',
+  'bottom-left': toastPosition == 'bottom-left',
+  'bottom-right': toastPosition == 'bottom-right',
+  'bottom-center': toastPosition == 'bottom-center'
+
+}">
+  <span class="closeToast" (click)="closeToast()">X</span>
+  <div class = "toast-content">
+    <span class="iconToast" *ngIf="toastType == 'success'"><p>✓</p>
+      <h3>Succès</h3>
+    </span>
+    <span class="iconToast" *ngIf="toastType == 'error'"><p>X</p>
+      <h3>Erreur</h3>
+    </span>
+    <span class="iconToast" *ngIf="toastType == 'warn'"><p>!</p>
+      <h3>Attention!</h3>
+    </span>
+    <span class="iconToast" *ngIf="toastType == 'info'"><p>i</p>
+      <h3>Information</h3>
+    </span>
+    <span>{{ toastMsg }}</span>
+  </div>
+</div>
+
+<app-nav></app-nav>
+<router-outlet (activate)="onActive()"></router-outlet>
+<app-footer></app-footer>
