@@ -1,5 +1,9 @@
+import { identifierName } from '@angular/compiler';
 import { Component } from '@angular/core';
+import { TableProprety } from 'src/Interface';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { RoutingService } from 'src/app/services/routing.service';
+import { Route } from '@angular/router';
 
 @Component({
   selector: 'app-page-principale',
@@ -7,11 +11,34 @@ import { FooterPositionService } from 'src/app/services/footer-position.service'
   styleUrls: ['./page-principale.component.scss']
 })
 export class PagePrincipaleComponent {
+  nomPageControlleur: string = "Produits";
 
-  constructor(private footerPosition:FooterPositionService) {}
+  tableProprety: TableProprety[] = [];
+
+  constructor(private footerPosition:FooterPositionService, private routing:RoutingService) {}
 
   ngOnInit() {
-    this.footerPosition.setIsAbsolute(false)
+    this.footerPosition.setIsAbsolute(false);
+    this.getHeaderTable();
+
+  }
+
+  async getHeaderTable()
+  {
+
+    /* this.routing.getAPIRoute<TableProprety[]>({}, `${this.nomPageControlleur}/Info/Propriety`)
+    .subscribe(data => this.tableProprety = data); */
+
+    /* alert(localStorage.getItem("token")); */
+
+
+  }
+
+  changeControl(event: string)
+  {
+
+    this.nomPageControlleur = event;
+    this.getHeaderTable();
   }
 
 }

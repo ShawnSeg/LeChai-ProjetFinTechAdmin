@@ -6,19 +6,28 @@ h1{
 
 div{
   margin-left: 2em;
+  margin-right: 2em;
   display: flex;
   flex-wrap: nowrap;
   overflow: hidden;
-  padding-bottom: 2em;
+  padding-bottom: 1em;
   border-bottom: 2px solid black;
+
+  span:first-of-type{
+    margin-left: 2em;
+  }
   .aNom{
     margin-right: 1.5em;
     cursor: pointer;
   }
 
-  .filtreControlleur{
-    input{
-      left: 90%;
+  .listeControlleurs{
+    position: absolute;
+    right: 10%; /* Placez la liste déroulante à droite */
+
+    select{
+      width: 150%;
     }
+
   }
 }

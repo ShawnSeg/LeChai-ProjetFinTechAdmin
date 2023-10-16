@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { RoutingService } from 'src/app/services/routing.service';
+import { RouteTypes, RoutingService } from 'src/app/services/routing.service';
 import { ApiResponse } from 'src/Interface';
 import { group } from '@angular/animations';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -55,12 +55,13 @@ export class ConnexionComponent {
     if(this.loginForm.valid)
     {
 
-      this.toast.showToast("success", "Connexion réussi.", "bottom-center", 4000);
+/*       this.toast.showToast("success", "Connexion réussi.", "bottom-center", 4000);
       this.auth.setToken("tokenTemp");
       this.connexion.setConnected(true);
-      this.router.navigate([""]);
+      this.router.navigate([""]); */
 
-      /* this.routingSevice.connexion(this.loginForm.get('courriel')!.value, this.loginForm.get('password')!.value).subscribe({
+      this.routingSevice.callAPIRouteURL(RouteTypes.POST, {"Email": this.loginForm.get('courriel')!.value, "Password": this.loginForm.get('password')!.value}, "Employes", "ConnexionStepOne")
+      .subscribe({
         next: (data: any) => {
           // Handle successful response here
           this.router.navigate([`/checkClient`]);
@@ -72,13 +73,7 @@ export class ConnexionComponent {
           console.error('Status code:', error.status);
 
         }
-      }); */
-
-
-      // Use template literals to interpolate the value into the URL
-
-
-
+      });
     }
     else{
       ValidationInput.validationInput(this.loginForm);

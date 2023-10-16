@@ -1,12 +1,22 @@
 <h1>Controle des {{ control }}</h1>
 
 <div>
-  <span *ngFor="let controlleur of controlleurs" class="aNom">
-    <a (click)="changerControl(controlleur.nom)">{{controlleur.nom}}</a>
+  <span *ngFor="let controlleur of controlleurs">
+    <ng-container *ngIf="controlleur.isMain">
+      <span class="aNom">
+            <!-- <a (click)="changerControl(controlleur.name)">{{controlleur.name}}</a> -->
+            <a (click)="changerControl(controlleur.id)" [routerLink]="['../', controlleur.id]">{{controlleur.name}}</a>
+      </span>
+    </ng-container>
   </span>
-  <span class="filtreControlleur">
-    <input type="text" placeholder="Rechercher">
-    <!-- <app-filtre-input (activate)="chargeInput("filtreControleur", "", "text", "filtre", "Rechercher")"></app-filtre-input> -->
+
+
+  <span class="listeControlleurs">
+    <select name="controlleur" [(ngModel)]="selectedControlleur" (change)="changerControl(selectedControlleur)" [routerLink]="['../', selectedControlleur]">
+      <ng-container *ngFor="let controlleur of controlleurs">
+        <option [value] ="controlleur.id">{{controlleur.name}}</option>
+      </ng-container>
+    </select>
   </span>
 </div>
 

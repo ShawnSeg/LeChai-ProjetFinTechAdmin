@@ -1,0 +1,20 @@
+<section class="loginSection">
+  <div class="log-form-box">
+    <div class="log-form-value">
+      <form >
+        <h2 class="log-title">Entrer le code envoyé au courriel associé à ce compte</h2>
+
+
+        <div class="log-inputbox">
+
+          <input placeholder="Entrer code" type="text" class="log-input" required #token>
+        </div>
+
+
+        <button (click)="checkToken()" type="submit" class="log-btn">Vérifier code</button>
+
+
+      </form>
+    </div>
+  </div>
+</section>

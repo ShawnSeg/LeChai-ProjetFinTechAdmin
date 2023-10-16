@@ -1,141 +1,84 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { ClientInterface } from 'src/Interface';
+import { ClientInterface, TableProprety } from 'src/Interface';
+import { Services } from './services.service';
 import { Observable } from 'rxjs';
+import { Token } from '@angular/compiler';
+
+export enum RouteTypes {
+  GET = 1,
+  POST = 2,
+  PUT = 3,
+  DELETE = 4,
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoutingService {
 
-  public baseURL = "https://localhost:7247";
+  public baseURL = "https://localhost:5001";
 
   private routesPermises:String[] = []
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private connexion:Services) {
+   }
 
-  //Voir avec amélie comment elle stock le id client
-/*
-  testAPI() {
-    return this.http.get<ApiResponse>("https://localhost:7247/testProduit");
-  }
-  getRoutesPermisesClients(): void{
-    //Store les routes que les clients pourront utiliser
-  }
-
-  getProduitDetail(produitId:number):Observable<ProduitTestAPI>{
-
-    let token = ""
-    alert(produitId)
-    const httpOptions = {
-
+  getAPIRoute<T>(params:{[Key:string]: Object}, routeURL: string)
+  {
+    return this.http.get<T>(this.baseURL+routeURL + this.convertParamURL(params),
+    {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${this.connexion.getToken()}`
       })
-    };
-
-    return this.http.get<ProduitTestAPI>(this.baseURL+"/Produits/GetDetailed?ID="+produitId.toString, httpOptions)
+    });
   }
 
-  getCategories(){
-    let token = ""
-
-    const httpOptions = {
-
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      })
-    };
-    return this.http.get<Produit[]>(this.baseURL+"/Categories/GetAll", httpOptions)
+  callAPIRouteURL(routeType:RouteTypes, params:{[Key:string]: Object}, controlleurName: string, routeName:string)
+  {
+    return this.callAPIRoute(routeType, params, `/${controlleurName}/${routeName}`);
   }
 
-  getCarousel(): Observable<Carousel[]> {
-    let token = "";
+  callAPIRoute(routeType:RouteTypes, params:{[Key:string]: Object}, routeURL: string)
+  {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${this.connexion.getToken()}`
       })
     };
-    return this.http.get<Carousel[]>(this.baseURL + "/carousel/", httpOptions);
+
+    switch (routeType)
+    {
+      case RouteTypes.POST:
+        return this.http.post(this.baseURL+routeURL, params, httpOptions);
+      case RouteTypes.PUT:
+        return this.http.put(this.baseURL+routeURL, params, httpOptions);
+      case RouteTypes.DELETE:
+        return this.http.delete(this.baseURL+routeURL+this.convertParamURL(params), httpOptions);
+      default:
+        throw new Error();
+    }
   }
 
-  getProduitsPanier(): Observable<ProduitPanier[]>{
-    const token = localStorage.getItem("token");
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<ProduitPanier[]>(this.baseURL+"/testProduit/", {headers:headers});
+  convertParamURL(params:{[Key:string]: Object})
+  {
+    if (Object.keys(params).length == 0)
+      return "";
+    let sb = "?";
+    for (let Key in params)
+    {
+      sb+=`${Key}=${params[Key].toString()}`
+    }
+    return sb;
   }
 
-  getProduitsListeSouhait(): Observable<ProduitPanier[]>{
-    const token = localStorage.getItem("token");
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<ProduitPanier[]>(this.baseURL+"/testProduit/", {headers:headers});
-  }
 
-  getAllProduit():Observable<Produit[]>{
-    let token = ""
 
-    const httpOptions = {
-
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      })
-    };
-    return this.http.get<Produit[]>(this.baseURL+"/Produits/GetAll", httpOptions)
-  }
-
-  getListeCommandes(): Observable<Commandes[]>{
-    const token = localStorage.getItem("token");
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<Commandes[]>(this.baseURL+"/testProduit/", {headers:headers});
-  }
-
-  getCollaborateur():Observable<Collaborateurs[]>{
-    let token = ""
-
-    const httpOptions = {
-
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      })
-    };
-    return this.http.get<Collaborateurs[]>(this.baseURL+"/Collaborateurs/GetAll", httpOptions);
-  }
-
-  getCommandesDetail(commandeId:number): Observable<Commandes>{
-    const token = localStorage.getItem("token");
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    const appelApi = this.baseURL+"/testProduit/"+commandeId.toString
-    return this.http.get<Commandes>(appelApi, {headers:headers});
-  }
-
-  getAdresseLivraisonPassee(): Observable<AdresseLivraison[]>{
-    const token = localStorage.getItem("token");
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<AdresseLivraison[]>(this.baseURL+"/testProduit/", {headers:headers});
-  }
- */
-  getClientInfo(){
+/*   getClientInfo(){
     const token = localStorage.getItem("token");
     alert(token)
     const headers = new HttpHeaders({
@@ -143,49 +86,9 @@ export class RoutingService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.get<ClientInterface>(this.baseURL+"/Clients/Get", {headers:headers});
-  }
+  } */
 
-  connexion(courriel:string, mdp:string)
-  {
-    const url = this.baseURL+"/Clients/ConnexionStepOne";
 
-    const body = {
-      Email: courriel,
-      Password:mdp
-    }
-
-    let token = ""
-
-    const httpOptions = {
-
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      })
-    };
-
-    return this.http.post(url, body, httpOptions);
-  }
-
-  checkToken(token:String){
-    const url = this.baseURL+"/Clients/ConnexionStepTwo";
-    alert(token)
-    const body = {
-      Token: token,
-
-    }
-
-    let tokentest = ""
-
-    const httpOptions = {
-
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${tokentest}`
-      })
-    };
-    return this.http.post(url, body, httpOptions);
-  }
 
  /*  updateClientInfo(prenom:string, ){
 

@@ -16,6 +16,7 @@ import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oub
 import { SelectionControlleurComponent } from './components/page-principale/selection-controlleur/selection-controlleur.component';
 
 import { Services } from './services/services.service';
+import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { Services } from './services/services.service';
     ConnexionComponent,
     MdpOublierEnvoiComponent,
     SelectionControlleurComponent,
+    VerifyUserComponent,
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ export class NavComponent {
 
   nomAdmin: string = 'Alberto';
   connecter:boolean = false;
+
   token$!: Observable<string | null>;
 
   /* private subscription: Subscription; */
@@ -30,24 +31,17 @@ export class NavComponent {
   }
 
   ngOnInit() {
-    this.connexion.isConnected$.subscribe(isConnected => {
+      this.connexion.isConnected$.subscribe(isConnected => {
       this.connecter = isConnected;
     });
 
-/*     if(localStorage.getItem("token"))
-    {
-      this.connecter = true
-    }
-    else{
-      this.connecter = false
-    } */
+    /* this.connecter = this.connexion.checkToken(); */
 
   }
 
   deconnecter()
   {
-    localStorage.removeItem("token")
-    this.connexion.setConnected(false);
+    this.connexion.clearToken();
     this.router.navigate([""]);
     this.toast.showToast("success", "Déconnexion réussi.", "bottom-center", 4000);
   }
