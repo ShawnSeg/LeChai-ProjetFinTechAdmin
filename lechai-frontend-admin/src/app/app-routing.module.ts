@@ -7,10 +7,11 @@ import { ConnexionComponent } from './components/connexion/connexion.component';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'produit', pathMatch: 'full' }, // Redirection par défaut
-  { path: ':id', component: PagePrincipaleComponent },
+
   {path: 'connexion', component: ConnexionComponent},
   {path: 'checkClient', component:VerifyUserComponent},
+  { path: '', redirectTo: 'produit', pathMatch: 'full' }, // Redirection par défaut
+  { path: ':name', component: PagePrincipaleComponent },
   {path: '**', component: Page404Component},
 ];
 

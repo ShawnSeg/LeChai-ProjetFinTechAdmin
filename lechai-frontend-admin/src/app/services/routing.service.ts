@@ -28,13 +28,13 @@ export class RoutingService {
 
   getAPIRoute<T>(params:{[Key:string]: Object}, routeURL: string)
   {
-    return this.http.get<T>(this.baseURL+routeURL + this.convertParamURL(params),
-    {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.connexion.getToken()}`
-      })
-    });
+    return this.http.get<T>(this.baseURL+routeURL + this.convertParamURL(params), this.getHeader());
+  }
+
+
+  getAPIRouteURL<T>(params:{[Key:string]: Object}, controlleurName: string, routeName:string)
+  {
+    return this.getAPIRoute<T>(params, `/${controlleurName}/${routeName}`);
   }
 
   callAPIRouteURL(routeType:RouteTypes, params:{[Key:string]: Object}, controlleurName: string, routeName:string)
@@ -44,12 +44,8 @@ export class RoutingService {
 
   callAPIRoute(routeType:RouteTypes, params:{[Key:string]: Object}, routeURL: string)
   {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.connexion.getToken()}`
-      })
-    };
+
+    const httpOptions = this.getHeader();
 
     switch (routeType)
     {
@@ -74,6 +70,16 @@ export class RoutingService {
       sb+=`${Key}=${params[Key].toString()}`
     }
     return sb;
+  }
+
+  getHeader()
+  {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.connexion.getToken()}`
+      })
+    };
   }
 
 

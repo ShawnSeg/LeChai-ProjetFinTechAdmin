@@ -1,22 +1,21 @@
-<h1>Controle des {{ control }}</h1>
+<h1>Controle des {{ selectedControlleur }}</h1>
+
+<span class="listeControlleurs">
+  <select name="controlleur" [(ngModel)]="selectedControlleur" [routerLink]="['../', selectedControlleur]">
+    <ng-container *ngFor="let controlleur of controlleurs">
+      <option [value] ="controlleur.name">{{controlleur.name}}</option>
+    </ng-container>
+  </select>
+</span>
 
 <div>
   <span *ngFor="let controlleur of controlleurs">
     <ng-container *ngIf="controlleur.isMain">
       <span class="aNom">
-            <!-- <a (click)="changerControl(controlleur.name)">{{controlleur.name}}</a> -->
-            <a (click)="changerControl(controlleur.id)" [routerLink]="['../', controlleur.id]">{{controlleur.name}}</a>
+            <a [routerLink]="['../', controlleur.name]" [ngClass]="{'selected': controlleur.name === selectedControlleur}">{{controlleur.name}}</a>
       </span>
     </ng-container>
   </span>
 
-
-  <span class="listeControlleurs">
-    <select name="controlleur" [(ngModel)]="selectedControlleur" (change)="changerControl(selectedControlleur)" [routerLink]="['../', selectedControlleur]">
-      <ng-container *ngFor="let controlleur of controlleurs">
-        <option [value] ="controlleur.id">{{controlleur.name}}</option>
-      </ng-container>
-    </select>
-  </span>
 </div>
 

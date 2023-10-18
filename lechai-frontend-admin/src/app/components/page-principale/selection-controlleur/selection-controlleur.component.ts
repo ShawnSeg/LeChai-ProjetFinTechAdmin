@@ -5,6 +5,7 @@ import { RouteTypes, RoutingService } from 'src/app/services/routing.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from 'src/app/services/toast.service';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-selection-controlleur',
@@ -14,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 export class SelectionControlleurComponent {
 
   controlleurs: Controlleur[] = [
-    {
+    /* {
       id:1,
       name:'Produits',
       isMain:true
@@ -33,30 +34,32 @@ export class SelectionControlleurComponent {
       id:4,
       name:'ddddddddd',
       isMain:false
-    },
+    }, */
   ];
 
-  control: string="Produit";
+  control: string="";
   @Output() changeControl= new EventEmitter<string>();
-  selectedControlleur: number=1;
+  selectedControlleur: string="";
 
 
-  constructor(serv: Services,  private routingSevice:RoutingService, private toast: ToastService, private route: ActivatedRoute) {}
+  constructor(private http:HttpClient,  private routingSevice:RoutingService, private toast: ToastService, private route: ActivatedRoute) {}
 
   ngOnInit()
   {
 
     this.route.paramMap.subscribe(params => {
-      let id = params.get('id');
-      console.log('ID from URL:', id);
+      let name = params.get('name');
+      console.log('ID from URL:', name);
 
-      if (id !== null) {
-        this.selectedControlleur = +id;
-        this.changerControl(this.selectedControlleur);
+      if (name !== null) {
+        this.selectedControlleur = name;
+        this.changeControl.emit(this.selectedControlleur);
       }
     });
 
-    this.routingSevice.getAPIRoute<Controlleur>({}, "Info/Controllers")
+      //this.getControlleurs()
+
+    this.routingSevice.getAPIRouteURL<Controlleur>({}, "Info", "Controllers")
       .subscribe({
         next: (data: any) => {
           // Handle successful response here
@@ -71,24 +74,4 @@ export class SelectionControlleurComponent {
       });
   }
 
-  changerControl(id: number) {
-    let nameController = this.controlleurs.find(controller => controller.id === Number(id));
-    console.log(nameController)
-    if (nameController) {
-      this.control = nameController.name;
-      this.changeControl.emit(this.control);
-    } else {
-      console.error(`Contrôleur avec l'ID ${id} introuvable.`);
-    }
-  }
-
-  onChangeControl() {
-    let selectedId = this.selectedControlleur;
-    this.changerControl(selectedId);
-  }
-
-/*   chargeInput(for: string, labelName: string, type: string, class: string, placeholder: string)
-  {
-    this.serv.chargeInput(for, labelName, type, class, placeholder)
-  } */
 }
