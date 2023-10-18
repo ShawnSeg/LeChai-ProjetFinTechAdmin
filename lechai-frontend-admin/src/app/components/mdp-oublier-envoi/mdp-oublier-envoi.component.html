@@ -1,0 +1,25 @@
+<div class="modal fade" id="exampleModal" [ngClass]="{'slide-in': showForm, 'slide-out': !showForm}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title" id="exampleModalLable"><span style="font-size: 25px;font-weight: 700;">Mot de passe oublié?</span><br>
+            <small>Entrer votre adresse courriel pour l'envoi du lien de réinitialisation</small></p>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+          <div class="form-group pt-3">
+            <div class="input-field"><span class="fa fa-user p-2"></span><input type="text" [(ngModel)]="resetPasswordEmail" (ngModelChange)="checkValidEmail($event)" placeholder="Adresse courriel"></div>
+          </div>
+          <small *ngIf="!resetPasswordEmail" class="text-danger">*Courriel est nécessaire</small>
+          <small *ngIf="!isValidEmail && resetPasswordEmail" class="text-danger">*Ce courriel est invalide</small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="toggleForm()">Fermer</button>
+        <button type="button" (click)="confirmToSend()" class="btn btn-primary">Envoyer</button>
+
+      </div>
+    </div>
+  </div>
+</div>

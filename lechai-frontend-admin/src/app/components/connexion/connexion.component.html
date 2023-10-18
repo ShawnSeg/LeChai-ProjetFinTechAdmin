@@ -1,0 +1,30 @@
+<section class="loginSection">
+  <div class="log-form-box">
+    <div class="log-form-value">
+      <form [formGroup]="loginForm">
+        <h2 class="log-title">Se connecter</h2>
+
+        <div class="log-inputbox" [class.log-inputboxErr]="loginForm.controls['courriel'].dirty && loginForm.hasError('required', 'courriel')">
+          <input formControlName="courriel" placeholder="Courriel" type="email" class="log-input" required>
+        </div>
+        <small *ngIf="loginForm.controls['courriel'].dirty && loginForm.hasError('required', 'courriel')" class="errorLogin">*Le Courriel n'est pas valide!</small>
+
+        <div class="log-inputbox" [class.log-inputboxErr]="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
+          <span (click)="hideShowPass()" class="fa eye-slash {{eyeIcon}}"></span>
+          <input formControlName="password" placeholder="Mot de passe" [type]="passType" class="log-input" required>
+        </div>
+        <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')" class="errorLogin">*Le mot de passe n'est pas valide!</small>
+
+        <div class="log-forget">
+          <a class="log-forget-a" (click)="toggleForm()">Mot de passe oublier</a>
+        </div>
+
+        <button (click)="onLogin()" type="submit" class="log-btn">Se connecter</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<app-mdp-oublier-envoi *ngIf="!hideForm" [showForm]="showForm" (hideForm)="toggleForm()"></app-mdp-oublier-envoi>
+<!-- [disabled]="loginForm.invalid" -->
+

@@ -1,0 +1,142 @@
+
+
+.toast-container{
+  width: auto;
+  height: auto;
+  color:black;
+  margin-right: 10px;
+  padding: 20px 25px;
+  position: fixed;
+  z-index: 1001;
+  box-shadow: 0 0 12px #999;
+  display: flex;
+  border-left: solid 4px black;
+  background-color: white;
+  border-radius: 3px;
+
+
+  .toast-content{
+    align-self: center;
+  }
+
+  .iconToast{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    border-radius: 100%;
+    color: black;
+    font-weight: bolder;
+    margin-right: 15px;
+    margin-bottom: .5em;
+
+    h3{
+      margin-left: 1em;
+    }
+  }
+
+  &.success{
+    border-color: #0EDD00;
+
+    .toast-content{
+      .iconToast{
+        background-color: #0EDD00;
+
+        p{
+          margin-left: 6px;
+        }
+      }
+    }
+  }
+
+  &.error{
+    border-color: #ed2131;
+
+    .toast-content{
+      .iconToast{
+        background-color: #ed2131;
+
+        p{
+          margin-left: 7px;
+
+        }
+      }
+    }
+  }
+
+  &.warn{
+    border-color: #FFC900;
+
+    .toast-content{
+      .iconToast{
+        background-color: #FFC900;
+
+        p{
+          margin-left: 9px;
+          margin-top: 1px;
+        }
+
+        h3{
+          margin-left: 1.2em;
+        }
+      }
+    }
+  }
+
+  &.info{
+    border-color: #00B6FF;
+
+    .toast-content{
+      .iconToast{
+        background-color: #00B6FF;
+
+        p{
+          margin-left: 9px;
+          margin-top: 1px;
+        }
+
+        h3{
+          margin-left: 1.2em;
+        }
+      }
+    }
+  }
+}
+
+
+.closeToast{
+  position:absolute;
+  right: 12px;
+  top: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.toast-container.top-left{
+  left: 2%;
+  top: 2%;
+}
+.toast-container.top-right{
+  left: 90%;
+  top: 2%;
+}
+.toast-container.bottom-left{
+  left: 2%;
+  top: 88%;
+}
+.toast-container.bottom-right{
+  left: 90%;
+  top: 88%;
+}
+.toast-container.bottom-center{
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 80%;
+}
+.toast-container.top-center{
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 15%;
+}
+
+
