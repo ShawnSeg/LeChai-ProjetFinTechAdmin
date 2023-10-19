@@ -1,3 +1,5 @@
+<button (click)="updateData({})">reload</button>
+
 <div class="center">
   <table>
     <thead>
@@ -5,7 +7,7 @@
       <th *ngFor="let prop of proprietes" class="grandeur">{{ prop.name }}</th>
     </tr>
   </thead>
-
+    <app-rows-data [data]="dataRow" [proprieties]="proprietiesResum"></app-rows-data>
 
   </table>
 </div>

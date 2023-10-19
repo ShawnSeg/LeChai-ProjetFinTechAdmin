@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ViewChild, ElementRef, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { RoutingService } from 'src/app/services/routing.service';
-import { ParamInfoResume } from 'src/shawnInterface';
+import { ParamInfoResume } from 'src/Interface';
 
 @Component({
   selector: 'app-filtre-container',
@@ -35,7 +35,7 @@ export class FiltreContainerComponent {
   callRoutingService(value: string | undefined) {
     this.routingService.getAPIRouteURL({}, value!, 'info/filters').subscribe({
       next: (data: any) => {
-        console.log(data);
+        //console.log(data);
         this.filtres = data;
         this.filtresLoaded = true; // Set the flag to indicate that data is loaded.
         this.filtresChange.emit(this.filtres)

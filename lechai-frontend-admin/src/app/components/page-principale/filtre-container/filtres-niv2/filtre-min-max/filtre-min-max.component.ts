@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ParamInfoResume } from 'src/shawnInterface';
+import { ParamInfoResume } from 'src/Interface';
 
 @Component({
   selector: 'app-filtre-min-max',

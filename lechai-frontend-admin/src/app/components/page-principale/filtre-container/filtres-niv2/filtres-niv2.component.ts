@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { ParamInfoResume } from 'src/shawnInterface';
+import { ParamInfoResume } from 'src/Interface';
 
 @Component({
   selector: 'app-filtres-niv2',
@@ -12,7 +12,7 @@ export class FiltresNiv2Component {
   ngOnChanges(changes: SimpleChanges) {
     if ('filtres' in changes) {
       const newValue = changes['filtres'].currentValue;
-      console.log(newValue); // Log the updated filtres when it changes.
+      //console.log(newValue); // Log the updated filtres when it changes.
       this.filtres = newValue;
     }
   }

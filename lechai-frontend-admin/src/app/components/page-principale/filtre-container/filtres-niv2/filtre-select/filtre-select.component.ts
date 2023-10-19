@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ParamInfoResume } from 'src/shawnInterface';
+import { ParamInfoResume } from 'src/Interface';
 
 @Component({
   selector: 'app-filtre-select',
@@ -25,6 +25,6 @@ export class FiltreSelectComponent {
   all: string = "Tout";
 
   ngOnInit(){
-    console.log(this.filtre)
+    //console.log(this.filtre)
   }
 }

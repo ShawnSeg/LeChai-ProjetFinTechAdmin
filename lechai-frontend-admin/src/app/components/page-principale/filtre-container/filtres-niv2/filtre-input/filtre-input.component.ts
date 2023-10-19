@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { ParamInfoResume } from 'src/shawnInterface';
+import { ParamInfoResume } from 'src/Interface';
 
 @Component({
   selector: 'app-filtre-input',
@@ -28,7 +28,7 @@ export class FiltreInputComponent {
   ngOnChanges(changes: SimpleChanges) {
     if ('filtre' in changes) {
       const newValue = changes['filtre'].currentValue;
-      console.log(newValue); // Log the updated filtre when it changes.
+      //console.log(newValue); // Log the updated filtre when it changes.
     }
   }
 

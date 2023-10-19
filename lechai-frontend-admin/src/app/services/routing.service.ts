@@ -18,7 +18,7 @@ export enum RouteTypes {
 })
 export class RoutingService {
 
-  public baseURL = "https://localhost:7247";
+  public baseURL = "https://localhost:5001";
 
   private routesPermises:String[] = []
 

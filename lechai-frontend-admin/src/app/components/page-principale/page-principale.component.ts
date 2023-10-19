@@ -4,6 +4,8 @@ import { TableProprety } from 'src/Interface';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { Route } from '@angular/router';
+import { Services } from 'src/app/services/services.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-page-principale',
@@ -11,10 +13,14 @@ import { Route } from '@angular/router';
   styleUrls: ['./page-principale.component.scss']
 })
 export class PagePrincipaleComponent {
-  nomPageControlleur: string = "Produits";
-  @Output() nomPageControlleurChange = new EventEmitter<string>();
+  /* nomPageControlleur: string = "Produits"; */
+  /* @Output() nomPageControlleurChange = new EventEmitter<string>(); */
 
-  constructor(private footerPosition:FooterPositionService, private routing:RoutingService) {}
+  controllerName$: Observable<string>;
+
+  constructor(private footerPosition:FooterPositionService, private routing:RoutingService, private services:Services) {
+    this.controllerName$ = this.services.name$;
+  }
 
   ngOnInit() {
     this.footerPosition.setIsAbsolute(false);
@@ -33,11 +39,11 @@ export class PagePrincipaleComponent {
 
   }
 
-  changeControl(event: string)
+  /* changeControl(event: string)
   {
     this.nomPageControlleur = event;
     this.nomPageControlleurChange.emit(this.nomPageControlleur);
     this.getHeaderTable();
-  }
+  } */
 
 }

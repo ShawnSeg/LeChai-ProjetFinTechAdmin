@@ -9,6 +9,17 @@ export class Services {
   private isConnected = new BehaviorSubject<boolean>(false);
   isConnected$ = this.isConnected.asObservable();
 
+  private nameSubject = new BehaviorSubject<string>("Produits");
+  name$ = this.nameSubject.asObservable();
+
+  getControllerName(){
+    return this.nameSubject.value;
+  }
+
+  setControllerName(name: string){
+    this.nameSubject.next(name);
+  }
+
   constructor() {
     this.updateIsConnected(this.getToken());
   }

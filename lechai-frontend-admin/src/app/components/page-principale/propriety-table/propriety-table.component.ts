@@ -1,8 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ViewChild, ElementRef, Input } from '@angular/core';
-import { Proprietes, Details } from 'src/Interface';
+import { Component, ViewChild, ElementRef, Input, EventEmitter } from '@angular/core';
+import { ParamInfoResume, ProprietyResum } from 'src/Interface';
 import { RouteTypes, RoutingService } from 'src/app/services/routing.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { Observable } from 'rxjs';
+import { Services } from 'src/app/services/services.service';
+
 
 @Component({
   selector: 'app-propriety-table',
@@ -11,7 +14,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class ProprietyTableComponent {
 
-  proprietes: Proprietes[] = [
+  proprietes: ParamInfoResume[] = [
 /*     {
       name: "id",
     },
@@ -26,51 +29,48 @@ export class ProprietyTableComponent {
     }, */
   ];
 
-  allDetails: Details[] = [
-   /*  {
-      details: [1, 2, 3],
-    },
-    {
-      details: ["chai", "dirty chai", "chandail"],
-    },
-    {
-      details: [18, 20, 25],
-    },
-    {
-      details: ["dahkjdhsjakshdjahxjkhjkhsjkhfjkdshfjshfkjshfjkshfdjkshfjdhfdjkshfjkdhkjhllkjhdjkashjdksajkdhajkhdjksahjdkhasjkdsadjkashdjksahjkdhsajkhdkjsahdkjsahdjkhdajkhsakjdhaskjdhkjah", 20, 25],
-    }, */
 
-  ];
+  nomControlleur: string = "";
+  controllerName$: Observable<string>;
+
+  dataRow:any[] = [];
+  proprietiesResum: ProprietyResum[] = [];
 
 
-  nbDetail = 0;
-  selectionner = false;
-  /* @ViewChild('elem') element?: ElementRef; */
-  @Input() nomControlleur?: string;
 
+  constructor(private routingSevice:RoutingService, private toast: ToastService, private services:Services){
 
-  constructor(private routingSevice:RoutingService, private toast: ToastService){
-
-
+    this.controllerName$ = this.services.name$;
   }
 
   ngOnInit(){
-    this.routingSevice.getAPIRouteURL<Proprietes>({}, this.nomControlleur!, "Info/Proprieties")
+    console.log(this.controllerName$);
+
+    this.controllerName$.subscribe((value) => {
+      this.nomControlleur = value;
+    });
+
+    this.routingSevice.getAPIRouteURL({}, this.nomControlleur, "Info/Proprieties")
       .subscribe({
         next: (data: any) => {
+          console.log(data);
           // Handle successful response here
           this.proprietes = data;
+
+          this.proprietiesResum = this.proprietes.map(prop => ({
+            showTypeID: prop.showTypeID,
+            params: prop.paramAffecteds.map(varsAffected => varsAffected.name)
+        }));
+
           this.updateData({});
         },
         error: (error: HttpErrorResponse) => {
           // Handle error response here
-          this.toast.showToast("error", 'Le chargement de la page n\'a pas bien été fait.', "bottom-center", 4000);
+          this.toast.showToast("error", 'Les propriéter du header n\'ont pas bien été charger.', "bottom-center", 4000);
           console.error('Status code:', error.status);
 
         }
       });
-
-    this.compteDetails();
   }
 
   updateData(params:{[Key:string]: Object}){
@@ -79,40 +79,16 @@ export class ProprietyTableComponent {
     .subscribe({
       next: (data: any) => {
         // Handle successful response here
+        this.dataRow = data;
 
-
-
-        for(let item of data)
-        {
-
-        }
       },
       error: (error: HttpErrorResponse) => {
         // Handle error response here
-        this.toast.showToast("error", 'Le chargement de la page n\'a pas bien été fait.', "bottom-center", 4000);
+        this.toast.showToast("error", 'Les détails des propriéter n\'ont pas été bien charger.', "bottom-center", 4000);
         console.error('Status code:', error.status);
 
       }
     });
-  }
-
-
-  compteDetails()
-  {
-    let nb = 0;
-
-    for (let det of this.allDetails) {
-      nb = det.details.length;
-
-      if (nb > this.nbDetail)
-      {
-        this.nbDetail = nb;
-      }
-    }
-  }
-
-  generateArray(nbDetails: number): number[] {
-    return Array.from({ length: nbDetails }, (_, i) => i);
   }
 
 /*   itemSelect(index: number){

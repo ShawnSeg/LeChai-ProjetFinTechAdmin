@@ -25,6 +25,7 @@ import { FiltreResumeComponent } from './components/page-principale/filtre-conta
 import { FiltreMinMaxComponent } from './components/page-principale/filtre-container/filtres-niv2/filtre-min-max/filtre-min-max.component';
 import { FiltresNiv2Component } from './components/page-principale/filtre-container/filtres-niv2/filtres-niv2.component';
 import { FiltreHeaderComponent} from './components/page-principale/filtre-container/filtre-header/filtre-header.component';
+import { RowsDataComponent } from './components/page-principale/propriety-table/rows-data/rows-data.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,8 @@ import { FiltreHeaderComponent} from './components/page-principale/filtre-contai
     FiltreResumeComponent,
     FiltreMinMaxComponent,
     FiltresNiv2Component,
-    FiltreHeaderComponent
+    FiltreHeaderComponent,
+    RowsDataComponent
   ],
   imports: [
     BrowserModule,

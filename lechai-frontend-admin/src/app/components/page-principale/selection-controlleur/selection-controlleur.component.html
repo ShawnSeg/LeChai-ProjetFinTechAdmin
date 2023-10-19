@@ -1,4 +1,4 @@
-<h1>Controle des {{ selectedControlleur }}</h1>
+<h1>Controle des {{ controllerName$ | async }}</h1>
 
 <span class="listeControlleurs">
   <select name="controlleur" [(ngModel)]="selectedControlleur" [routerLink]="['../', selectedControlleur]">

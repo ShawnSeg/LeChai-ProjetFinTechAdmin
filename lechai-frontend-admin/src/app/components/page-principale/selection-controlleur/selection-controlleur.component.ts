@@ -37,15 +37,20 @@ export class SelectionControlleurComponent {
     }, */
   ];
 
-  control: string="";
-  @Output() changeControl= new EventEmitter<string>();
+  controllerName$: Observable<string>;
+  /* @Output() changeControl= new EventEmitter<string>(); */
   selectedControlleur: string="";
 
 
-  constructor(private http:HttpClient,  private routingSevice:RoutingService, private toast: ToastService, private route: ActivatedRoute) {}
+  constructor(private http:HttpClient,  private routingSevice:RoutingService, private toast: ToastService, private route: ActivatedRoute,
+              private services:Services) {
+                this.controllerName$ = this.services.name$;
+              }
 
   ngOnInit()
   {
+
+
 
     this.route.paramMap.subscribe(params => {
       let name = params.get('name');
@@ -53,7 +58,10 @@ export class SelectionControlleurComponent {
 
       if (name !== null) {
         this.selectedControlleur = name;
-        this.changeControl.emit(this.selectedControlleur);
+        /* this.changeControl.emit(this.selectedControlleur); */
+        this.services.setControllerName(name);
+        /* console.log(this.controllerName$) */
+
       }
     });
 
@@ -73,5 +81,4 @@ export class SelectionControlleurComponent {
         }
       });
   }
-
 }
