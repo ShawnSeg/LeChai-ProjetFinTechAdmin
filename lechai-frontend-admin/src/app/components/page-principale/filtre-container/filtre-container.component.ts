@@ -10,7 +10,7 @@ import { ParamInfoResume } from 'src/shawnInterface';
 })
 export class FiltreContainerComponent {
   @ViewChild('fleche', { static: true }) fleche?: ElementRef;
-  @ViewChild('container', { static: true }) container?: ElementRef;
+
 
   @Input() nomPageControlleur?: string;
   @Output() nomPageControlleurChange = new EventEmitter<string>();
@@ -28,7 +28,8 @@ export class FiltreContainerComponent {
   ngOnChanges(changes: SimpleChanges) {
     if ('nomPageControlleur' in changes) {
       const newValue = changes['nomPageControlleur'].currentValue;
-      this.callRoutingService(newValue);
+      this.nomPageControlleur=newValue
+      this.nomPageControlleurChange.emit()
     }
   }
 
