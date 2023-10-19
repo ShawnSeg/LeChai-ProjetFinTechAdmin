@@ -38,3 +38,20 @@ export interface Validator{
   Value:object,
   Message:string
 }
+
+export interface Proprietes{
+  id: number,
+  name:string,
+  isMane:boolean,
+  /* validators */
+  description:string,
+  displayName:string,
+  placeholder:string,
+  ind:number,
+  showType:number,
+}
+
+
+export interface Details{
+  details: any[],
+}

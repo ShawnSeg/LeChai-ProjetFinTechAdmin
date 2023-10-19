@@ -17,6 +17,9 @@ import { SelectionControlleurComponent } from './components/page-principale/sele
 
 import { Services } from './services/services.service';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
+import { ProprietyTableComponent } from './components/page-principale/propriety-table/propriety-table.component';
+
+
 import { FiltreContainerComponent } from './components/page-principale/filtre-container/filtre-container.component';
 import { FiltreResumeComponent } from './components/page-principale/filtre-container/filtre-header/filtre-resume/filtre-resume.component';
 import { FiltreMinMaxComponent } from './components/page-principale/filtre-container/filtres-niv2/filtre-min-max/filtre-min-max.component';
@@ -35,6 +38,7 @@ import { FiltreHeaderComponent} from './components/page-principale/filtre-contai
     MdpOublierEnvoiComponent,
     SelectionControlleurComponent,
     VerifyUserComponent,
+    ProprietyTableComponent,
     FiltreContainerComponent,
     FiltreResumeComponent,
     FiltreMinMaxComponent,

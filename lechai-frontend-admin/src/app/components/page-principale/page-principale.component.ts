@@ -14,8 +14,6 @@ export class PagePrincipaleComponent {
   nomPageControlleur: string = "Produits";
   @Output() nomPageControlleurChange = new EventEmitter<string>();
 
-  tableProprety: TableProprety[] = [];
-
   constructor(private footerPosition:FooterPositionService, private routing:RoutingService) {}
 
   ngOnInit() {
@@ -37,7 +35,6 @@ export class PagePrincipaleComponent {
 
   changeControl(event: string)
   {
-
     this.nomPageControlleur = event;
     this.nomPageControlleurChange.emit(this.nomPageControlleur);
     this.getHeaderTable();

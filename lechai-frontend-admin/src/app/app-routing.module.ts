@@ -10,7 +10,7 @@ const routes: Routes = [
 
   {path: 'connexion', component: ConnexionComponent},
   {path: 'checkClient', component:VerifyUserComponent},
-  { path: '', redirectTo: 'produit', pathMatch: 'full' }, // Redirection par défaut
+  { path: '', redirectTo: 'Produits', pathMatch: 'full' }, // Redirection par défaut devra etre connexion puis une fois loger on se dirige vers Produits!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   { path: ':name', component: PagePrincipaleComponent },
   {path: '**', component: Page404Component},
 ];
