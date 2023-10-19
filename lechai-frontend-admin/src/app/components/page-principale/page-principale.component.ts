@@ -1,5 +1,5 @@
 import { identifierName } from '@angular/compiler';
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { TableProprety } from 'src/Interface';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { RoutingService } from 'src/app/services/routing.service';
@@ -12,6 +12,7 @@ import { Route } from '@angular/router';
 })
 export class PagePrincipaleComponent {
   nomPageControlleur: string = "Produits";
+  @Output() nomPageControlleurChange = new EventEmitter<string>();
 
   tableProprety: TableProprety[] = [];
 
@@ -38,6 +39,7 @@ export class PagePrincipaleComponent {
   {
 
     this.nomPageControlleur = event;
+    this.nomPageControlleurChange.emit(this.nomPageControlleur);
     this.getHeaderTable();
   }
 

@@ -1,0 +1,17 @@
+.flex{
+
+
+  width:70%;
+  margin-left:15%;
+  text-align: center;
+  display: flex;
+
+  align-content: center;
+  margin-top:1.2%;
+  flex-wrap: wrap;
+  .valeur_filtre{
+    width:27%;
+    margin-right:3%;
+  }
+
+}

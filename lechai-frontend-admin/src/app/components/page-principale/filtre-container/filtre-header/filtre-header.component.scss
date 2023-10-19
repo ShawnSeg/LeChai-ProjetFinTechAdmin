@@ -1,0 +1,53 @@
+$borderCouleur: #FFE649;
+
+@keyframes rotate1 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes rotate2 {
+  from {
+    transform: rotate(90deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.rotate-image {
+  animation: rotate1 0.5s ease forwards; /* You can adjust the duration and timing function as needed */
+}
+
+.rotate-image2 {
+  animation: rotate2 0.5s ease forwards; /* You can adjust the duration and timing function as needed */
+}
+
+
+
+div, section{
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 50px;
+  margin-bottom:2%;
+  &.hide{
+    display: none;
+  }
+  button{
+    margin-right:2%;
+    width:10%
+  }
+  img{
+    width:3%;
+  }
+  span{
+    width:70%;
+    border:2px solid black;
+    margin-right:2%;
+  }
+}
+
+
