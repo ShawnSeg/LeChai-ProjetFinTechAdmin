@@ -26,6 +26,8 @@ import { FiltreMinMaxComponent } from './components/page-principale/filtre-conta
 import { FiltresNiv2Component } from './components/page-principale/filtre-container/filtres-niv2/filtres-niv2.component';
 import { FiltreHeaderComponent} from './components/page-principale/filtre-container/filtre-header/filtre-header.component';
 import { RowsDataComponent } from './components/page-principale/propriety-table/rows-data/rows-data.component';
+
+import { ListeDeroulanteCustomComponent } from './components/page-principale/liste-deroulante-custom/liste-deroulante-custom.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +48,8 @@ import { RowsDataComponent } from './components/page-principale/propriety-table/
     FiltresNiv2Component,
     FiltreHeaderComponent,
     RowsDataComponent
+    ListeDeroulanteCustomComponent,
+
   ],
   imports: [
     BrowserModule,

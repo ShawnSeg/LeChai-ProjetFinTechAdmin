@@ -10,7 +10,7 @@ import { ParamInfoResume } from 'src/Interface';
 })
 export class FiltreContainerComponent {
   @ViewChild('fleche', { static: true }) fleche?: ElementRef;
-  @ViewChild('container', { static: true }) container?: ElementRef;
+
 
   @Input() nomPageControlleur?: string;
   @Output() nomPageControlleurChange = new EventEmitter<string>();
@@ -28,15 +28,17 @@ export class FiltreContainerComponent {
   ngOnChanges(changes: SimpleChanges) {
     if ('nomPageControlleur' in changes) {
       const newValue = changes['nomPageControlleur'].currentValue;
-      this.callRoutingService(newValue);
+      this.nomPageControlleur=newValue
+      this.callRoutingService(newValue)
     }
   }
 
   callRoutingService(value: string | undefined) {
     this.routingService.getAPIRouteURL({}, value!, 'info/filters').subscribe({
       next: (data: any) => {
-        //console.log(data);
-        this.filtres = data;
+        console.log(data);
+        let testFiltre:ParamInfoResume[]=data
+        this.filtres = testFiltre.sort((a, b) => a.ind - b.ind);
         this.filtresLoaded = true; // Set the flag to indicate that data is loaded.
         this.filtresChange.emit(this.filtres)
 

@@ -1,11 +1,7 @@
 <h1>Controle des {{ controllerName$ | async }}</h1>
 
 <span class="listeControlleurs">
-  <select name="controlleur" [(ngModel)]="selectedControlleur" [routerLink]="['../', selectedControlleur]">
-    <ng-container *ngFor="let controlleur of controlleurs">
-      <option [value] ="controlleur.name">{{controlleur.name}}</option>
-    </ng-container>
-  </select>
+  <app-liste-deroulante-custom [values]="listeControlleur" (selectedValue)="handleSelectedValue($event)"></app-liste-deroulante-custom>
 </span>
 
 <div>

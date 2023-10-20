@@ -1,0 +1,6 @@
+<div class="search-bar">
+  <input type="text" [(ngModel)]="searchQuery" (click)="showValues()" (input)="filterValues()" placeholder="Recherche">
+  <ul *ngIf="showDropdown" class="dropdown">
+    <li *ngFor="let value of filteredValues" (click)="selectValue(value)">{{ value }}</li>
+  </ul>
+</div>
