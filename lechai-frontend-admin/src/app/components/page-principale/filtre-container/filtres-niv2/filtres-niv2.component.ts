@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
-import { ParamInfoResume } from 'src/shawnInterface';
+import { ParamInfoResume } from 'src/Interface';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';

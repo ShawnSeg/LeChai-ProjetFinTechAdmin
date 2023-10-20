@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ViewChild, ElementRef, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
 import { RoutingService } from 'src/app/services/routing.service';
+import { Services } from 'src/app/services/services.service';
 import { ParamInfoResume } from 'src/Interface';
 
 @Component({
@@ -12,17 +14,24 @@ export class FiltreContainerComponent {
   @ViewChild('fleche', { static: true }) fleche?: ElementRef;
 
 
-  @Input() nomPageControlleur?: string;
+  nomPageControlleur?: string;
+  controllerName$:Observable<string>
   @Output() nomPageControlleurChange = new EventEmitter<string>();
   @Output() filtresChange = new EventEmitter<ParamInfoResume[]>();
 
   filtres: ParamInfoResume[] = [];
   filtresLoaded: boolean = false;
 
-  constructor(private routingService: RoutingService) {}
+  constructor(private routingService: RoutingService, private service:Services) {
+    this.controllerName$=this.service.name$
+  }
 
   ngOnInit() {
-    this.callRoutingService(this.nomPageControlleur);
+    this.controllerName$.subscribe((value) => {
+      this.nomPageControlleur = value;
+      this.callRoutingService(this.nomPageControlleur);
+    });
+
   }
 
   ngOnChanges(changes: SimpleChanges) {

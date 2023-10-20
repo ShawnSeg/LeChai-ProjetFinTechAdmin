@@ -47,7 +47,7 @@ import { ListeDeroulanteCustomComponent } from './components/page-principale/lis
     FiltreMinMaxComponent,
     FiltresNiv2Component,
     FiltreHeaderComponent,
-    RowsDataComponent
+    RowsDataComponent,
     ListeDeroulanteCustomComponent,
 
   ],
