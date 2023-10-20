@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class FiltresValuesService {
+
   private isHideSubject = new BehaviorSubject<boolean>(false);
   isHide$ = this.isHideSubject.asObservable();
 

@@ -21,7 +21,8 @@ import { FiltreContainerComponent } from './components/page-principale/filtre-co
 import { FiltreResumeComponent } from './components/page-principale/filtre-container/filtre-header/filtre-resume/filtre-resume.component';
 import { FiltreMinMaxComponent } from './components/page-principale/filtre-container/filtres-niv2/filtre-min-max/filtre-min-max.component';
 import { FiltresNiv2Component } from './components/page-principale/filtre-container/filtres-niv2/filtres-niv2.component';
-import { FiltreHeaderComponent} from './components/page-principale/filtre-container/filtre-header/filtre-header.component';
+import { FiltreHeaderComponent } from './components/page-principale/filtre-container/filtre-header/filtre-header.component';
+import { ListeDeroulanteCustomComponent } from './components/page-principale/liste-deroulante-custom/liste-deroulante-custom.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,9 @@ import { FiltreHeaderComponent} from './components/page-principale/filtre-contai
     FiltreResumeComponent,
     FiltreMinMaxComponent,
     FiltresNiv2Component,
-    FiltreHeaderComponent
+    FiltreHeaderComponent,
+    ListeDeroulanteCustomComponent,
+
   ],
   imports: [
     BrowserModule,

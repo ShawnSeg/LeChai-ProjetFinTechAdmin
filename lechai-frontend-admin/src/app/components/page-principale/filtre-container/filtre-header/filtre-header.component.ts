@@ -1,5 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, SimpleChanges} from '@angular/core';
 import { FiltresValuesService } from 'src/app/services/filtres-values.service';
+import { ParamInfoResume } from 'src/shawnInterface';
 
 @Component({
   selector: 'app-filtre-header',
@@ -9,9 +10,27 @@ import { FiltresValuesService } from 'src/app/services/filtres-values.service';
 export class FiltreHeaderComponent {
   @ViewChild('fleche', { static: true }) fleche?: ElementRef;
 
+  @Input() filtres?:ParamInfoResume[]
+
   constructor(private filtreValues:FiltresValuesService){}
 
+  ngOnInit(){
+    console.log(this.filtres)
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    /* if ('nomPageControlleur' in changes) {
+       const newValue = changes['nomPageControlleur'].currentValue;
+       console.log(newValue); // Log the updated filtres when it changes.
+       this.nomPageControlleur = newValue;
+       this.callRoutingService(newValue);
+     */
+     if ('filtres' in changes) {
+       const newValue = changes['filtres'].currentValue;
+       console.log(newValue); // Log the updated filtres when it changes.
+       this.filtres = newValue;
 
+     }
+   }
 
   toggleHide() {
 

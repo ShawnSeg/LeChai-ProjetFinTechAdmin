@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, SimpleChanges, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ParamInfoResume } from 'src/shawnInterface';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,12 +11,15 @@ import { FiltresValuesService } from 'src/app/services/filtres-values.service';
   styleUrls: ['./filtres-niv2.component.scss']
 })
 export class FiltresNiv2Component {
-  @Input() nomPageControlleur?: string;
+  //@Input() nomPageControlleur?: string;
+  @Input() filtres?: ParamInfoResume[];
+  @Output() filtresChange = new EventEmitter<ParamInfoResume[]>();
+
   @ViewChild('container', { static: true }) container?: ElementRef;
 
   private subscription: Subscription;
 
-  filtres: ParamInfoResume[] = [];
+  //filtres: ParamInfoResume[] = [];
   filtresLoaded: boolean = false;
 
 
@@ -33,15 +36,21 @@ export class FiltresNiv2Component {
   }
 
   ngOnInit() {
-    this.callRoutingService(this.nomPageControlleur);
+    //this.callRoutingService(this.nomPageControlleur);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if ('nomPageControlleur' in changes) {
+   /* if ('nomPageControlleur' in changes) {
       const newValue = changes['nomPageControlleur'].currentValue;
       console.log(newValue); // Log the updated filtres when it changes.
       this.nomPageControlleur = newValue;
       this.callRoutingService(newValue);
+    */
+    if ('filtres' in changes) {
+      const newValue = changes['filtres'].currentValue;
+      console.log(newValue); // Log the updated filtres when it changes.
+      this.filtres = newValue;
+      this.filtresChange.emit(this.filtres)
     }
   }
 
@@ -54,9 +63,10 @@ export class FiltresNiv2Component {
     this.routingService.getAPIRouteURL({}, value!, 'info/filters').subscribe({
       next: (data: any) => {
         console.log(data);
-        this.filtres = data;
+        let testFiltre:ParamInfoResume[]=data
+        this.filtres = testFiltre.sort((a, b) => a.ind - b.ind);
         this.filtresLoaded = true; // Set the flag to indicate that data is loaded.
-
+        console.log(this.filtres)
 
       },
       error: (error: HttpErrorResponse) => {

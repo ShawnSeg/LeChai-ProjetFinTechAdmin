@@ -29,7 +29,7 @@ export class FiltreContainerComponent {
     if ('nomPageControlleur' in changes) {
       const newValue = changes['nomPageControlleur'].currentValue;
       this.nomPageControlleur=newValue
-      this.nomPageControlleurChange.emit()
+      this.callRoutingService(newValue)
     }
   }
 
@@ -37,7 +37,8 @@ export class FiltreContainerComponent {
     this.routingService.getAPIRouteURL({}, value!, 'info/filters').subscribe({
       next: (data: any) => {
         console.log(data);
-        this.filtres = data;
+        let testFiltre:ParamInfoResume[]=data
+        this.filtres = testFiltre.sort((a, b) => a.ind - b.ind);
         this.filtresLoaded = true; // Set the flag to indicate that data is loaded.
         this.filtresChange.emit(this.filtres)
 

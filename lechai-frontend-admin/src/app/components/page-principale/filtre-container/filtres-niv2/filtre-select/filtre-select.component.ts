@@ -25,6 +25,6 @@ export class FiltreSelectComponent {
   all: string = "Tout";
 
   ngOnInit(){
-    console.log(this.filtre)
+
   }
 }

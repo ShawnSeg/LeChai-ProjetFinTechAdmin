@@ -18,7 +18,7 @@ export class FiltreInputComponent {
 
 
  ngOnInit(){
-  console.log(this.filtre)
+
  }
 
 

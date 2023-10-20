@@ -6,6 +6,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from 'src/app/services/toast.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-selection-controlleur',
@@ -37,12 +38,14 @@ export class SelectionControlleurComponent {
     }, */
   ];
 
+  listeControlleur:string[] = []
+
   control: string="";
   @Output() changeControl= new EventEmitter<string>();
   selectedControlleur: string="";
 
 
-  constructor(private http:HttpClient,  private routingSevice:RoutingService, private toast: ToastService, private route: ActivatedRoute) {}
+  constructor(private http:HttpClient,  private routingSevice:RoutingService, private toast: ToastService, private route: ActivatedRoute, private router:Router) {}
 
   ngOnInit()
   {
@@ -64,6 +67,11 @@ export class SelectionControlleurComponent {
         next: (data: any) => {
           // Handle successful response here
           this.controlleurs = data;
+          for(let i = 0; i<this.controlleurs.length;i++)
+          {
+            this.listeControlleur.push(this.controlleurs[i].name)
+          }
+          console.log(this.listeControlleur)
         },
         error: (error: HttpErrorResponse) => {
           // Handle error response here
@@ -72,6 +80,9 @@ export class SelectionControlleurComponent {
 
         }
       });
+  }
+  handleSelectedValue(event:string){
+    this.router.navigate([`/${event}`]);
   }
 
 }

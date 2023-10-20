@@ -1,15 +1,8 @@
 <div class="flex">
-  <span class="valeur_filtre">
-    <label for="test">Nom:</label>
-    <label for="test">Chai</label>
+  <span class="valeur_filtre" *ngFor="let filtre of filtres">
+    <label for="test">{{filtre.name}}: </label>
+    <label for="test">test</label>
   </span>
-  <span class="valeur_filtre">
-    <label for="test">Prix:</label>
-    <label for="test">1.00$ à 4.00$</label>
-  </span>
-  <span class="valeur_filtre">
-    <label for="test">Collaborateur:</label>
-    <label for="test">Elon</label>
-  </span>
+
 
 </div>
