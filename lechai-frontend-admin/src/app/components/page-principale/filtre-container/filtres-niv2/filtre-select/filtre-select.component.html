@@ -1,8 +1,8 @@
 <div>
   <label [for]="forLabel">{{ filtre.name }}:</label>
-  <select>
-    <option [value]="valueAll">{{all}}</option>
-    <!-- <option *ngFor="let t of things" [value]="t.id">{{ t.nom }}</option> -->
-  </select>
+  <div class="selectValues">
+    <app-liste-deroulante-custom ></app-liste-deroulante-custom>
+  </div>
+
 </div>
 

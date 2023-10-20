@@ -1,5 +1,12 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ParamInfoResume } from 'src/Interface';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+
+interface filtreNameValue{
+  name:string,
+  value:string
+}
 
 @Component({
   selector: 'app-filtre-input',
@@ -9,6 +16,7 @@ import { ParamInfoResume } from 'src/Interface';
 export class FiltreInputComponent {
 
   @Input() filtre?: ParamInfoResume
+  @Output() filtreChange = new EventEmitter<filtreNameValue>();
 
   forLabel: string = "";
   labelName: string = "";
@@ -16,10 +24,18 @@ export class FiltreInputComponent {
   classInput: string = "";
   placeholder: string = "testInput";
 
+  controllerName:string=""
 
- ngOnInit(){
+  constructor(private route:ActivatedRoute, private router:Router){}
 
- }
 
+  ngOnInit(){
+
+}
+
+  onChange(name:string,value:string){
+
+    this.filtreChange.emit({name:name, value:value})
+  }
 
 }

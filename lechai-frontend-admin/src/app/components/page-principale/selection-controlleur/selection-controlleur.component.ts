@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-selection-controlleur',
@@ -38,14 +39,13 @@ export class SelectionControlleurComponent {
     }, */
   ];
 
-  controllerName$: Observable<string>;
   /* @Output() changeControl= new EventEmitter<string>(); */
   selectedControlleur: string="";
 
 
   constructor(private http:HttpClient,  private routingSevice:RoutingService, private toast: ToastService, private route: ActivatedRoute, private router:Router,
               private services:Services) {
-                this.controllerName$ = this.services.name$;
+
               }
   listeControlleur:string[] = []
 
@@ -60,19 +60,20 @@ export class SelectionControlleurComponent {
   {
 
 
-
-    this.route.paramMap.subscribe(params => {
+    this.selectedControlleur!=this.route.snapshot.paramMap.get("name")
+    console.log(this.selectedControlleur)
+    /*this.route.paramMap.subscribe(params => {
       let name = params.get('name');
       console.log('ID from URL:', name);
 
       if (name !== null) {
         this.selectedControlleur = name;
-        /* this.changeControl.emit(this.selectedControlleur); */
+        this.changeControl.emit(this.selectedControlleur);
         this.services.setControllerName(name);
-        /* console.log(this.controllerName$) */
+         console.log(this.controllerName$)
 
       }
-    });
+    });*/
 
       //this.getControlleurs()
 
@@ -96,7 +97,7 @@ export class SelectionControlleurComponent {
       });
   }
   handleSelectedValue(event:string){
-    this.router.navigate([`/${event}`]);
+    this.router.navigate([event], {relativeTo:this.route});
   }
 
 }

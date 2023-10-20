@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { RoutingService } from 'src/app/services/routing.service';
 import { Services } from 'src/app/services/services.service';
 import { ParamInfoResume } from 'src/Interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-filtre-container',
@@ -14,7 +15,7 @@ export class FiltreContainerComponent {
   @ViewChild('fleche', { static: true }) fleche?: ElementRef;
 
 
-  nomPageControlleur?: string;
+  @Input() nomPageControlleur?: string;
   controllerName$:Observable<string>
   @Output() nomPageControlleurChange = new EventEmitter<string>();
   @Output() filtresChange = new EventEmitter<ParamInfoResume[]>();
@@ -22,25 +23,33 @@ export class FiltreContainerComponent {
   filtres: ParamInfoResume[] = [];
   filtresLoaded: boolean = false;
 
-  constructor(private routingService: RoutingService, private service:Services) {
+  constructor(private routingService: RoutingService, private service:Services, private route:ActivatedRoute) {
     this.controllerName$=this.service.name$
   }
 
   ngOnInit() {
-    this.controllerName$.subscribe((value) => {
+    /*this.controllerName$.subscribe((value) => {
       this.nomPageControlleur = value;
       this.callRoutingService(this.nomPageControlleur);
-    });
+    });*/
 
-  }
+    this.route.paramMap.subscribe(params => {
+      let name = params.get('name');
+      console.log('ID from URL:', name);
 
-  ngOnChanges(changes: SimpleChanges) {
-    if ('nomPageControlleur' in changes) {
-      const newValue = changes['nomPageControlleur'].currentValue;
-      this.nomPageControlleur=newValue
-      this.callRoutingService(newValue)
-    }
-  }
+      if (name !== null) {
+        this.nomPageControlleur = name;
+        this.callRoutingService(this.nomPageControlleur);
+        /* this.changeControl.emit(this.selectedControlleur); /
+        this.services.setControllerName(name);
+        / console.log(this.controllerName$) */
+
+      }
+
+  })
+}
+
+
 
   callRoutingService(value: string | undefined) {
     this.routingService.getAPIRouteURL({}, value!, 'info/filters').subscribe({

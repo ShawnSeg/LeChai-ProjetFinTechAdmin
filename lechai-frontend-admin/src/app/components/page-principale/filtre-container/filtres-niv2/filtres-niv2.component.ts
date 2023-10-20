@@ -4,6 +4,9 @@ import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { FiltresValuesService } from 'src/app/services/filtres-values.service';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-filtres-niv2',
@@ -13,6 +16,7 @@ import { FiltresValuesService } from 'src/app/services/filtres-values.service';
 export class FiltresNiv2Component {
   //@Input() nomPageControlleur?: string;
   @Input() filtres?: ParamInfoResume[];
+
   @Output() filtresChange = new EventEmitter<ParamInfoResume[]>();
 
   @ViewChild('container', { static: true }) container?: ElementRef;
@@ -21,9 +25,10 @@ export class FiltresNiv2Component {
 
   //filtres: ParamInfoResume[] = [];
   filtresLoaded: boolean = false;
+  controllerName?:string
 
 
-  constructor(private routingService:RoutingService, private filtresValues:FiltresValuesService){
+  constructor(private routingService:RoutingService, private filtresValues:FiltresValuesService, private router:Router, private route:ActivatedRoute, private location:Location){
     this.subscription = this.filtresValues.isHide$.subscribe(isHide => {
       if (isHide) {
         (this.container?.nativeElement as HTMLElement).classList.add('hide');
@@ -36,7 +41,22 @@ export class FiltresNiv2Component {
   }
 
   ngOnInit() {
+    /*
+    this.route.paramMap.subscribe(params => {
+      let name = params.get('name');
+      console.log('ID from URL:', name);
+
+      if (name !== null && name!= this.controllerName) {
+        this.controllerName = name;
+        console.log(this.controllerName)
+        /* this.changeControl.emit(this.selectedControlleur); /
+        this.services.setControllerName(name);
+        / console.log(this.controllerName$)
+
+      }
+ })
     //this.callRoutingService(this.nomPageControlleur);
+    */
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -50,7 +70,7 @@ export class FiltresNiv2Component {
       const newValue = changes['filtres'].currentValue;
       //console.log(newValue); // Log the updated filtres when it changes.
       this.filtres = newValue;
-      this.filtresChange.emit(this.filtres)
+
     }
   }
 
@@ -73,6 +93,32 @@ export class FiltresNiv2Component {
         console.log(error.status);
       }
     });
+  }
+
+  changeFiltre(eventData:{name:string, value:string})
+  {
+    let nom = eventData.name
+    let valeur = eventData.value
+    console.log(eventData.name)
+    console.log(this.controllerName)
+
+    let testArray = [eventData.name, eventData.value]
+
+    const url = this.router.createUrlTree([], {relativeTo: this.route, queryParams: {nom: testArray}}).toString()
+    //this.router.navigate([{nom: valeur}], { relativeTo: this.route });
+    this.location.go(url)
+
+    let test:{[key:string]:string|null}={}
+    const paramMap = this.route.snapshot.queryParamMap
+    this.route.queryParams.subscribe(params=>{
+      console.log(params)
+    })
+
+    paramMap.keys.forEach(key => {
+      test[key]=paramMap.get(key)
+
+    });
+
   }
 
 }

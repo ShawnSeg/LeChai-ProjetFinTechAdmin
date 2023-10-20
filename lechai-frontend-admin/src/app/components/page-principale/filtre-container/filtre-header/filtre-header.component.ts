@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, Input, SimpleChanges} from '@angular/core';
 import { FiltresValuesService } from 'src/app/services/filtres-values.service';
-import { ParamInfoResume } from 'src/shawnInterface';
+import { ParamInfoResume } from 'src/Interface';
 
 @Component({
   selector: 'app-filtre-header',
