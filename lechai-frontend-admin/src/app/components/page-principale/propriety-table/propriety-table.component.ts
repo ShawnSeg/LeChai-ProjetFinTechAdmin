@@ -4,7 +4,7 @@ import { ParamInfoResume, ProprietyResum } from 'src/Interface';
 import { RouteTypes, RoutingService } from 'src/app/services/routing.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Observable } from 'rxjs';
-import { Services } from 'src/app/services/services.service';
+import { ParamsURLService } from 'src/app/services/params-url.service';
 
 
 @Component({
@@ -30,27 +30,42 @@ export class ProprietyTableComponent {
   ];
 
 
-  nomControlleur: string = "";
-  controllerName$: Observable<string>;
+  nomControlleur: string | null = null;
 
   dataRow:any[] = [];
   proprietiesResum: ProprietyResum[] = [];
 
 
 
-  constructor(private routingSevice:RoutingService, private toast: ToastService, private services:Services){
-
-    this.controllerName$ = this.services.name$;
+  constructor(private routingSevice:RoutingService, private toast: ToastService, private services:ParamsURLService){
   }
 
   ngOnInit(){
-    console.log(this.controllerName$);
+    console.log(this.nomControlleur);
 
-    this.controllerName$.subscribe((value) => {
-      this.nomControlleur = value;
+    this.nomControlleur = this.services.returnParamsURL();
+  }
+
+  updateData(params:{[Key:string]: Object}){
+
+    this.routingSevice.getAPIRouteURL<any>(params, this.nomControlleur!, "GetAll")
+    .subscribe({
+      next: (data: any) => {
+        // Handle successful response here
+        this.dataRow = data;
+
+      },
+      error: (error: HttpErrorResponse) => {
+        // Handle error response here
+        this.toast.showToast("error", 'Les détails des propriéter n\'ont pas été bien charger.', "bottom-center", 4000);
+        console.error('Status code:', error.status);
+
+      }
     });
+  }
 
-    this.routingSevice.getAPIRouteURL({}, this.nomControlleur, "Info/Proprieties")
+  getpropreities(){
+    this.routingSevice.getAPIRouteURL({}, this.nomControlleur!, "Info/Proprieties")
       .subscribe({
         next: (data: any) => {
           console.log(data);
@@ -71,24 +86,6 @@ export class ProprietyTableComponent {
 
         }
       });
-  }
-
-  updateData(params:{[Key:string]: Object}){
-
-    this.routingSevice.getAPIRouteURL<any>(params, this.nomControlleur!, "GetAll")
-    .subscribe({
-      next: (data: any) => {
-        // Handle successful response here
-        this.dataRow = data;
-
-      },
-      error: (error: HttpErrorResponse) => {
-        // Handle error response here
-        this.toast.showToast("error", 'Les détails des propriéter n\'ont pas été bien charger.', "bottom-center", 4000);
-        console.error('Status code:', error.status);
-
-      }
-    });
   }
 
 /*   itemSelect(index: number){

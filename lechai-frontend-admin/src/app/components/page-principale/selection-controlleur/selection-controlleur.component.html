@@ -8,7 +8,7 @@
   <span *ngFor="let controlleur of controlleurs">
     <ng-container *ngIf="controlleur.isMain">
       <span class="aNom">
-            <a [routerLink]="['../', controlleur.name]" [ngClass]="{'selected': controlleur.name === selectedControlleur}">{{controlleur.name}}</a>
+            <a (click)="handleSelectedValue(controlleur.name)" [ngClass]="{'selected': controlleur.name === selectedControlleur}">{{controlleur.name}}</a>
       </span>
     </ng-container>
   </span>
