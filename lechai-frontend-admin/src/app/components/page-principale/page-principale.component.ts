@@ -13,31 +13,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['./page-principale.component.scss']
 })
 export class PagePrincipaleComponent {
-  /* nomPageControlleur: string = "Produits"; */
-  /* @Output() nomPageControlleurChange = new EventEmitter<string>(); */
 
-  controllerName$: Observable<string>;
+  constructor(private footerPosition:FooterPositionService, private routing:RoutingService) {
 
-  constructor(private footerPosition:FooterPositionService, private routing:RoutingService, private services:Services) {
-    this.controllerName$ = this.services.name$;
   }
 
   ngOnInit() {
     this.footerPosition.setIsAbsolute(false);
-    this.getHeaderTable();
 
   }
 
-  async getHeaderTable()
-  {
 
-    /* this.routing.getAPIRoute<TableProprety[]>({}, `${this.nomPageControlleur}/Info/Propriety`)
-    .subscribe(data => this.tableProprety = data); */
-
-    /* alert(localStorage.getItem("token")); */
-
-
-  }
 
   /* changeControl(event: string)
   {
