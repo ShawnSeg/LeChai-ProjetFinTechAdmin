@@ -1,0 +1,23 @@
+<table>
+  <thead>
+  <tr>
+    <th *ngFor="let prop of proprietiesResum" class="grandeur">{{ prop.name }}</th>
+  </tr>
+</thead>
+  <tbody>
+    <ng-container *ngFor="let item of dataDisplay; let i = index">
+      <tr (click)="toggleSelected(i, item)">
+        <td *ngFor="let prop of proprietiesResum">
+          <span [ngSwitch]="prop.showTypeID">
+            <span *ngSwitchDefault>{{ getValue(prop.params, item) }}</span>
+          </span>
+        </td>
+      </tr>
+      <tr *ngIf="checkIndex(i)" id="selectedDetail">
+        <td [attr.colspan]="proprietiesResum.length">
+          <app-display-item-container [Ids]="currentInfosIds(i)" [Proprieties]="Proprieties" [ContainerType]="ItemContainerTypes.Proprieties" [ControllerName]="_ControllerName"></app-display-item-container>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

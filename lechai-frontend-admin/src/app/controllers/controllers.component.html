@@ -1,0 +1,10 @@
+<h1>Controle des {{ selectedController }}</h1>
+<div>
+  <span *ngFor="let controller of filteredControllers()">
+      <span class="aNom">
+            <a (click)="selectController(controller.name)" [class.selected]="controller.name === selectedController">{{controller.name}}</a>
+      </span>
+  </span>
+</div>
+<app-filtres [ControllerName]="selectedController"></app-filtres>
+<app-data-display [ControllerName]="selectedController"></app-data-display>

@@ -1,0 +1,13 @@
+<div class="filtre_container">
+  <div class="filter_header">
+    <span class="filtre_resume">
+      <div *ngFor="let filterResume of FilterResumes">
+        <p>{{filterResume.name}} - {{filterResume.params[0]}}</p>
+      </div>
+    </span>
+    <button>Refresh</button>
+    <button>Reset</button>
+    <img src="assets/image/hideFiltre.png" alt="hideFiltre" (click)="toggleHide()" #fleche>
+  </div>
+  <app-display-item-container [class.hide]="filterHidden" #filtersContainer (params)="updateFilters($event)" [ContainerType]="ItemContainerTypes.Filters" [ControllerName]="ControllerName"></app-display-item-container>
+</div>

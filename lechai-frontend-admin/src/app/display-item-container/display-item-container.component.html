@@ -1,0 +1,15 @@
+<div class="paramInfoContainer" *ngFor="let paramInfo of DisplayItemInfos">
+  <span [ngSwitch]="paramInfo.showTypeID">
+    <app-string-display-item *ngSwitchCase="1" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="2" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="3" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="4" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="5" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="6" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="7" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="8" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="9" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="10" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item *ngSwitchCase="11" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+  </span>
+</div>
