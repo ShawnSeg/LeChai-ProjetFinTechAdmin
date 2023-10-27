@@ -9,7 +9,7 @@ export class Services {
   private isConnected = new BehaviorSubject<boolean>(false);
   isConnected$ = this.isConnected.asObservable();
 
-  /* private nameSubject = new BehaviorSubject<string>("Produits");
+  private nameSubject = new BehaviorSubject<string>("Produits");
   name$ = this.nameSubject.asObservable();
 
   getControllerName(){
@@ -18,7 +18,7 @@ export class Services {
 
   setControllerName(name: string){
     this.nameSubject.next(name);
-  } */
+  }
 
   constructor() {
     this.updateIsConnected(this.getToken());
@@ -58,6 +58,8 @@ export class Services {
       alert('8 hours have passed!');
     }, eightHoursInMilliseconds);
   }
+
+
 
   /* chargeInput(for: string, labelName: string, type: string, class: string, placeholder: string){
 
