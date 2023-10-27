@@ -2,7 +2,6 @@
   <span [ngSwitch]="paramInfo.showTypeID">
     <app-string-display-item class="filtres" *ngSwitchCase="1" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
     <app-ref-display-item class="filtres" *ngSwitchCase="2" [valuePairs]="paramsValue" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-ref-display-item>
-    <app-string-display-item class="filtres" *ngSwitchCase="2" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
     <app-string-display-item class="filtres" *ngSwitchCase="3" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
     <app-string-display-item class="filtres" *ngSwitchCase="4" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
     <app-string-display-item class="filtres" *ngSwitchCase="5" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
