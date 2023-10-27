@@ -6,7 +6,6 @@ import { ToastService } from 'src/app/services/toast.service';
 import { Observable } from 'rxjs';
 import { ParamsURLService } from 'src/app/services/params-url.service';
 
-
 @Component({
   selector: 'app-propriety-table',
   templateUrl: './propriety-table.component.html',
