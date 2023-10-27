@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { Services } from 'src/app/services/services.service';
 
 @Component({
   selector: 'app-selection-controlleur',
@@ -74,11 +75,7 @@ export class SelectionControlleurComponent {
         next: (data: any) => {
           // Handle successful response here
           this.controlleurs = data;
-          for(let i = 0; i<this.controlleurs.length;i++)
-          {
-            this.listeControlleur.push(this.controlleurs[i].name)
-          }
-          console.log(this.listeControlleur)
+
         },
         error: (error: HttpErrorResponse) => {
           // Handle error response here
