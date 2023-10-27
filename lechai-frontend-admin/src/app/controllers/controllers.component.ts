@@ -15,6 +15,7 @@ export interface Controller{
 })
 export class ControllersComponent implements OnInit{
   controllers: Controller[] = [];
+  controllersString:string[]=[];
   selectedController:string = "";
   testObject = 0;
   controllerOk = false;
@@ -26,6 +27,10 @@ export class ControllersComponent implements OnInit{
     this.caller.Get<Controller[]>({}, "Info", "Controllers")
     .subscribe(data => {
       this.controllers = data;
+      for(let i = 0; i<data.length;i++)
+      {
+        this.controllersString.push(data[i].name)
+      }
       if (!this.selectedController || !this.controllers.some(controller => controller.name == this.selectedController))
         this.URLParser.ChangeURL("controller", this.controllers[0].name, this.route)
       //this.URLParser.ChangeControlerRoute(this.controllers[0].name, this.route)
@@ -41,5 +46,6 @@ export class ControllersComponent implements OnInit{
   {
     return this.controllers.filter(controller => controller.isMain)
   }
+
 
 }
