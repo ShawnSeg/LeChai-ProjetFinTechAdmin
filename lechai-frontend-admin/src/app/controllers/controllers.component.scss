@@ -20,6 +20,14 @@ $backgroundColor:#FFCFDF;
   .roles{
     position: absolute;
     left:30%;
+    top:1%;
+    height:50px;
+    &:hover{
+      cursor: pointer;
+    }
+    img{
+      width:50%;
+    }
   }
 }
 

@@ -35,4 +35,6 @@ export class ListeDeroulanteCustomComponent {
     this.showDropdown = false;
     this.selectedValue.emit(value);
   }
+
+
 }
