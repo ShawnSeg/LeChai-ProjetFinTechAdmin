@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Controlleur } from 'src/Interface';
-import { Services } from 'src/app/services/services.service';
+import { ParamsURLService } from 'src/app/services/params-url.service';
 import { RouteTypes, RoutingService } from 'src/app/services/routing.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from 'src/app/services/toast.service';
@@ -47,14 +47,6 @@ export class SelectionControlleurComponent {
               private services:Services) {
 
               }
-  listeControlleur:string[] = []
-
-
-
-
-
-
-
 
   ngOnInit()
   {
@@ -95,9 +87,14 @@ export class SelectionControlleurComponent {
 
         }
       });
+
+
+      //this.getControlleurs()
+
+
   }
+
   handleSelectedValue(event:string){
     this.router.navigate([event], {relativeTo:this.route});
   }
-
 }

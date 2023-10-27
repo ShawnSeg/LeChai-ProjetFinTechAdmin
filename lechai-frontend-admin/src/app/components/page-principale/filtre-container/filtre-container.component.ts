@@ -3,6 +3,7 @@ import { Component, ViewChild, ElementRef, Input, SimpleChanges, Output, EventEm
 import { Observable } from 'rxjs';
 import { RoutingService } from 'src/app/services/routing.service';
 import { Services } from 'src/app/services/services.service';
+import { ParamsURLService } from 'src/app/services/params-url.service';
 import { ParamInfoResume } from 'src/Interface';
 import { ActivatedRoute } from '@angular/router';
 
