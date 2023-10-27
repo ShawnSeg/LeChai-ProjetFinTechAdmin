@@ -4,6 +4,7 @@ export interface ParamInfoResume{
   description:string,
   placeholder:string,
   showTypeID:number,
+  mapper:MapperResume|null,
   ind:number,
   paramAffecteds:ParamAffectedResume[]
 }
@@ -15,6 +16,7 @@ export function defaultParamInfo() : ParamInfoResume
     description: '',
     placeholder: '',
     showTypeID: 0,
+    mapper: null,
     ind: 0,
     paramAffecteds: []
   };
@@ -43,4 +45,10 @@ export interface FilterResume{
   name: string,
   type: number,
   params: (object | null)[]
+}
+
+export interface MapperResume {
+  refController: string,
+  parametersToLink: {[key:string]:string},
+  baseParameters: {[key:string]:any}
 }
