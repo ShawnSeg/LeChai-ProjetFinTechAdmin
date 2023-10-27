@@ -29,7 +29,23 @@ $backgroundColor:#FFCFDF;
   font-size: xx-large;
 }
 
+.controller_names_list{
+  width:70%;
+  margin-left:15%;
+  margin-top:2%;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
+
+
+.aNom{
+  font-size: x-large;
+  &:hover{
+    cursor: pointer;
+  }
+}
 
 .selected {
   color: yellow;

@@ -11,13 +11,12 @@
 
 <h1 class="controleur_titre">Controle des {{ selectedController }}</h1>
 
-<div>
+<div  class="controller_names_list">
   <span *ngFor="let controller of filteredControllers()">
       <span class="aNom">
             <a (click)="selectController(controller.name)" [class.selected]="controller.name === selectedController">{{controller.name}}</a>
       </span>
   </span>
-
   <span class="listeControlleurs">
     <app-liste-deroulante-custom [values]="controllersString" (selectedValue)="selectController($event)"></app-liste-deroulante-custom>
   </span>
