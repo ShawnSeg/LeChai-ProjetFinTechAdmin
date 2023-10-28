@@ -1,9 +1,24 @@
-<h1>Controle des {{ selectedController }}</h1>
-<div>
+<div class="headerBanner">
+  <img src="assets/image/leChaiLogo.png" class="titre" alt="Titre">
+  <span class="roles">
+    <img src="assets/image/rolesAdmin (2).png" alt="">
+  </span>
+  <span class="cercle">
+    <img class="logo"src="assets/image/logo.png" alt="logo">
+  </span>
+
+</div>
+
+<h1 class="controleur_titre">Controle des {{ selectedController }}</h1>
+
+<div  class="controller_names_list">
   <span *ngFor="let controller of filteredControllers()">
       <span class="aNom">
             <a (click)="selectController(controller.name)" [class.selected]="controller.name === selectedController">{{controller.name}}</a>
       </span>
+  </span>
+  <span class="listeControlleurs">
+    <app-liste-deroulante-custom [values]="controllersString" (selectedValue)="selectController($event)"></app-liste-deroulante-custom>
   </span>
 </div>
 <app-filtres [ControllerName]="selectedController"></app-filtres>

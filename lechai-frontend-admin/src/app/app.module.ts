@@ -44,6 +44,7 @@ import { StringDisplayItemComponent } from './string-display-item/string-display
 
 
 import { ListeDeroulanteCustomComponent } from './components/page-principale/liste-deroulante-custom/liste-deroulante-custom.component';
+import { RefDisplayItemComponent } from './ref-display-item/ref-display-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +74,8 @@ import { ListeDeroulanteCustomComponent } from './components/page-principale/lis
     DataDisplayComponent,
     //MainPageComponent,
     DisplayItemContainerComponent,
-    StringDisplayItemComponent
+    StringDisplayItemComponent,
+    RefDisplayItemComponent
 
   ],
   imports: [

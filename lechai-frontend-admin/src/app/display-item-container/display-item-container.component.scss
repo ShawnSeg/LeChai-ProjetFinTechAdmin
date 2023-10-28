@@ -1,4 +1,13 @@
 :host {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  width:100%;
+  .paramInfoContainer{
+    margin-right:5%;
+    width:27%;
+    margin-bottom: 3%;
+  }
 }
+
+

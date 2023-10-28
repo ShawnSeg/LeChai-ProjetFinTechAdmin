@@ -34,6 +34,7 @@ export class DisplayItemContainerComponent implements OnInit {
   @Input() Ids? :{[Key:string]:object}
   @Input() Proprieties? : ParamInfoResume[]
   filterSubscription : Subscription | undefined
+  dataSubscription : Subscription | undefined
   @Input()
   set ControllerName(name : string)
   {
@@ -46,6 +47,8 @@ export class DisplayItemContainerComponent implements OnInit {
   }
 
   setProprieties() {
+    if (this.dataSubscription)
+      this.dataSubscription.unsubscribe()
     if (this.Proprieties != undefined){
       this.setProprietiesStatic(this.Proprieties, this.Ids)
       return;
@@ -57,8 +60,9 @@ export class DisplayItemContainerComponent implements OnInit {
       this.filterSubscription = this.URLParser.GetSubscription("filters", this.route, false).subscribe(data => this.paramsValue = data);
     }
     let urlPath :string = this.switchCaseContainerType();
-    this.caller.Get<ParamInfoResume[]>({}, urlPath)
-      .subscribe(data => this.DisplayItemInfos = data.sort(item => item.ind))
+
+    this.dataSubscription = this.caller.Get<ParamInfoResume[]>({}, urlPath)
+        .subscribe(data => this.DisplayItemInfos = data.sort(item => item.ind))
   }
   setProprietiesStatic(Proprieties : ParamInfoResume[], Ids? :{[Key:string]:object}) {
     if (!!Ids)

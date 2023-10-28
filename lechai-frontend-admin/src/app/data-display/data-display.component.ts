@@ -31,54 +31,50 @@ export class DataDisplayComponent implements OnInit {
   ItemContainerTypes = ItemContainerTypes;
   paramsSubscription : Subscription | undefined;
   dataSubscription : Subscription | undefined;
+  paramInfoSubscription : Subscription | undefined;
   subscribed = false;
+  @Input() preFilters? : {[key:string]:string}
   constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute) {}
   ngOnInit() {
   }
   setProprieties()
   {
-    this.caller.Get<ParamInfoResume[]>({}, this._ControllerName, "Info/Proprieties")
+    if (this.paramInfoSubscription)
+          this.paramInfoSubscription.unsubscribe()
+    this.paramInfoSubscription = this.caller.Get<ParamInfoResume[]>({}, this._ControllerName, "Info/Proprieties")
       .subscribe(data => {
         this.Proprieties = data.sort(item => item.ind);
+        console.log(this.Proprieties)
         this.proprietiesResum = this.Proprieties.filter(prop => prop.isMain).map(prop => ({
           name:prop.name,
           showTypeID: prop.showTypeID,
           params: prop.paramAffecteds.map(varsAffected => varsAffected.name)
         }));
         this.IdsNames = this.Proprieties.filter(prop => [7,8].includes(prop.showTypeID)).map(prop => prop.paramAffecteds[0].name);
-        this.URLParser.GetSubscription("selected", this.route, false).subscribe(tempCurrent => this.setSelected(tempCurrent as number[][] ?? []));
+        //this.URLParser.GetSubscription("selected", this.route, false).subscribe(tempCurrent => this.setSelected(tempCurrent as number[][] ?? []));
         if (this.paramsSubscription)
           this.paramsSubscription.unsubscribe()
+        if (this.preFilters)
+        {
+          this.getData(this.preFilters, false)
+          return;
+        }
         this.paramsSubscription = this.URLParser.GetSubscription("filters", this.route, true).subscribe(filters => {
           console.log(filters);
           this.filters = filters;
-          if (this.dataSubscription)
-            this.dataSubscription.unsubscribe()
-          this.dataSubscription = this.caller.Get<{[key:string]:any}[]>(filters, this._ControllerName, "GetAll")
-          .subscribe(data => {
-            this.dataDisplay = data;
-            console.log(this.currentInfos)
-            this.setIndex()
-            console.log(this.currentInfos)
-          });
+          this.getData(filters, true)
         });
-        /*
-        this.paramsSubscription = this.URLParser.GetParams(this.route, this.IdsNames).subscribe(([filters, currentSelecteds]) => {
-          console.log(currentSelecteds)
-          if (currentSelecteds)
-            this.currentInfos = currentSelecteds;
-          console.log(filters);
-          this.filters = filters;
-          this.caller.Get<{[key:string]:any}[]>(filters, this._ControllerName, "GetAll")
-            .subscribe(data => {
-              this.dataDisplay = data;
-              this.currentInfos.forEach(info =>
-                info.Index = data.findIndex(item => Object.keys(info.Ids).every(key => item[key] == info.Ids[key]))
-              )
-            });
-        });
-        */
       });
+  }
+  getData(params : {[key:string]:any}, setIndex : boolean){
+    if (this.dataSubscription)
+      this.dataSubscription.unsubscribe()
+    this.dataSubscription = this.caller.Get<{[key:string]:any}[]>(params, this._ControllerName, "GetAll")
+    .subscribe(data => {
+      this.dataDisplay = data;
+      if (setIndex)
+        this.setIndex()
+    });
   }
   setSelected(tempCurrent : number[][])
   {

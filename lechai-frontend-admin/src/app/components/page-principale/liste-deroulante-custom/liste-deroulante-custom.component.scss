@@ -9,6 +9,7 @@ ul{
 
 .search-bar {
   position: relative;
+
 }
 
 .dropdown {
@@ -33,4 +34,8 @@ ul{
 
 .dropdown li:hover {
   background-color: #f0f0f0;
+}
+
+input{
+  height:40px;
 }
