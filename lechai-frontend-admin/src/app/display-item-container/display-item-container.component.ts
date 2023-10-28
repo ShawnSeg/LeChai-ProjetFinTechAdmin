@@ -49,8 +49,13 @@ export class DisplayItemContainerComponent implements OnInit {
   setProprieties() {
     if (this.dataSubscription)
       this.dataSubscription.unsubscribe()
+    if (this.ContainerType == ItemContainerTypes.SingleFunction)
+    {
+      this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind)
+      return;
+    }
     if (this.Proprieties != undefined){
-      this.setProprietiesStatic(this.Proprieties, this.Ids)
+      this.setProprietiesStatic(this.Ids)
       return;
     }
     if (this.ContainerType == ItemContainerTypes.Filters)
@@ -64,10 +69,10 @@ export class DisplayItemContainerComponent implements OnInit {
     this.dataSubscription = this.caller.Get<ParamInfoResume[]>({}, urlPath)
         .subscribe(data => this.DisplayItemInfos = data.sort(item => item.ind))
   }
-  setProprietiesStatic(Proprieties : ParamInfoResume[], Ids? :{[Key:string]:object}) {
+  setProprietiesStatic(Ids? :{[Key:string]:object}) {
     if (!!Ids)
       this.caller.Get<{[key:string]:any}>(Ids, this._ControllerName, "GetDetailed")
-        .subscribe(data => {this.paramsValue = data; this.DisplayItemInfos = Proprieties!});
+        .subscribe(data => {this.paramsValue = data;this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind)});
   }
   switchCaseContainerType()
   {

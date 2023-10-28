@@ -1,3 +1,14 @@
+<div *ngFor="let funct of getMultipleRoute()" (click)="toggleFunction(funct)">
+  <span>{{funct.route.name}}</span>
+</div>
+<ng-container *ngIf="selectedFunction">
+  <app-display-item-container
+    [Proprieties]="selectedFunction.paramsInfo"
+    [ContainerType]="ItemContainerTypes.SingleFunction"
+    [ControllerName]="_ControllerName"
+  ></app-display-item-container>
+</ng-container>
+
 <table>
   <thead>
   <tr>

@@ -16,13 +16,15 @@ export class RefDisplayItemComponent implements OnInit {
   preFilters : {[key:string]:any} = {}
   constructor() {}
   ngOnInit(): void {
+    let tempFilters:{[key:string]:any} = {}
     let baseParam = this.paramInfoResume.mapper?.baseParameters;
     if (baseParam)
-      Object.keys(baseParam).forEach(key => this.preFilters[key] = baseParam![key])
-      let linkParam = this.paramInfoResume.mapper?.parametersToLink;
-      if (linkParam)
-        Object.keys(linkParam).forEach(key => this.preFilters[key] = this.valuePairs[linkParam![key]])
-      this.refController = this.paramInfoResume.mapper?.refController!
+      Object.keys(baseParam).forEach(key => tempFilters[key] = baseParam![key])
+    let linkParam = this.paramInfoResume.mapper?.parametersToLink;
+    if (linkParam)
+      Object.keys(linkParam).forEach(key => tempFilters[key] = this.valuePairs[linkParam![key]])
+    this.refController = this.paramInfoResume.mapper?.refController!
+    this.preFilters = tempFilters;
   }
   updateValue(value : string)
   {

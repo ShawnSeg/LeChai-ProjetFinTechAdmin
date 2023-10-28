@@ -21,7 +21,6 @@ export class ControllersComponent implements OnInit{
   controllerOk = false;
   constructor(private URLParser:URLParserService, private caller:APICallerService, private route : ActivatedRoute){}
   ngOnInit(): void {
-    console.log(this.URLParser.controllerNameVariableName)
     //this.URLParser.GetControllerName(this.route).subscribe(name => this.selectedController = name ?? "");
     this.URLParser.GetSubscription("controller", this.route, true).subscribe(name => this.selectedController = name ?? "")
     this.caller.Get<Controller[]>({}, "Info", "Controllers")
