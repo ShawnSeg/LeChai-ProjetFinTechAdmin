@@ -59,6 +59,7 @@ export class DisplayItemContainerComponent implements OnInit {
     let urlPath :string = this.switchCaseContainerType();
     this.caller.Get<ParamInfoResume[]>({}, urlPath)
       .subscribe(data => this.DisplayItemInfos = data.sort(item => item.ind))
+    console.log(this.DisplayItemInfos)
   }
   setProprietiesStatic(Proprieties : ParamInfoResume[], Ids? :{[Key:string]:object}) {
     if (!!Ids)

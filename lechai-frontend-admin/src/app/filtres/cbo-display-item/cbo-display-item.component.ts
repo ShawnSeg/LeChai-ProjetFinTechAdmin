@@ -1,18 +1,20 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { DisplayItemTemplate } from '../display-item-container/display-item-container.component';
-import { Entryies, ObjectEntry } from '../generalInterfaces';
-import { ParamInfoResume, defaultParamInfo } from '../DisplayItemsInterfaces';
+import { DisplayItemTemplate } from 'src/app/display-item-container/display-item-container.component';
+import { Entryies, ObjectEntry } from 'src/app/generalInterfaces';
+import { ParamInfoResume, defaultParamInfo } from 'src/app/DisplayItemsInterfaces';
+import { APICallerService } from 'src/app/apicaller.service';
 
 @Component({
-  selector: 'app-string-display-item',
-  templateUrl: './string-display-item.component.html',
-  styleUrls: ['./string-display-item.component.scss']
+  selector: 'app-cbo-display-item',
+  templateUrl: './cbo-display-item.component.html',
+  styleUrls: ['./cbo-display-item.component.scss']
 })
-export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
+export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
   @Input() valuePairs : ObjectEntry = { key: '', value: null };
   @Output() push = new EventEmitter();
   @ViewChild('inputValue') input! : ElementRef;
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
+  listValeurPossible:string[]=[]
   constructor() {}
   ngOnInit(): void {
     console.log(this.paramInfoResume)
