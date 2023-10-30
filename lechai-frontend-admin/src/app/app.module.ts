@@ -45,6 +45,7 @@ import { StringDisplayItemComponent } from './string-display-item/string-display
 
 import { ListeDeroulanteCustomComponent } from './components/page-principale/liste-deroulante-custom/liste-deroulante-custom.component';
 import { RefDisplayItemComponent } from './ref-display-item/ref-display-item.component';
+import { CboDisplayItemComponent } from './filtres/cbo-display-item/cbo-display-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +76,8 @@ import { RefDisplayItemComponent } from './ref-display-item/ref-display-item.com
     //MainPageComponent,
     DisplayItemContainerComponent,
     StringDisplayItemComponent,
-    RefDisplayItemComponent
+    RefDisplayItemComponent,
+    CboDisplayItemComponent
 
   ],
   imports: [
