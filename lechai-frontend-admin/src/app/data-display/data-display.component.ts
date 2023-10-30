@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { URLParserService } from '../urlparser.service';
 import { ActivatedRoute } from '@angular/router';
-import { ParamInfoResume, ProprietyResume } from '../DisplayItemsInterfaces';
+import { ParamInfoResume, ProprietyResume, RouteDisplayTypes, RouteResume, RouteResumeBundle } from '../DisplayItemsInterfaces';
 import { APICallerService } from '../apicaller.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ItemContainerTypes } from '../display-item-container/display-item-container.component';
@@ -23,6 +23,8 @@ export class DataDisplayComponent implements OnInit {
   }
   @ViewChild("selectedDetail") selectedDetailElem? : ElementRef;
   IdsNames:string[] = []
+  selectedFunction? : RouteResumeBundle
+  functions: RouteResumeBundle[] = []
   Proprieties: ParamInfoResume[] = []
   proprietiesResum: ProprietyResume[] = [];
   dataDisplay:{[key:string]:any}[] = []
@@ -32,6 +34,7 @@ export class DataDisplayComponent implements OnInit {
   paramsSubscription : Subscription | undefined;
   dataSubscription : Subscription | undefined;
   paramInfoSubscription : Subscription | undefined;
+  functionsSubscription : Subscription | undefined;
   subscribed = false;
   @Input() preFilters? : {[key:string]:string}
   constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute) {}
@@ -39,12 +42,15 @@ export class DataDisplayComponent implements OnInit {
   }
   setProprieties()
   {
+    if (this.functionsSubscription)
+          this.functionsSubscription.unsubscribe()
+    this.functionsSubscription = this.caller.Get<RouteResumeBundle[]>({}, this._ControllerName, "Info/Routes")
+      .subscribe(data => this.functions = data);
     if (this.paramInfoSubscription)
           this.paramInfoSubscription.unsubscribe()
     this.paramInfoSubscription = this.caller.Get<ParamInfoResume[]>({}, this._ControllerName, "Info/Proprieties")
       .subscribe(data => {
         this.Proprieties = data.sort(item => item.ind);
-        console.log(this.Proprieties)
         this.proprietiesResum = this.Proprieties.filter(prop => prop.isMain).map(prop => ({
           name:prop.name,
           showTypeID: prop.showTypeID,
@@ -78,18 +84,14 @@ export class DataDisplayComponent implements OnInit {
   }
   setSelected(tempCurrent : number[][])
   {
-    console.log(tempCurrent)
     this.currentInfos = tempCurrent.map(value =>
       ({Ids: toDictionarySimple<string, number>(this.IdsNames, key => key, (key, i) => value[i]), Index:-1})
     );
-    console.log(this.dataDisplay)
-    console.log(this.currentInfos)
     if (this.dataDisplay.length > 0)
       this.setIndex()
   }
   setIndex()
   {
-    console.log(this.dataDisplay)
     this.currentInfos.forEach(info =>
       info.Index = this.dataDisplay.findIndex(item => Object.keys(info.Ids).every(key => item[key] == info.Ids[key]))
     );
@@ -109,7 +111,6 @@ export class DataDisplayComponent implements OnInit {
       const Ids = toDictionary(this.IdsNames, idName => idName, idName => item[idName]);
       this.currentInfos.push({Ids:Ids, Index:i});
     }
-    console.log(this.currentInfos.map(info => info.Ids))
     this.URLParser.ChangeURL("selected", this.currentInfos.map(info => info.Ids), this.route);
   }
   checkIndex(i:number) : boolean
@@ -119,5 +120,17 @@ export class DataDisplayComponent implements OnInit {
   currentInfosIds(i : number)
   {
     return this.currentInfos.find(info => info.Index == i)?.Ids;
+  }
+  getMultipleRoute()
+  {
+    return this.functions.filter(funct => funct.route.routeDisplayType == RouteDisplayTypes.MULTIPLE)
+  }
+  toggleFunction(funct: RouteResumeBundle) {
+    if (this.selectedFunction == funct)
+    {
+      this.selectedFunction = undefined
+      return
+    }
+    this.selectedFunction = funct;
   }
 }

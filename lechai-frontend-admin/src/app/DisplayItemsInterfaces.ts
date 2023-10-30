@@ -52,3 +52,18 @@ export interface MapperResume {
   parametersToLink: {[key:string]:string},
   baseParameters: {[key:string]:any}
 }
+
+export interface RouteResume {
+  name: string,
+  routeDisplayType: RouteDisplayTypes
+}
+export enum RouteDisplayTypes {
+  NONE = 1,
+  GET = 2,
+  MULTIPLE = 3,
+  SINGLE = 4
+}
+export interface RouteResumeBundle {
+  route: RouteResume,
+  paramsInfo : ParamInfoResume[]
+}

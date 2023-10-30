@@ -36,25 +36,18 @@ export class URLParserService {
       value : null,
       setter : function (router, value : any, route) {
         this.value = (value as {[key:string]:any}[]).map(entry => Object.keys(entry).map(key => entry[key]));
-        console.log(value)
-        console.log(this.value)
+        //console.log(this.value)
         router.navigate([], {relativeTo: route,
           queryParamsHandling: 'merge',
           queryParams: { currentSelected: this.value.length > 0 ? (this.value as any[][]).map(entry => entry.join(":")).join(",")  : null}
         });
-        /*
-        if (this.value == "")
-          delete currentParams![this.variableName];
-        else
-          currentParams![this.variableName] = (this.value as any[][]).map(entry => entry.join(":")).join(",");*/
-        //console.log(currentParams)
       },
       getter : function (route) {
-        console.log(this.value)
+        //console.log(this.value)
         if (this.value != null)
           return this.value;
         let ids = route.snapshot.queryParamMap.get(this.variableName);
-        console.log(ids)
+        //console.log(ids)
         if (ids == null)
           return []
         return this.value = ids.split(",").map(single => {
@@ -107,27 +100,20 @@ export class URLParserService {
   {
     this.requestMade = true;
     this.parserTool[type].requested = true;
-    console.log(type + "request")
-    console.log(this.requestMade)
-    console.log(this.parserTool[type].requested)
     this.parserTool[type].setter(this.router, value, route);
   }
   GetURLInstance(type : string, route : ActivatedRoute, always : boolean) : any
   {
-    console.log(type)
     if (!this.requestMade)
       this.parserTool[type].value = null;
     else if (!always || !this.parserTool[type].requested)
       return null;
     this.requestMade = false;
-    console.log(type)
     this.parserTool[type].requested = false;
-    //console.log(this.parserTool[type].getter(paramMap, this.knownParams))
     return this.parserTool[type].getter(route);
   }
   ParseAll(paraMap : ParamMap): { [key: string]: any }
   {
-    console.log(paraMap)
     return toDictionary<string, any>(paraMap.keys, key => key == this.controllerNameVariableName ? null : key, (key) => paraMap.get(key));
   }
 }
