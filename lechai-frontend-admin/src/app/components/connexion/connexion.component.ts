@@ -12,6 +12,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observer } from 'rxjs';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { Services } from 'src/app/services/services.service';
+import { APICallerService } from 'src/app/apicaller.service';
 
 @Component({
   selector: 'app-connexion',
@@ -31,7 +32,7 @@ export class ConnexionComponent {
 
 
   constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router,  private routingSevice:RoutingService,
-              private http:HttpClient, private footerPosition:FooterPositionService,  private connexion: Services){
+              private http:HttpClient, private footerPosition:FooterPositionService,  /* private connexion: Services */ private caller: APICallerService){
 
 
   }
@@ -60,7 +61,7 @@ export class ConnexionComponent {
       this.connexion.setConnected(true);
       this.router.navigate([""]); */
 
-      this.routingSevice.callAPIRouteURL(RouteTypes.POST, {"Email": this.loginForm.get('courriel')!.value, "Password": this.loginForm.get('password')!.value}, "Employes", "ConnexionStepOne")
+      /* this.routingSevice.callAPIRouteURL(RouteTypes.POST, {"Email": this.loginForm.get('courriel')!.value, "Password": this.loginForm.get('password')!.value}, "Employes", "ConnexionStepOne")
       .subscribe({
         next: (data: any) => {
           // Handle successful response here
@@ -73,7 +74,14 @@ export class ConnexionComponent {
           console.error('Status code:', error.status);
 
         }
-      });
+      }); */
+
+      this.caller.ConnexionStepOne(this.loginForm.get('courriel')!.value, this.loginForm.get('password')!.value).subscribe((data: boolean) => {
+        if(data){
+          this.router.navigate([`/checkClient`]);
+          this.loginForm.reset();
+        }
+      })
     }
     else{
       ValidationInput.validationInput(this.loginForm);
