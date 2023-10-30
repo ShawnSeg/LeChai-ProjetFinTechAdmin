@@ -4,7 +4,6 @@ import { ParamInfoResume, ProprietyResum } from 'src/Interface';
 import { RouteTypes, RoutingService } from 'src/app/services/routing.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Observable } from 'rxjs';
-import { ParamsURLService } from 'src/app/services/params-url.service';
 
 @Component({
   selector: 'app-propriety-table',
@@ -36,13 +35,13 @@ export class ProprietyTableComponent {
 
 
 
-  constructor(private routingSevice:RoutingService, private toast: ToastService, private services:ParamsURLService){
+  constructor(private routingSevice:RoutingService, private toast: ToastService){
   }
 
   ngOnInit(){
     console.log(this.nomControlleur);
 
-    this.nomControlleur = this.services.returnParamsURL();
+    /* this.nomControlleur = this.services.returnParamsURL(); */
   }
 
   updateData(params:{[Key:string]: Object}){

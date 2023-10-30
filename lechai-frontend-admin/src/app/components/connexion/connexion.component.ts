@@ -3,13 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import ValidationInput from 'src/app/helpers/validationInput';
-import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RouteTypes, RoutingService } from 'src/app/services/routing.service';
 import { ApiResponse } from 'src/Interface';
 import { group } from '@angular/animations';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observer } from 'rxjs';
+import { Observer, Subscription } from 'rxjs';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { Services } from 'src/app/services/services.service';
 import { APICallerService } from 'src/app/apicaller.service';
@@ -25,13 +24,14 @@ export class ConnexionComponent {
   eyeIcon: string = "fa-eye-slash";
   showForm = false;
   hideForm = true
+  loginSubscription:  Subscription | undefined;
 
   loginForm!: FormGroup;
 
 
 
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router,  private routingSevice:RoutingService,
+  constructor(private fb: FormBuilder, private toast: ToastService, private router: Router,  private routingSevice:RoutingService,
               private http:HttpClient, private footerPosition:FooterPositionService,  /* private connexion: Services */ private caller: APICallerService){
 
 
@@ -55,31 +55,18 @@ export class ConnexionComponent {
   onLogin(){
     if(this.loginForm.valid)
     {
+      if (this.loginSubscription)
+        this.loginSubscription.unsubscribe()
 
-/*       this.toast.showToast("success", "Connexion réussi.", "bottom-center", 4000);
-      this.auth.setToken("tokenTemp");
-      this.connexion.setConnected(true);
-      this.router.navigate([""]); */
-
-      /* this.routingSevice.callAPIRouteURL(RouteTypes.POST, {"Email": this.loginForm.get('courriel')!.value, "Password": this.loginForm.get('password')!.value}, "Employes", "ConnexionStepOne")
-      .subscribe({
-        next: (data: any) => {
-          // Handle successful response here
-          this.router.navigate([`/checkClient`]);
-          this.loginForm.reset();
-        },
-        error: (error: HttpErrorResponse) => {
-          // Handle error response here
-          this.toast.showToast("error", 'il n\'existe pas de compte avec ce courriel et ce mot de passe.', "bottom-center", 4000);
-          console.error('Status code:', error.status);
-
-        }
-      }); */
-
-      this.caller.ConnexionStepOne(this.loginForm.get('courriel')!.value, this.loginForm.get('password')!.value).subscribe((data: boolean) => {
+      this.loginSubscription = this.caller.ConnexionStepOne(this.loginForm.get('courriel')!.value, this.loginForm.get('password')!.value).subscribe((data: boolean) => {
         if(data){
           this.router.navigate([`/checkClient`]);
           this.loginForm.reset();
+        }
+        else
+        {
+          this.toast.showToast("error", 'Le courriel ou le mot de passe est incorecte.', "bottom-center", 4000);
+          console.error('Status code:', HttpErrorResponse);
         }
       })
     }

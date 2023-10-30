@@ -46,6 +46,8 @@ export class DataDisplayComponent implements OnInit {
           this.functionsSubscription.unsubscribe()
     this.functionsSubscription = this.caller.Get<RouteResumeBundle[]>({}, this._ControllerName, "Info/Routes")
       .subscribe(data => this.functions = data);
+
+
     if (this.paramInfoSubscription)
           this.paramInfoSubscription.unsubscribe()
     this.paramInfoSubscription = this.caller.Get<ParamInfoResume[]>({}, this._ControllerName, "Info/Proprieties")
@@ -56,6 +58,8 @@ export class DataDisplayComponent implements OnInit {
           showTypeID: prop.showTypeID,
           params: prop.paramAffecteds.map(varsAffected => varsAffected.name)
         }));
+
+
         this.IdsNames = this.Proprieties.filter(prop => [7,8].includes(prop.showTypeID)).map(prop => prop.paramAffecteds[0].name);
         //this.URLParser.GetSubscription("selected", this.route, false).subscribe(tempCurrent => this.setSelected(tempCurrent as number[][] ?? []));
         if (this.paramsSubscription)

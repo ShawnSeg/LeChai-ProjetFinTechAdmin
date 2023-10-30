@@ -13,7 +13,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { Page404Component } from './components/page404/page404.component';
 import { ConnexionComponent } from './components/connexion/connexion.component';
 import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oublier-envoi.component';
-import { SelectionControlleurComponent } from './components/page-principale/selection-controlleur/selection-controlleur.component';
 
 import { Services } from './services/services.service';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
@@ -57,7 +56,6 @@ import { CboDisplayItemComponent } from './filtres/cbo-display-item/cbo-display-
     FooterComponent,
     ConnexionComponent,
     MdpOublierEnvoiComponent,
-    SelectionControlleurComponent,
     VerifyUserComponent,
     ProprietyTableComponent,
     FiltreContainerComponent,

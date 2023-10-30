@@ -1,6 +1,19 @@
-<div *ngFor="let funct of getMultipleRoute()" (click)="toggleFunction(funct)">
-  <span>{{funct.route.name}}</span>
+<div class="btnDiv" *ngFor="let funct of getMultipleRoute()" (click)="toggleFunction(funct)">
+  <button class="btn">{{funct.route.name}}</button>
+<!--   <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button> -->
 </div>
+
 <ng-container *ngIf="selectedFunction">
   <app-display-item-container
     [Proprieties]="selectedFunction.paramsInfo"

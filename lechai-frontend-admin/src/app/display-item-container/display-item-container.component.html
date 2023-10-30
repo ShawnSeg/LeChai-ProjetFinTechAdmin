@@ -1,3 +1,4 @@
+
 <div class="paramInfoContainer" *ngFor="let paramInfo of DisplayItemInfos">
   <span [ngSwitch]="paramInfo.showTypeID">
     <app-string-display-item class="filtres" *ngSwitchCase="1" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
