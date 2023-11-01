@@ -7,7 +7,7 @@
   </div>
 
 
-  <ng-container *ngIf="connecter; else notConnected">
+  <ng-container *ngIf="nomAdmin; else notConnected">
     <p class="nomAdmin">Bonjour {{ nomAdmin }}!</p>
     <span class="lienDeco">
       <a (click)="deconnecter()">Déconnexion</a>

@@ -1,4 +1,4 @@
-<!--<div class = "toast-container" *ngIf="showToast" [ngClass]="{
+<div class = "toast-container" *ngIf="showToast" [ngClass]="{
   success: toastType == 'success',
   error: toastType == 'error',
   warn: toastType == 'warn',
@@ -30,6 +30,6 @@
   </div>
 </div>
 
-<app-nav></app-nav>-->
+<!--<app-nav></app-nav>-->
 <router-outlet (activate)="onActive()"></router-outlet>
 <!--<app-footer></app-footer>-->

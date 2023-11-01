@@ -1,0 +1,59 @@
+<div class="block">
+<div class="btnDiv" *ngFor="let funct of getMultipleRoute()" (click)="toggleFunction(funct)">
+  <button class="btn">{{funct.route.name}}</button>
+<!--   <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button> -->
+</div>
+
+<ng-container *ngIf="selectedFunction">
+  <app-display-item-container
+
+    [Proprieties]="selectedFunction.paramsInfo"
+    [ContainerType]="ItemContainerTypes.SingleFunction"
+    [ControllerName]="_ControllerName"
+    (params)="executeFunction($event, selectedFunction.route.name, selectedFunction.route.routeType)"
+  ></app-display-item-container>
+
+  <div class="btnFlex">
+    <button class="addbtn">Effacer</button>
+    <button class="addbtn">Valider</button>
+  </div>
+
+</ng-container>
+
+<table>
+  <thead>
+  <tr>
+    <th><input type="checkbox" #checkAll name="" id="checkAll" (change)="checkAllItems(checkAll.checked)"></th>
+    <th *ngFor="let prop of proprietiesResum" class="grandeur">{{ prop.name }}</th>
+  </tr>
+</thead>
+  <tbody>
+    <ng-container *ngFor="let item of dataDisplay; let i = index">
+      <tr>
+        <td><input type="checkbox" [checked]="checkIndex(i, false)" id="check{{i}}" (change)="toggleSelected(i, item, false)"></td>
+        <td *ngFor="let prop of proprietiesResum" (click)="toggleSelected(i, item, true)">
+          <span [ngSwitch]="prop.showTypeID">
+            <span *ngSwitchDefault>{{ getValue(prop.params, item) }}</span>
+          </span>
+        </td>
+      </tr>
+      <tr *ngIf="checkIndex(i, true)" id="selectedDetail">
+        <td [attr.colspan]="proprietiesResum.length+1">
+          <app-display-item-container [Ids]="currentInfosIds(i)" [Proprieties]="Proprieties" [ContainerType]="ItemContainerTypes.Proprieties" [ControllerName]="_ControllerName"></app-display-item-container>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+</div>

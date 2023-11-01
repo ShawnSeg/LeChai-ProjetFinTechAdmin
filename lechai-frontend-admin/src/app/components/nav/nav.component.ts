@@ -1,10 +1,9 @@
 import { Component, ViewChild, ElementRef, OnInit  } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
-import { Services } from 'src/app/services/services.service';
 import { Subscription } from 'rxjs';
+import { APICallerService } from 'src/app/apicaller.service';
 
 @Component({
   selector: 'app-nav',
@@ -13,14 +12,14 @@ import { Subscription } from 'rxjs';
 })
 export class NavComponent {
 
-  nomAdmin: string = 'Alberto';
+  nomAdmin: string|null = 'Alberto';
   connecter:boolean = false;
 
   token$!: Observable<string | null>;
 
   /* private subscription: Subscription; */
 
-  constructor(private auth: AuthService, private router: Router, private toast: ToastService, private connexion:Services){
+  constructor(private router: Router, private toast: ToastService, private caller:APICallerService){
     /* this.subscription = this.connexion.isConnected$.subscribe(isConnected => {
       if (isConnected) {
         this.connecter = true
@@ -31,9 +30,13 @@ export class NavComponent {
   }
 
   ngOnInit() {
-      this.connexion.isConnected$.subscribe(isConnected => {
+
+    this.nomAdmin = this.caller.getUserName();
+
+
+      /* this.connexion.isConnected$.subscribe(isConnected => {
       this.connecter = isConnected;
-    });
+    }); */
 
     /* this.connecter = this.connexion.checkToken(); */
 
@@ -41,9 +44,10 @@ export class NavComponent {
 
   deconnecter()
   {
-    this.connexion.clearToken();
-    this.router.navigate([""]);
+    this.caller.clearLocalStorage();
+    this.router.navigate(["/connexion"]);
     this.toast.showToast("success", "Déconnexion réussi.", "bottom-center", 4000);
+
   }
 
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
 export enum RouteTypes {
@@ -7,22 +7,42 @@ export enum RouteTypes {
   PUT = 3,
   DELETE = 4,
 }
+
+export interface UserInfoBundle{
+  token:string,
+  name:string
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class APICallerService {
+export class APICallerService{
 
-  public baseURL = "https://localhost:7247";
+  public baseURL = "https://localhost:5001";
   public token = "";
   public controllerConnexionName = "Employes";
   public connexionRouteNameStepOne = "ConnexionStepOne";
   public connexionRouteNameStepTwo = "ConnexionStepTwo";
   public refreshTokenRouteName = "RefreshToken";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    let tempToken = localStorage.getItem("token");
+    if(tempToken)
+      this.token=tempToken;
+  }
 
   setToken(token: string) {
     localStorage.setItem("token", token)
     this.token = token;
+  }
+  setUserName(name: string) {
+    localStorage.setItem("name", name)
+  }
+  getUserName(){
+    return localStorage.getItem("name")
+  }
+  clearLocalStorage(){
+    localStorage.setItem("token", "");
+    localStorage.setItem("name", "");
   }
   ConnexionStepOne(userName:string, password:string): Observable<boolean>{
     return this.Post({"Email": userName, "Password": password}, this.controllerConnexionName, this.connexionRouteNameStepOne)
@@ -35,14 +55,15 @@ export class APICallerService {
       })
     );
   }
-  ConnexionStepTwo(connexionValidationToken:string): Observable<string|null> {
-    return this.Post<string>({"Token": connexionValidationToken}, this.controllerConnexionName, this.connexionRouteNameStepOne)
+  ConnexionStepTwo(connexionValidationToken:string): Observable<string|null|UserInfoBundle> {
+    return this.Post<string|UserInfoBundle>({"Token": connexionValidationToken}, this.controllerConnexionName, this.connexionRouteNameStepTwo)
     .pipe(
       map(data => {
         if (!data)
           return null;
-        this.token = data;
-        return this.token;
+        this.token = (typeof data === "string")? data: data.token;
+
+        return data;
       }),
       catchError(error => {
         return of(null);
@@ -71,14 +92,17 @@ export class APICallerService {
   Get<T>(params: { [key: string]: Object }, routeURL: string): Observable<T>;
   Get<T>(params: { [key: string]: Object }, controllerOrRoute: string, routeName?: string): Observable<T>
   { return this.http.get<T>(this.GetRoutePath(controllerOrRoute, routeName)+this.ParamsToURL(params), this.GetHeader());}
+
   Post<T>(params: { [key: string]: Object }, controllerName: string, routeName: string): Observable<T>;
   Post<T>(params: { [key: string]: Object }, routeURL: string): Observable<T>;
   Post<T>(params: { [key: string]: Object }, controllerOrRoute: string, routeName?: string): Observable<T>
   { return this.http.post<T>(this.GetRoutePath(controllerOrRoute, routeName), params, this.GetHeader());}
+
   Put<T>(params: { [key: string]: Object }, controllerName: string, routeName: string): Observable<T>;
   Put<T>(params: { [key: string]: Object }, routeURL: string): Observable<T>;
   Put<T>(params: { [key: string]: Object }, controllerOrRoute: string, routeName?: string): Observable<T>
   { return this.http.put<T>(this.GetRoutePath(controllerOrRoute, routeName), params, this.GetHeader());}
+
   Delete<T>(params: { [key: string]: Object }, controllerName: string, routeName: string): Observable<T>;
   Delete<T>(params: { [key: string]: Object }, routeURL: string): Observable<T>;
   Delete<T>(params: { [key: string]: Object }, controllerOrRoute: string, routeName?: string): Observable<T>
@@ -126,4 +150,8 @@ export class APICallerService {
       })
     };
   }
+
+
+
+
 }

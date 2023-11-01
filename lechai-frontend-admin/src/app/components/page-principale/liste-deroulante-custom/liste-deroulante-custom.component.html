@@ -1,5 +1,5 @@
 <div class="search-bar">
-  <input type="text" [(ngModel)]="searchQuery" (click)="showValues()" (input)="filterValues()" placeholder="Recherche">
+  <input type="text" [(ngModel)]="searchQuery" (click)="showValues()" (input)="filterValues()" placeholder="Recherche" (focusout)="closeDropdown()">
   <ul *ngIf="showDropdown" class="dropdown">
     <li *ngFor="let id of getFilteredValueIds()" (click)="selectValue(id)">{{ filteredValues[id] }}</li>
   </ul>

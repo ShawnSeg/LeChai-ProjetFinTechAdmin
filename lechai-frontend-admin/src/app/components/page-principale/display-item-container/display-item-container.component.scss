@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width:100%;
+  border-radius: 10px;
+
+  .ref{
+    width: 100%;
+  }
+
+  .paramInfoContainer{
+    margin-top: 1em;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-bottom: 2%;
+
+  }
+}

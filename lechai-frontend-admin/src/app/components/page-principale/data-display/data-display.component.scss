@@ -1,0 +1,58 @@
+.block{
+  display: block;
+  width: 100%;
+}
+
+.btnDiv{
+  margin-left: 4em;
+  margin-right: 3em;
+  margin-top: 3em;
+}
+
+.btn{
+  margin-left: 1em;
+  margin-bottom: 1em;
+  background-color: rgb(255,250,234);
+  border-radius: 10px;
+  border: 1px solid black;
+  width: 10%;
+  padding: 1.5em;
+  cursor: pointer;
+}
+
+.btnFlex{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.addbtn{
+  margin-left: 1em;
+  margin-bottom: 1em;
+  background-color: rgb(255,250,234);
+  border-radius: 10px;
+  border: 1px solid black;
+  width: 15%;
+  padding: 1em;
+  cursor: pointer;
+}
+
+table {
+  table-layout:fixed;
+  width: 98%;
+  word-wrap: break-word;
+  border-collapse: collapse;
+  margin:auto;
+  margin-top: 2em;
+}
+
+th, td{
+  border: 1px solid black;
+  padding: 8px;
+  /* max-height: 1em; */
+
+}
+
+th{
+  background-color: rgb(255,250,234);
+}
