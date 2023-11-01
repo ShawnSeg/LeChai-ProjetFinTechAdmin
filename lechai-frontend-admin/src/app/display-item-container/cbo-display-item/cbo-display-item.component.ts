@@ -14,10 +14,12 @@ export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
   @Output() push = new EventEmitter();
   @ViewChild('inputValue') input! : ElementRef;
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
-  listValeurPossible:string[]=[]
-  constructor() {}
+  listValeurPossible:{[key:string]:any}={}
+  constructor(private caller:APICallerService) {}
   ngOnInit(): void {
-    console.log(this.paramInfoResume)
+
+    if(this.paramInfoResume.mapper)
+      this.caller.Get<{[key:string]:any}>({}, this.paramInfoResume.mapper.refController, "CBO").subscribe(data=>{this.listValeurPossible=data})
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)

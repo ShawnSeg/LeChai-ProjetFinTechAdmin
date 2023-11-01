@@ -1,23 +1,22 @@
-ul{
+ul {
   list-style: none;
-  li{
+  li {
     background-color: white;
-    padding:0.5%;
-    border:1px gray solid
+    padding: 0.5%;
+    border: 1px gray solid;
   }
 }
 
 .search-bar {
   position: relative;
-
 }
 
 .dropdown {
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 200px; /* Set a maximum height for the dropdown */
-  overflow-y: auto; /* Add a vertical scrollbar when the content exceeds the max height */
+  max-height: 200px;
+  overflow-y: auto;
   border: 1px solid #ccc;
   border-top: none;
   background-color: #fff;
@@ -26,7 +25,6 @@ ul{
   width: 100%;
 }
 
-/* Additional styling for dropdown items */
 .dropdown li {
   padding: 8px 16px;
   cursor: pointer;
@@ -36,6 +34,6 @@ ul{
   background-color: #f0f0f0;
 }
 
-input{
-  height:40px;
+input {
+  height: 40px;
 }

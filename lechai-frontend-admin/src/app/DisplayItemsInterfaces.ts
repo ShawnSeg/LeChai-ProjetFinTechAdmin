@@ -1,3 +1,5 @@
+import { RouteTypes } from "./apicaller.service";
+
 export interface ParamInfoResume{
   name:string,
   isMain:boolean,
@@ -55,7 +57,8 @@ export interface MapperResume {
 
 export interface RouteResume {
   name: string,
-  routeDisplayType: RouteDisplayTypes
+  routeDisplayType: RouteDisplayTypes,
+  routeType:RouteTypes
 }
 export enum RouteDisplayTypes {
   NONE = 1,

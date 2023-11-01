@@ -2,11 +2,12 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { URLParserService } from '../urlparser.service';
 import { ActivatedRoute } from '@angular/router';
 import { ParamInfoResume, ProprietyResume, RouteDisplayTypes, RouteResume, RouteResumeBundle } from '../DisplayItemsInterfaces';
-import { APICallerService } from '../apicaller.service';
+import { APICallerService, RouteTypes } from '../apicaller.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ItemContainerTypes } from '../display-item-container/display-item-container.component';
-import { toDictionary, toDictionarySimple } from '../generalInterfaces';
+import { ObjectEntry, toDictionary, toDictionarySimple } from '../generalInterfaces';
 import { Subscription } from 'rxjs';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-data-display',
@@ -29,15 +30,17 @@ export class DataDisplayComponent implements OnInit {
   proprietiesResum: ProprietyResume[] = [];
   dataDisplay:{[key:string]:any}[] = []
   filters : {[key:string]:any} = {}
-  currentInfos : {Ids:{[key:string]:any}, Index:number}[] = []
+  currentInfos : {Ids:{[key:string]:any}, Index:number, detailOpened:boolean}[] = []
   ItemContainerTypes = ItemContainerTypes;
   paramsSubscription : Subscription | undefined;
   dataSubscription : Subscription | undefined;
   paramInfoSubscription : Subscription | undefined;
   functionsSubscription : Subscription | undefined;
   subscribed = false;
+  isRowChecked: boolean[] = [];
+  checkedItems: ObjectEntry = { key: 'Ids', value: this.isRowChecked };
   @Input() preFilters? : {[key:string]:string}
-  constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute) {}
+  constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute, private toast:ToastService) {}
   ngOnInit() {
   }
   setProprieties()
@@ -85,7 +88,7 @@ export class DataDisplayComponent implements OnInit {
   setSelected(tempCurrent : number[][])
   {
     this.currentInfos = tempCurrent.map(value =>
-      ({Ids: toDictionarySimple<string, number>(this.IdsNames, key => key, (key, i) => value[i]), Index:-1})
+      ({Ids: toDictionarySimple<string, number>(this.IdsNames, key => key, (key, i) => value[i]), Index:-1, detailOpened:false})
     );
     if (this.dataDisplay.length > 0)
       this.setIndex()
@@ -100,22 +103,27 @@ export class DataDisplayComponent implements OnInit {
   {
     return params.map(param => item[param]).join(', ');
   }
-  toggleSelected(i : number, item :{[key:string]:any})
+  toggleSelected(i : number, item :{[key:string]:any}, isForOpenedDetail:boolean, forceCheck?:boolean)
   {
     const index = this.currentInfos.findIndex(info => info.Index == i);
-    if (index > -1) {
+    if ( index > -1) {
+      if(forceCheck===true)
+        return
       this.currentInfos.splice(index, 1);
     }
     else
     {
+      if(forceCheck===false)
+        return
       const Ids = toDictionary(this.IdsNames, idName => idName, idName => item[idName]);
-      this.currentInfos.push({Ids:Ids, Index:i});
+      this.currentInfos.push({Ids:Ids, Index:i, detailOpened:isForOpenedDetail});
     }
-    this.URLParser.ChangeURL("selected", this.currentInfos.map(info => info.Ids), this.route);
+    if(isForOpenedDetail)
+      this.URLParser.ChangeURL("selected", this.currentInfos.map(info => info.Ids), this.route);
   }
-  checkIndex(i:number) : boolean
+  checkIndex(i:number, isForDetail:boolean) : boolean
   {
-    return this.currentInfos.some(info => info.Index == i);
+    return this.currentInfos.some(info => info.Index == i && (!isForDetail||info.detailOpened ));
   }
   currentInfosIds(i : number)
   {
@@ -123,6 +131,7 @@ export class DataDisplayComponent implements OnInit {
   }
   getMultipleRoute()
   {
+
     return this.functions.filter(funct => funct.route.routeDisplayType == RouteDisplayTypes.MULTIPLE)
   }
   toggleFunction(funct: RouteResumeBundle) {
@@ -132,5 +141,32 @@ export class DataDisplayComponent implements OnInit {
       return
     }
     this.selectedFunction = funct;
+  }
+
+
+
+  checkAllItems(event: boolean) {
+    this.dataDisplay.forEach((item,i)=>this.toggleSelected(i, item, false, event))
+  }
+
+  getCurrentInfo()
+  {
+    return this.currentInfos.map(info=>info.Ids)
+  }
+
+  executeFunction(params:{[key:string]:any}|null, routeName:string, routeType:RouteTypes){
+    if(params == null)
+      return
+
+    this.caller.CallAPI(routeType,params,this._ControllerName,routeName).subscribe({
+      next:(data:any)=>{
+        this.toast.showToast("success", data+" lignes d'affectées!", "bottom-center", 4000)
+      },
+      error:(error:HttpErrorResponse)=>{
+        console.log(error.status)
+        this.toast.showToast("error", "Erreur", "bottom-center", 4000)
+      }
+    })
+
   }
 }

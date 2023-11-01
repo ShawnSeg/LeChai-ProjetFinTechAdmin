@@ -26,6 +26,7 @@ export interface DisplayItemTemplate {
 })
 export class DisplayItemContainerComponent implements OnInit {
   constructor(private URLParser : URLParserService, private caller:APICallerService, private route : ActivatedRoute) {}
+  ItemContainerTypes = ItemContainerTypes;
   @Output() params = new EventEmitter();
   @Input() paramsValue:{[Key:string]:object} = {}
   _ControllerName:string = "";
@@ -33,6 +34,8 @@ export class DisplayItemContainerComponent implements OnInit {
   @Input() ContainerType? : ItemContainerTypes;
   @Input() Ids? :{[Key:string]:object}
   @Input() Proprieties? : ParamInfoResume[]
+  @Input() multipleIds?: {[Key:string]:object}[]=[]
+
   filterSubscription : Subscription | undefined
   dataSubscription : Subscription | undefined
   @Input()
@@ -44,9 +47,13 @@ export class DisplayItemContainerComponent implements OnInit {
   DisplayItemInfos : ParamInfoResume[] = []
   ngOnInit()
   {
+
   }
 
   setProprieties() {
+
+    console.log(this.multipleIds)
+
     if (this.dataSubscription)
       this.dataSubscription.unsubscribe()
     if (this.ContainerType == ItemContainerTypes.SingleFunction)
@@ -93,7 +100,9 @@ export class DisplayItemContainerComponent implements OnInit {
       valuePairs.forEach(valuePair => this.updateObjectPair(valuePair))
     else
       this.updateObjectPair(valuePairs)
-    this.pushParams()
+
+    if(this.ContainerType==ItemContainerTypes.Filters)
+      this.pushParams()
   }
   currentAffectedVarValues(paramName:string) : ObjectEntry[]
   {
@@ -118,6 +127,11 @@ export class DisplayItemContainerComponent implements OnInit {
   pushParams()
   {
     this.params.emit(this.paramsValue);
+  }
+
+  pushCancel()
+  {
+    this.params.emit(null)
   }
   paramsByDisplayName() : FilterResume[]
   {
