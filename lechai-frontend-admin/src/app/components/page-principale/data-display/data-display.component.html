@@ -1,5 +1,5 @@
 <div class="block">
-<div class="btnDiv" *ngFor="let funct of getMultipleRoute()" (click)="toggleFunction(funct)">
+<div class="btnDiv" *ngFor="let funct of getRouteByType(RouteDisplayTypes.MULTIPLE)" (click)="toggleFunction(funct)">
   <button class="btn">{{funct.route.name}}</button>
 <!--   <button class="btn">{{funct.route.name}}</button>
   <button class="btn">{{funct.route.name}}</button>
@@ -17,7 +17,6 @@
 
 <ng-container *ngIf="selectedFunction">
   <app-display-item-container
-
     [Proprieties]="selectedFunction.paramsInfo"
     [ContainerType]="ItemContainerTypes.SingleFunction"
     [ControllerName]="_ControllerName"
@@ -47,7 +46,13 @@
       </tr>
       <tr *ngIf="checkIndex(i, true)" id="selectedDetail">
         <td [attr.colspan]="proprietiesResum.length+1">
-          <app-display-item-container [Ids]="currentInfosIds(i)" [Proprieties]="Proprieties" [ContainerType]="ItemContainerTypes.Proprieties" [ControllerName]="_ControllerName"></app-display-item-container>
+          <app-display-item-container
+            [Routes]="getRouteByType(RouteDisplayTypes.SINGLE)"
+            [Ids]="currentInfosIds(i)"
+            [Proprieties]="Proprieties"
+            [ContainerType]="ItemContainerTypes.Proprieties"
+            [ControllerName]="_ControllerName"
+            (params)="executeFunction($event[0], $event[1], $event[2])"></app-display-item-container>
         </td>
       </tr>
     </ng-container>

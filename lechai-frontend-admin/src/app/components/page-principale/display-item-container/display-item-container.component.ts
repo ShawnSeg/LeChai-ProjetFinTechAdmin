@@ -3,7 +3,7 @@ import { URLParserService } from '../../../urlparser.service';
 import { APICallerService } from '../../../apicaller.service';
 import { ActivatedRoute } from '@angular/router';
 import { Entryies, ObjectEntry } from '../../../generalInterfaces';
-import { FilterResume, ParamInfoResume } from '../../../DisplayItemsInterfaces';
+import { FilterResume, ParamInfoResume, RouteResumeBundle } from '../../../DisplayItemsInterfaces';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
@@ -30,12 +30,11 @@ export class DisplayItemContainerComponent implements OnInit {
   @Output() params = new EventEmitter();
   @Input() paramsValue:{[Key:string]:object} = {}
   _ControllerName:string = "";
-  @Input() RouteName = "";
   @Input() ContainerType? : ItemContainerTypes;
   @Input() Ids? :{[Key:string]:object}
   @Input() Proprieties? : ParamInfoResume[]
   @Input() multipleIds?: {[Key:string]:object}[]=[]
-
+  @Input() Routes : RouteResumeBundle[] = []
   filterSubscription : Subscription | undefined
   dataSubscription : Subscription | undefined
   @Input()
@@ -56,43 +55,29 @@ export class DisplayItemContainerComponent implements OnInit {
 
     if (this.dataSubscription)
       this.dataSubscription.unsubscribe()
-    if (this.ContainerType == ItemContainerTypes.SingleFunction)
-    {
-      this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind)
-      return;
-    }
-    if (this.Proprieties != undefined){
-      this.setProprietiesStatic(this.Ids)
-      return;
-    }
-    if (this.ContainerType == ItemContainerTypes.Filters)
-    {
-      if (this.filterSubscription)
-        this.filterSubscription.unsubscribe()
-      this.filterSubscription = this.URLParser.GetSubscription("filters", this.route, false).subscribe(data => this.paramsValue = data);
-    }
-    let urlPath :string = this.switchCaseContainerType();
 
-    this.dataSubscription = this.caller.Get<ParamInfoResume[]>({}, urlPath)
-        .subscribe(data => this.DisplayItemInfos = data.sort(item => item.ind))
-  }
-  setProprietiesStatic(Ids? :{[Key:string]:object}) {
-    if (!!Ids)
-      this.caller.Get<{[key:string]:any}>(Ids, this._ControllerName, "GetDetailed")
-        .subscribe(data => {this.paramsValue = data;this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind)});
-  }
-  switchCaseContainerType()
-  {
     switch (this.ContainerType) {
-      case ItemContainerTypes.Filters:
-        return `/${this._ControllerName}/Info/Filters`;
-      case ItemContainerTypes.Proprieties:
-        return `/${this._ControllerName}/Info/Proprieties`;
       case ItemContainerTypes.SingleFunction:
-        return `/${this._ControllerName}/InfoRoute/${this.RouteName}`;
-      default:
-        return '';
+        this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind)
+        break;
+        case ItemContainerTypes.Proprieties:
+        if (!!this.Ids)
+          this.caller.Get<{[key:string]:any}>(this.Ids, this._ControllerName, "GetDetailed")
+            .subscribe(data => {
+              this.paramsValue = data;
+              this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind);
+              Object.keys(this.Ids!).forEach(key => this.paramsValue[key] = this.Ids![key])
+            });
+        break;
+      case ItemContainerTypes.Filters:
+        if (this.filterSubscription)
+          this.filterSubscription.unsubscribe()
+        this.filterSubscription = this.URLParser.GetSubscription("filters", this.route, false).subscribe(data => this.paramsValue = data);
+        this.dataSubscription = this.caller.Get<ParamInfoResume[]>({}, `/${this._ControllerName}/Info/Filters`)
+            .subscribe(data => this.DisplayItemInfos = data.sort(item => item.ind))
+        break;
     }
+
   }
   updateFilter(valuePairs : Entryies)
   {
@@ -118,20 +103,21 @@ export class DisplayItemContainerComponent implements OnInit {
   updateObjectPair(valuePairs : ObjectEntry)
   {
     if (valuePairs.value == null)
-    {
       delete this.paramsValue[valuePairs.key];
-      return;
-    }
-    this.paramsValue[valuePairs.key] = valuePairs.value;
+    else
+      this.paramsValue[valuePairs.key] = valuePairs.value;
   }
   pushParams()
   {
     this.params.emit(this.paramsValue);
   }
-
   pushCancel()
   {
     this.params.emit(null)
+  }
+  pushRoute(route : RouteResumeBundle)
+  {
+    this.params.emit([this.paramsValue, route.route.name, route.route.routeType])
   }
   paramsByDisplayName() : FilterResume[]
   {

@@ -34,6 +34,7 @@ export class DataDisplayComponent implements OnInit {
   filters : {[key:string]:any} = {}
   currentInfos : {Ids:{[key:string]:any}, Index:number, detailOpened:boolean}[] = []
   ItemContainerTypes = ItemContainerTypes;
+  RouteDisplayTypes = RouteDisplayTypes
   paramsSubscription : Subscription | undefined;
   dataSubscription : Subscription | undefined;
   paramInfoSubscription : Subscription | undefined;
@@ -135,10 +136,9 @@ export class DataDisplayComponent implements OnInit {
   {
     return this.currentInfos.find(info => info.Index == i)?.Ids;
   }
-  getMultipleRoute()
+  getRouteByType(routeType : RouteDisplayTypes)
   {
-
-    return this.functions.filter(funct => funct.route.routeDisplayType == RouteDisplayTypes.MULTIPLE)
+    return this.functions.filter(funct => funct.route.routeDisplayType == routeType)
   }
   toggleFunction(funct: RouteResumeBundle) {
     if (this.selectedFunction == funct)
@@ -159,7 +159,6 @@ export class DataDisplayComponent implements OnInit {
   {
     return this.currentInfos.map(info=>info.Ids)
   }
-
   executeFunction(params:{[key:string]:any}|null, routeName:string, routeType:RouteTypes){
     if(params == null)
       return

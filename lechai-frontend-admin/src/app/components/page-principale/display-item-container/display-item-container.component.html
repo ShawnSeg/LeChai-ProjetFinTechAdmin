@@ -20,3 +20,6 @@
   <button (click)="pushCancel()" class="addbtn">Annuler</button>
   <button (click)="pushParams()" class="addbtn">Executer</button>
 </div>
+<div *ngIf="ContainerType == ItemContainerTypes.Proprieties" class="btnFlex">
+  <button (click)="pushParams()" class="addbtn" *ngFor="let route of Routes">{{route.route.name}}</button>
+</div>
