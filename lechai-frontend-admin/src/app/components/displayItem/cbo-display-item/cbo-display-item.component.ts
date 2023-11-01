@@ -17,7 +17,7 @@ export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
   listValeurPossible:string[]=[]
   constructor() {}
   ngOnInit(): void {
-    console.log(this.paramInfoResume)
+    /* console.log(this.paramInfoResume) */
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)

@@ -4,22 +4,28 @@ import { Entryies, ObjectEntry } from '../../../generalInterfaces';
 import { ParamInfoResume, defaultParamInfo } from '../../../DisplayItemsInterfaces';
 
 @Component({
-  selector: 'app-string-display-item',
-  templateUrl: './string-display-item.component.html',
-  styleUrls: ['./string-display-item.component.scss']
+  selector: 'app-image-display-item',
+  templateUrl: './image-display-item.component.html',
+  styleUrls: ['./image-display-item.component.scss']
 })
-export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
+export class ImageDisplayItemComponent implements OnInit, DisplayItemTemplate{
+
   @Input() valuePairs : ObjectEntry = { key: '', value: null };
   @Output() push = new EventEmitter();
   @ViewChild('inputValue') input! : ElementRef;
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
+  str:string = "";
   constructor() {}
   ngOnInit(): void {
     /* console.log(this.paramInfoResume) */
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)
+    {
       this.input.nativeElement.value = this.valuePairs.value;
+      this.str = this.valuePairs.value;
+    }
+
   }
   updateValue(value : string)
   {

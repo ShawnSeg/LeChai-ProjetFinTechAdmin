@@ -43,8 +43,13 @@ import { StringDisplayItemComponent } from './components/displayItem/string-disp
 
 
 import { ListeDeroulanteCustomComponent } from './components/page-principale/liste-deroulante-custom/liste-deroulante-custom.component';
-import { RefDisplayItemComponent } from './components/page-principale/ref-display-item/ref-display-item.component';
+import { RefDisplayItemComponent } from './components/displayItem/ref-display-item/ref-display-item.component';
 import { CboDisplayItemComponent } from './components/displayItem/cbo-display-item/cbo-display-item.component';
+import { IntDisplayItemComponent } from './components/displayItem/int-display-item/int-display-item.component';
+import { FloatDisplayItemComponent } from './components/displayItem/float-display-item/float-display-item.component';
+import { DescriptionDisplayItemComponent } from './components/displayItem/description-display-item/description-display-item.component';
+import { DateDisplayItemComponent } from './components/displayItem/date-display-item/date-display-item.component';
+import { ImageDisplayItemComponent } from './components/displayItem/image-display-item/image-display-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +80,12 @@ import { CboDisplayItemComponent } from './components/displayItem/cbo-display-it
     DisplayItemContainerComponent,
     StringDisplayItemComponent,
     RefDisplayItemComponent,
-    CboDisplayItemComponent
+    CboDisplayItemComponent,
+    IntDisplayItemComponent,
+    FloatDisplayItemComponent,
+    DescriptionDisplayItemComponent,
+    DateDisplayItemComponent,
+    ImageDisplayItemComponent
 
   ],
   imports: [

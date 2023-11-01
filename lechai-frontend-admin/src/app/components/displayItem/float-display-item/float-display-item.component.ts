@@ -4,11 +4,12 @@ import { Entryies, ObjectEntry } from '../../../generalInterfaces';
 import { ParamInfoResume, defaultParamInfo } from '../../../DisplayItemsInterfaces';
 
 @Component({
-  selector: 'app-string-display-item',
-  templateUrl: './string-display-item.component.html',
-  styleUrls: ['./string-display-item.component.scss']
+  selector: 'app-float-display-item',
+  templateUrl: './float-display-item.component.html',
+  styleUrls: ['./float-display-item.component.scss']
 })
-export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
+export class FloatDisplayItemComponent implements OnInit, DisplayItemTemplate{
+
   @Input() valuePairs : ObjectEntry = { key: '', value: null };
   @Output() push = new EventEmitter();
   @ViewChild('inputValue') input! : ElementRef;
@@ -33,4 +34,5 @@ export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
   {
     this.push.emit(this.valuePairs);
   }
+
 }

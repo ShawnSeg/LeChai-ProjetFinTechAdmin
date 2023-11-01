@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DisplayItemTemplate } from '../display-item-container/display-item-container.component';
+import { DisplayItemTemplate } from '../../page-principale/display-item-container/display-item-container.component';
 import { ParamInfoResume, defaultParamInfo } from '../../../DisplayItemsInterfaces';
 import { Entryies, ObjectEntry } from '../../../generalInterfaces';
 

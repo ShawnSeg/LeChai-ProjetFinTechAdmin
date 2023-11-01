@@ -3,12 +3,14 @@ import { DisplayItemTemplate } from '../../page-principale/display-item-containe
 import { Entryies, ObjectEntry } from '../../../generalInterfaces';
 import { ParamInfoResume, defaultParamInfo } from '../../../DisplayItemsInterfaces';
 
+
 @Component({
-  selector: 'app-string-display-item',
-  templateUrl: './string-display-item.component.html',
-  styleUrls: ['./string-display-item.component.scss']
+  selector: 'app-description-display-item',
+  templateUrl: './description-display-item.component.html',
+  styleUrls: ['./description-display-item.component.scss']
 })
-export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
+export class DescriptionDisplayItemComponent implements OnInit, DisplayItemTemplate{
+
   @Input() valuePairs : ObjectEntry = { key: '', value: null };
   @Output() push = new EventEmitter();
   @ViewChild('inputValue') input! : ElementRef;
@@ -33,4 +35,5 @@ export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
   {
     this.push.emit(this.valuePairs);
   }
+
 }
