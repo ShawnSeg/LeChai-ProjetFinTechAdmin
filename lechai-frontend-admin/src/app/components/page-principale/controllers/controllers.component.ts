@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { APICallerService } from '../apicaller.service';
+import { APICallerService } from '../../../apicaller.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { URLParserService } from '../urlparser.service';
-import { ListeDeroulanteCustomComponent } from '../components/page-principale/liste-deroulante-custom/liste-deroulante-custom.component';
+import { URLParserService } from '../../../urlparser.service';
+import { ListeDeroulanteCustomComponent } from '../liste-deroulante-custom/liste-deroulante-custom.component';
 export interface Controller{
   id:number,
   name:string,

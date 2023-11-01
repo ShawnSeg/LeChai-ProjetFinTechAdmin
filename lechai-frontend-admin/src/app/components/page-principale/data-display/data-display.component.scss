@@ -13,6 +13,24 @@
   border: 1px solid black;
   width: 10%;
   padding: 1.5em;
+  cursor: pointer;
+}
+
+.btnFlex{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.addbtn{
+  margin-left: 1em;
+  margin-bottom: 1em;
+  background-color: rgb(255,250,234);
+  border-radius: 10px;
+  border: 1px solid black;
+  width: 15%;
+  padding: 1em;
+  cursor: pointer;
 }
 
 table {

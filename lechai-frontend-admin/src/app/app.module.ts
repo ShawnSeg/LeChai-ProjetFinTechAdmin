@@ -16,7 +16,7 @@ import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oub
 
 import { Services } from './services/services.service';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
-import { ProprietyTableComponent } from './components/page-principale/propriety-table/propriety-table.component';
+/* import { ProprietyTableComponent } from './components/page-principale/propriety-table/propriety-table.component'; */
 
 
 import { FiltreContainerComponent } from './components/page-principale/filtre-container/filtre-container.component';
@@ -24,7 +24,7 @@ import { FiltreResumeComponent } from './components/page-principale/filtre-conta
 import { FiltreMinMaxComponent } from './components/page-principale/filtre-container/filtres-niv2/filtre-min-max/filtre-min-max.component';
 import { FiltresNiv2Component } from './components/page-principale/filtre-container/filtres-niv2/filtres-niv2.component';
 import { FiltreHeaderComponent} from './components/page-principale/filtre-container/filtre-header/filtre-header.component';
-import { RowsDataComponent } from './components/page-principale/propriety-table/rows-data/rows-data.component';
+/* import { RowsDataComponent } from './components/page-principale/propriety-table/rows-data/rows-data.component'; */
 
 
 import { NgModule } from '@angular/core';
@@ -32,19 +32,19 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ControllersComponent } from './controllers/controllers.component';
-import { FiltresComponent } from './filtres/filtres.component';
-import { DataDisplayComponent } from './data-display/data-display.component';
+import { ControllersComponent } from './components/page-principale/controllers/controllers.component';
+import { FiltresComponent } from './components/page-principale/filtres/filtres.component';
+import { DataDisplayComponent } from './components/page-principale/data-display/data-display.component';
 import { HttpClientModule } from '@angular/common/http';
 //import { MainPageComponent } from './main-page/main-page.component';
-import { DisplayItemContainerComponent } from './display-item-container/display-item-container.component';
-import { StringDisplayItemComponent } from './string-display-item/string-display-item.component';
+import { DisplayItemContainerComponent } from './components/page-principale/display-item-container/display-item-container.component';
+import { StringDisplayItemComponent } from './components/displayItem/string-display-item/string-display-item.component';
 
 
 
 import { ListeDeroulanteCustomComponent } from './components/page-principale/liste-deroulante-custom/liste-deroulante-custom.component';
-import { RefDisplayItemComponent } from './ref-display-item/ref-display-item.component';
-import { CboDisplayItemComponent } from './filtres/cbo-display-item/cbo-display-item.component';
+import { RefDisplayItemComponent } from './components/page-principale/ref-display-item/ref-display-item.component';
+import { CboDisplayItemComponent } from './components/displayItem/cbo-display-item/cbo-display-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,13 +57,13 @@ import { CboDisplayItemComponent } from './filtres/cbo-display-item/cbo-display-
     ConnexionComponent,
     MdpOublierEnvoiComponent,
     VerifyUserComponent,
-    ProprietyTableComponent,
+/*     ProprietyTableComponent, */
     FiltreContainerComponent,
     FiltreResumeComponent,
     FiltreMinMaxComponent,
     FiltresNiv2Component,
     FiltreHeaderComponent,
-    RowsDataComponent,
+/*     RowsDataComponent, */
     ListeDeroulanteCustomComponent,
 
 

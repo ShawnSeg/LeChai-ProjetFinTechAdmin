@@ -1,11 +1,11 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { URLParserService } from '../urlparser.service';
+import { URLParserService } from '../../../urlparser.service';
 import { ActivatedRoute } from '@angular/router';
-import { ParamInfoResume, ProprietyResume, RouteDisplayTypes, RouteResume, RouteResumeBundle } from '../DisplayItemsInterfaces';
-import { APICallerService } from '../apicaller.service';
+import { ParamInfoResume, ProprietyResume, RouteDisplayTypes, RouteResume, RouteResumeBundle } from '../../../DisplayItemsInterfaces';
+import { APICallerService } from '../../../apicaller.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ItemContainerTypes } from '../display-item-container/display-item-container.component';
-import { toDictionary, toDictionarySimple } from '../generalInterfaces';
+import { toDictionary, toDictionarySimple } from '../../../generalInterfaces';
 import { Subscription } from 'rxjs';
 
 @Component({

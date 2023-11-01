@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { DisplayItemTemplate } from 'src/app/display-item-container/display-item-container.component';
+import { DisplayItemTemplate } from 'src/app/components/page-principale/display-item-container/display-item-container.component';
 import { Entryies, ObjectEntry } from 'src/app/generalInterfaces';
 import { ParamInfoResume, defaultParamInfo } from 'src/app/DisplayItemsInterfaces';
 import { APICallerService } from 'src/app/apicaller.service';

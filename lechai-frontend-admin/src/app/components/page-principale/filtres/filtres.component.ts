@@ -1,10 +1,10 @@
 import { Component, ElementRef, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { APICallerService } from '../apicaller.service';
+import { APICallerService } from '../../../apicaller.service';
 import { ActivatedRoute } from '@angular/router';
-import { URLParserService } from '../urlparser.service';
-import { Entryies, ObjectEntry } from '../generalInterfaces';
+import { URLParserService } from '../../../urlparser.service';
+import { Entryies, ObjectEntry } from '../../../generalInterfaces';
 import { DisplayItemContainerComponent, ItemContainerTypes } from '../display-item-container/display-item-container.component';
-import { FilterResume } from '../DisplayItemsInterfaces';
+import { FilterResume } from '../../../DisplayItemsInterfaces';
 @Component({
   selector: 'app-filtres',
   templateUrl: './filtres.component.html',

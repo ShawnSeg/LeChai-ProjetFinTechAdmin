@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { DisplayItemTemplate } from '../display-item-container/display-item-container.component';
-import { Entryies, ObjectEntry } from '../generalInterfaces';
-import { ParamInfoResume, defaultParamInfo } from '../DisplayItemsInterfaces';
+import { DisplayItemTemplate } from '../../page-principale/display-item-container/display-item-container.component';
+import { Entryies, ObjectEntry } from '../../../generalInterfaces';
+import { ParamInfoResume, defaultParamInfo } from '../../../DisplayItemsInterfaces';
 
 @Component({
   selector: 'app-string-display-item',

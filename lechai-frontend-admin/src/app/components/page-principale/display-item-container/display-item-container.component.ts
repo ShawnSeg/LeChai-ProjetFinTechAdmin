@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { URLParserService } from '../urlparser.service';
-import { APICallerService } from '../apicaller.service';
+import { URLParserService } from '../../../urlparser.service';
+import { APICallerService } from '../../../apicaller.service';
 import { ActivatedRoute } from '@angular/router';
-import { Entryies, ObjectEntry } from '../generalInterfaces';
-import { FilterResume, ParamInfoResume } from '../DisplayItemsInterfaces';
+import { Entryies, ObjectEntry } from '../../../generalInterfaces';
+import { FilterResume, ParamInfoResume } from '../../../DisplayItemsInterfaces';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
