@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { URLParserService } from '../../../urlparser.service';
 import { ActivatedRoute } from '@angular/router';
 
-
+import { RouteTypes } from '../../../apicaller.service';
 import { ParamInfoResume, ProprietyResume, RouteDisplayTypes, RouteResume, RouteResumeBundle } from '../../../DisplayItemsInterfaces';
 import { APICallerService } from '../../../apicaller.service';
 import { HttpErrorResponse } from '@angular/common/http';

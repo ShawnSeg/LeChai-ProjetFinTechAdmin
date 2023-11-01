@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./liste-deroulante-custom.component.scss']
 })
 export class ListeDeroulanteCustomComponent {
-  @Input() values: { [id: string]: string } = {}
+  @Input() values: { [id: string]: any } = {}
   @Input() baseValue?: string;
   @Output() selectedValue = new EventEmitter<string>();
 

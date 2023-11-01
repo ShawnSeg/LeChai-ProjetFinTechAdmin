@@ -1,16 +1,22 @@
-
-<div class="paramInfoContainer" *ngFor="let paramInfo of DisplayItemInfos">
-  <span [ngSwitch]="paramInfo.showTypeID">
+<div class="paramInfoContainer" >
+  <span *ngFor="let paramInfo of DisplayItemInfos" [ngSwitch]="paramInfo.showTypeID">
     <app-string-display-item class="filtres" *ngSwitchCase="1" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
-    <app-ref-display-item class="filtres ref" *ngSwitchCase="2" [valuePairs]="paramsValue" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-ref-display-item>
+    <app-ref-display-item class="filtres" *ngSwitchCase="2" [valuePairs]="paramsValue" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-ref-display-item>
     <app-cbo-display-item class="filtres" *ngSwitchCase="3" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-cbo-display-item>
     <app-string-display-item class="filtres" *ngSwitchCase="4" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
-    <app-int-display-item class="filtres" *ngSwitchCase="5" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-int-display-item>
-    <app-float-display-item class="filtres" *ngSwitchCase="6" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-float-display-item>
+    <app-string-display-item class="filtres" *ngSwitchCase="5" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item class="filtres" *ngSwitchCase="6" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
     <app-cbo-display-item class="filtres" *ngSwitchCase="7" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-cbo-display-item>
-    <app-int-display-item class="filtres" *ngSwitchCase="8" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-int-display-item>
-    <app-description-display-item class="filtres" *ngSwitchCase="9" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-description-display-item>
-    <app-date-display-item class="filtres" *ngSwitchCase="10" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-date-display-item>
-    <app-image-display-item class="filtres" *ngSwitchCase="11" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-image-display-item>
+    <app-string-display-item class="filtres" *ngSwitchCase="8" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item class="filtres" *ngSwitchCase="9" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item class="filtres" *ngSwitchCase="10" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item class="filtres" *ngSwitchCase="11" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-delete-items class="filtres" *ngSwitchCase="12" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-delete-items>
+
   </span>
+</div>
+
+<div *ngIf="ContainerType == ItemContainerTypes.SingleFunction" class="btnFlex">
+  <button (click)="pushCancel()" class="addbtn">Annuler</button>
+  <button (click)="pushParams()" class="addbtn">Executer</button>
 </div>

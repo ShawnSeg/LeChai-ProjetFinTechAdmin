@@ -17,13 +17,13 @@ export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
   listValeurPossible:{[key:string]:any}={}
   constructor(private caller:APICallerService) {}
   ngOnInit(): void {
-<<<<<<<< HEAD:lechai-frontend-admin/src/app/display-item-container/cbo-display-item/cbo-display-item.component.ts
 
+    console.log(this.paramInfoResume)
     if(this.paramInfoResume.mapper)
-      this.caller.Get<{[key:string]:any}>({}, this.paramInfoResume.mapper.refController, "CBO").subscribe(data=>{this.listValeurPossible=data})
-========
-    /* console.log(this.paramInfoResume) */
->>>>>>>> dev:lechai-frontend-admin/src/app/components/displayItem/cbo-display-item/cbo-display-item.component.ts
+      this.caller.Get<{[key:string]:any}>({}, this.paramInfoResume.mapper.refController, "CBO").subscribe(data=>{this.listValeurPossible=data; console.log(this.listValeurPossible)})
+
+
+
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)
