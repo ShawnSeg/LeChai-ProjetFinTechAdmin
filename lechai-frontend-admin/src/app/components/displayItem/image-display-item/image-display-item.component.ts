@@ -33,10 +33,16 @@ export class ImageDisplayItemComponent implements OnInit, DisplayItemTemplate{
       this.valuePairs.value = null;
     else
       this.valuePairs.value = value;
-    this.pushValue();
+
+    if(!value || this.checkIfValide())
+      this.pushValue();
   }
   pushValue()
   {
     this.push.emit(this.valuePairs);
+  }
+  checkIfValide()
+  {
+    return (this.valuePairs.value && this.valuePairs.value.includes(".png"))
   }
 }

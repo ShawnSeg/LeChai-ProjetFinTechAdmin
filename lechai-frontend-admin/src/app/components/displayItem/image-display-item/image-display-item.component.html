@@ -1,6 +1,6 @@
 
+<img *ngIf="checkIfValide()" [src]="valuePairs.value">
 
-<img #inputValue src="../../../../assets/image/leChaiLogo.png" alt="{{str}}"/>
+<p>{{paramInfoResume.name}}</p>
+<input  type="text" class="classInput" #inputValue (input)="updateValue(inputValue.value)"/>
 
-
-<!-- (alt)="updateValue(inputValue.value)" -->

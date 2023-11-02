@@ -48,6 +48,8 @@ export class DataDisplayComponent implements OnInit {
   }
   setProprieties()
   {
+    this.selectedFunction = undefined;
+
     if (this.functionsSubscription)
           this.functionsSubscription.unsubscribe()
     this.functionsSubscription = this.caller.Get<RouteResumeBundle[]>({}, this._ControllerName, "Info/Routes")
@@ -160,6 +162,7 @@ export class DataDisplayComponent implements OnInit {
     return this.currentInfos.map(info=>info.Ids)
   }
   executeFunction(params:{[key:string]:any}|null, routeName:string, routeType:RouteTypes){
+    this.selectedFunction = undefined;
     if(params == null)
       return
 
