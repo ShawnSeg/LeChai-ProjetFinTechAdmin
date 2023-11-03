@@ -143,12 +143,13 @@ export class DataDisplayComponent implements OnInit {
     return this.functions.filter(funct => funct.route.routeDisplayType == routeType)
   }
   toggleFunction(funct: RouteResumeBundle) {
-    if (this.selectedFunction == funct)
-    {
-      this.selectedFunction = undefined
-      return
+    if (this.selectedFunction === funct) {
+      this.selectedFunction = undefined;
+      this.toggleModalOverlayBackground(false);
+      return;
     }
     this.selectedFunction = funct;
+    this.toggleModalOverlayBackground(true);
   }
 
 
@@ -176,5 +177,24 @@ export class DataDisplayComponent implements OnInit {
       }
     })
 
+  }
+
+
+  closeDisplayItemContainer() {
+    this.selectedFunction = undefined;
+
+    // Remove the transition effect when going back to the normal state
+    this.toggleModalOverlayBackground(false);
+  }
+
+  toggleModalOverlayBackground(isDarker: boolean) {
+    // Delay the background color change using a timeout
+    setTimeout(() => {
+      const modalOverlay = document.querySelector('.modal-overlay') as HTMLElement;
+      if (modalOverlay) {
+        modalOverlay.style.animationName = isDarker ? 'none' : 'fadeOut';
+        modalOverlay.style.backgroundColor = isDarker ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0)';
+      }
+    });
   }
 }

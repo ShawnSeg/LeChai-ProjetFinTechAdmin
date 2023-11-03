@@ -1,3 +1,13 @@
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
 .block{
   display: block;
   width: 100%;
@@ -64,4 +74,33 @@ th{
 
 .showType-11{
   text-align: center;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Start with a transparent background */
+  z-index: 999;
+  transition: background-color 0.3s ease-in-out; /* Transition background color */
+  animation: fadeOut 0.3s ease-in-out; /* Apply the animation */
+  animation-fill-mode: forwards; /* Maintain the final state of the animation */
+}
+
+/* Style for the app-display-item-container */
+.singleFunction{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Should be even higher than the modal overlay */
+  background-color: #fff; /* Your desired background color */
+  padding: 20px; /* Your desired padding */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Your desired box shadow */
+}
+
+.active {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
 }
