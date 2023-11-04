@@ -1,61 +1,57 @@
 <div class="block">
-  <div class="btnDiv" *ngFor="let funct of getRouteByType(RouteDisplayTypes.MULTIPLE)" (click)="toggleFunction(funct)">
-    <button class="btn">{{funct.route.name}}</button>
-  <!--   <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button>
-    <button class="btn">{{funct.route.name}}</button> -->
-  </div>
+<div class="btnDiv" *ngFor="let funct of getRouteByType(RouteDisplayTypes.MULTIPLE)" (click)="toggleFunction(funct)">
+  <button class="btn">{{funct.route.name}}</button>
+<!--   <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button>
+  <button class="btn">{{funct.route.name}}</button> -->
+</div>
 
-  <div class="modal-overlay" *ngIf="selectedFunction" (click)="closeDisplayItemContainer()"></div>
+<ng-container *ngIf="selectedFunction">
+  <app-display-item-container
+    [DisplayItemInfos]="selectedFunction.paramsInfo"
+    [ContainerType]="ItemContainerTypes.SingleFunction"
+    [ControllerName]="_ControllerName"
+    (params)="executeFunction($event, selectedFunction.route.name, selectedFunction.route.routeType)"
+  ></app-display-item-container>
+</ng-container>
 
-  <!-- Display Item Container -->
-  <ng-container *ngIf="selectedFunction">
-    <app-display-item-container
-      class="singleFunction"
-      [Proprieties]="selectedFunction.paramsInfo"
-      [ContainerType]="ItemContainerTypes.SingleFunction"
-      [ControllerName]="_ControllerName"
-      (params)="executeFunction($event, selectedFunction.route.name, selectedFunction.route.routeType)"
-    ></app-display-item-container>
-  </ng-container>
-
-  <table>
-    <thead>
-    <tr>
-      <th><input type="checkbox" #checkAll name="" id="checkAll" (change)="checkAllItems(checkAll.checked)"></th>
-      <th *ngFor="let prop of proprietiesResum" class="grandeur">{{ prop.name }}</th>
-    </tr>
-  </thead>
-    <tbody>
-      <ng-container *ngFor="let item of dataDisplay; let i = index">
-        <tr>
-          <td><input type="checkbox" [checked]="checkIndex(i, false)" id="check{{i}}" (change)="toggleSelected(i, item, false)"></td>
-          <td *ngFor="let prop of proprietiesResum" (click)="toggleSelected(i, item, true)" [ngSwitch]="prop.showTypeID" [class]="'showType-'+prop.showTypeID">
-            <img *ngSwitchCase="11" [src]="getValue(prop.params, item)" class="imgProd">
-            <span *ngSwitchDefault>{{ getValue(prop.params, item) }}</span>
-          </td>
-        </tr>
-        <tr *ngIf="checkIndex(i, true)" id="selectedDetail">
-          <td [attr.colspan]="proprietiesResum.length+1">
-            <app-display-item-container
-              [Routes]="getRouteByType(RouteDisplayTypes.SINGLE)"
-              [Ids]="currentInfosIds(i)"
-              [Proprieties]="Proprieties"
-              [ContainerType]="ItemContainerTypes.Proprieties"
-              [ControllerName]="_ControllerName"
-              (params)="executeFunction($event[0], $event[1], $event[2])"></app-display-item-container>
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+<table>
+  <thead>
+  <tr>
+    <th><input type="checkbox" #checkAll name="" id="checkAll" (change)="checkAllItems(checkAll.checked)"></th>
+    <th *ngFor="let prop of proprietiesResum" class="grandeur">{{ prop.name }}</th>
+  </tr>
+</thead>
+  <tbody>
+    <ng-container *ngFor="let item of dataDisplay; let i = index">
+      <tr>
+        <td><input type="checkbox" [checked]="checkIndex(i, false)" id="check{{i}}" (change)="toggleSelected(i, item, false)"></td>
+        <td *ngFor="let prop of proprietiesResum" (click)="toggleSelected(i, item, true)" [ngSwitch]="prop.showTypeID" [class]="'showType-'+prop.showTypeID">
+          <img *ngSwitchCase="11" [src]="getValue(prop.params, item)" class="imgProd">
+          <span *ngSwitchDefault>{{ getValue(prop.params, item) }}</span>
+        </td>
+      </tr>
+      <tr *ngIf="checkIndex(i, true)" id="selectedDetail">
+        <td [attr.colspan]="proprietiesResum.length+1">
+          <app-display-item-container
+            [Routes]="getRouteByType(RouteDisplayTypes.SINGLE)"
+            [Ids]="currentInfosIds(i)"
+            [DisplayItemInfos]="Proprieties"
+            [ContainerType]="ItemContainerTypes.Proprieties"
+            [ControllerName]="_ControllerName"
+            (params)="executeFunction($event[0], $event[1], $event[2])"></app-display-item-container>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
 </div>

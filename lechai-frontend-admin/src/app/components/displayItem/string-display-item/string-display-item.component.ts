@@ -33,4 +33,11 @@ export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
   {
     this.push.emit(this.valuePairs);
   }
+
+  isRequired(){
+    console.log(this.paramInfoResume)
+    this.paramInfoResume.paramAffecteds[0].validators.some(validator => validator.validatorTypeID == 1 )
+
+/*     this.paramInfoResume.paramAffecteds.some(paramAffected => paramAffected.isRequired);
+ */  }
 }

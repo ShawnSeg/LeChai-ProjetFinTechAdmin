@@ -1,3 +1,10 @@
+.container{
+  background-color: #F1EFF1;
+  padding: 1em;
+  border-radius: 10px;
+  margin: 1em;
+}
+
 .ref{
   width: 100%;
 }
@@ -9,17 +16,13 @@
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-
-
-  border-radius: 10px;
-
 }
 
 .btnFlex{
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top:1rem;
+  margin-top: 2em;
 }
 
 .addbtn{

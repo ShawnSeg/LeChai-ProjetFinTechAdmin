@@ -28,14 +28,16 @@ export class DisplayItemContainerComponent implements OnInit {
   constructor(private URLParser : URLParserService, private caller:APICallerService, private route : ActivatedRoute) {}
   ItemContainerTypes = ItemContainerTypes;
   @Output() params = new EventEmitter();
-  @Input() paramsValue:{[Key:string]:object} = {}
+  baseValues:{[Key:string]:object} = {}
+  paramsValue:{[Key:string]:object} = {}
   _ControllerName:string = "";
   @Input() ContainerType? : ItemContainerTypes;
   @Input() Ids? :{[Key:string]:object}
-  @Input() Proprieties? : ParamInfoResume[]
+/*   @Input() Proprieties? : ParamInfoResume[] */
   @Input() multipleIds?: {[Key:string]:object}[]=[]
   @Input() Routes : RouteResumeBundle[] = []
   filterSubscription : Subscription | undefined
+  propSubscription : Subscription | undefined
   dataSubscription : Subscription | undefined
   @Input()
   set ControllerName(name : string)
@@ -43,7 +45,8 @@ export class DisplayItemContainerComponent implements OnInit {
     this._ControllerName = name;
     this.setProprieties();
   }
-  DisplayItemInfos : ParamInfoResume[] = []
+  @Input() DisplayItemInfos : ParamInfoResume[] = []
+
   ngOnInit()
   {
 
@@ -53,26 +56,35 @@ export class DisplayItemContainerComponent implements OnInit {
 
     console.log(this.multipleIds)
 
+
     if (this.dataSubscription)
       this.dataSubscription.unsubscribe()
 
     switch (this.ContainerType) {
       case ItemContainerTypes.SingleFunction:
-        this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind)
+        /* this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind) */
         break;
-        case ItemContainerTypes.Proprieties:
+      case ItemContainerTypes.Proprieties:
+        if (this.propSubscription)
+        this.propSubscription.unsubscribe()
+
         if (!!this.Ids)
-          this.caller.Get<{[key:string]:any}>(this.Ids, this._ControllerName, "GetDetailed")
+          this.propSubscription = this.caller.Get<{[key:string]:any}>(this.Ids, this._ControllerName, "GetDetailed")
             .subscribe(data => {
-              this.paramsValue = data;
-              this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind);
-              Object.keys(this.Ids!).forEach(key => this.paramsValue[key] = this.Ids![key])
+              this.baseValues = data;
+             /*  this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind); */
+              Object.keys(this.Ids!).forEach(key => this.baseValues[key] = this.Ids![key])
             });
         break;
+
       case ItemContainerTypes.Filters:
         if (this.filterSubscription)
           this.filterSubscription.unsubscribe()
-        this.filterSubscription = this.URLParser.GetSubscription("filters", this.route, false).subscribe(data => this.paramsValue = data);
+
+        this.filterSubscription = this.URLParser.GetSubscription("filters", this.route, false).subscribe(data => {
+          this.baseValues = data
+          Object.keys(this.baseValues).forEach(key => this.paramsValue[key]=this.baseValues[key])
+        });
         this.dataSubscription = this.caller.Get<ParamInfoResume[]>({}, `/${this._ControllerName}/Info/Filters`)
             .subscribe(data => this.DisplayItemInfos = data.sort(item => item.ind))
         break;
@@ -93,13 +105,25 @@ export class DisplayItemContainerComponent implements OnInit {
   {
     const paramInfo = this.DisplayItemInfos.find(paramInfo => paramInfo.name === paramName)
     if (paramInfo)
-      return paramInfo.paramAffecteds.map(affected => {return {key : affected.name, value: this.paramsValue[affected.name]}});
+      return paramInfo.paramAffecteds.map(affected => {return {key : affected.name, value: this.baseValues[affected.name]}});
     return [{ key: paramName, value: null }];
   }
   currentAffectedVarValue(paramName:string) : ObjectEntry
   {
     return this.currentAffectedVarValues(paramName)[0] ;
   }
+
+  intermediaire(param: ParamInfoResume)
+  {
+    if(this.ContainerType == ItemContainerTypes.SingleFunction)
+    {
+      console.log(param)
+      console.log(param.showTypeID)
+    }
+
+    return this.currentAffectedVarValue(param.name)
+  }
+
   updateObjectPair(valuePairs : ObjectEntry)
   {
     if (valuePairs.value == null)
