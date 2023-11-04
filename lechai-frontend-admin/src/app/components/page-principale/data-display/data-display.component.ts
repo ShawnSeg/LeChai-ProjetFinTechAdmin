@@ -53,7 +53,10 @@ export class DataDisplayComponent implements OnInit {
     if (this.functionsSubscription)
           this.functionsSubscription.unsubscribe()
     this.functionsSubscription = this.caller.Get<RouteResumeBundle[]>({}, this._ControllerName, "Info/Routes")
-      .subscribe(data => this.functions = data);
+      .subscribe(data => {
+        this.functions = data
+        this.functions.forEach(fonction => fonction.paramsInfo = fonction.paramsInfo.sort(item => item.ind))
+      });
 
 
     if (this.paramInfoSubscription)
@@ -149,10 +152,8 @@ export class DataDisplayComponent implements OnInit {
       return
     }
     this.selectedFunction = funct;
+
   }
-
-
-
   checkAllItems(event: boolean) {
     this.dataDisplay.forEach((item,i)=>this.toggleSelected(i, item, false, event))
   }

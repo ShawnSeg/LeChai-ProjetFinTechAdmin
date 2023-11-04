@@ -17,14 +17,11 @@
 
 <ng-container *ngIf="selectedFunction">
   <app-display-item-container
-    [Proprieties]="selectedFunction.paramsInfo"
+    [DisplayItemInfos]="selectedFunction.paramsInfo"
     [ContainerType]="ItemContainerTypes.SingleFunction"
     [ControllerName]="_ControllerName"
     (params)="executeFunction($event, selectedFunction.route.name, selectedFunction.route.routeType)"
   ></app-display-item-container>
-
-
-
 </ng-container>
 
 <table>
@@ -48,7 +45,7 @@
           <app-display-item-container
             [Routes]="getRouteByType(RouteDisplayTypes.SINGLE)"
             [Ids]="currentInfosIds(i)"
-            [Proprieties]="Proprieties"
+            [DisplayItemInfos]="Proprieties"
             [ContainerType]="ItemContainerTypes.Proprieties"
             [ControllerName]="_ControllerName"
             (params)="executeFunction($event[0], $event[1], $event[2])"></app-display-item-container>

@@ -1,2 +1,2 @@
-<p>{{paramInfoResume.name}}</p>
+<p>{{paramInfoResume.name}} <span *ngIf="isRequired()">*</span></p>
 <input  type="text" class="classInput" #inputValue (input)="updateValue(inputValue.value)"/>

@@ -1,9 +1,11 @@
+
+<div class="container">
 <div class="paramInfoContainer" >
   <span *ngFor="let paramInfo of DisplayItemInfos" [ngSwitch]="paramInfo.showTypeID">
     <!-- switch 1 none -->
     <app-ref-display-item class="filtres" *ngSwitchCase="2" [valuePairs]="paramsValue" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-ref-display-item>
     <app-cbo-display-item class="filtres" *ngSwitchCase="3" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-cbo-display-item>
-    <app-string-display-item class="filtres" *ngSwitchCase="4" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
+    <app-string-display-item class="filtres" *ngSwitchCase="4" [valuePairs]="intermediaire(paramInfo)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-string-display-item>
     <app-int-display-item class="filtres" *ngSwitchCase="5" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-int-display-item>
     <app-float-display-item class="filtres" *ngSwitchCase="6" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-float-display-item>
     <app-cbo-display-item class="filtres" *ngSwitchCase="7" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event)"></app-cbo-display-item>
@@ -22,4 +24,5 @@
 </div>
 <div *ngIf="ContainerType == ItemContainerTypes.Proprieties" class="btnFlex">
   <button *ngFor="let route of Routes" (click)="pushRoute(route)" class="addbtn">{{route.route.name}}</button>
+</div>
 </div>
