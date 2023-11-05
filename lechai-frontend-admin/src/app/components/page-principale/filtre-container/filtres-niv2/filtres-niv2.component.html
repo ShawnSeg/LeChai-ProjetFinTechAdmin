@@ -1,8 +1,0 @@
-<div #container class="hide">
-  <ng-container *ngIf="filtres && filtres.length > 0">
-    <ng-container *ngFor="let filtre of filtres">
-      <app-filtre-select [filtre]="filtre" class="filtres" *ngIf="filtre.showTypeID==3"></app-filtre-select>
-      <app-filtre-input [filtre]="filtre" (filtreChange)="changeFiltre($event)" class="filtres" *ngIf="filtre.showTypeID==4"></app-filtre-input>
-    </ng-container>
-  </ng-container>
-</div>

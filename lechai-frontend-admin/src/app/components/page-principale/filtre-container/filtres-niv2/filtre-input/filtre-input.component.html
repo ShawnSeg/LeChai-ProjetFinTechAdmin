@@ -1,7 +1,0 @@
-<div>
-  <label [for]="forLabel">{{ filtre?.name }}:</label>
-  <aside *ngFor="let affectedValue of filtre?.paramAffecteds">
-    <label for="">{{affectedValue.name}}</label>
-    <input  [type]="passType" class="classInput" #inputValue [placeholder]="filtre?.placeholder" (input)="onChange(affectedValue.name, inputValue.value)">
-  </aside>
-</div>

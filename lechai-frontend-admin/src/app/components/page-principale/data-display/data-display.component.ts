@@ -17,21 +17,17 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./data-display.component.scss']
 })
 export class DataDisplayComponent implements OnInit {
-  @Input() _ControllerName = "";
-  @Input()
-  set ControllerName(name : string)
-  {
-    this._ControllerName = name;
-    this.setProprieties();
-  }
+  ControllerName = "";
+  @Input() refControlleur = "";
   @ViewChild("selectedDetail") selectedDetailElem? : ElementRef;
+  @Input() filters? : {[key:string]:any};
   IdsNames:string[] = []
   selectedFunction? : RouteResumeBundle
   functions: RouteResumeBundle[] = []
   Proprieties: ParamInfoResume[] = []
   proprietiesResum: ProprietyResume[] = [];
   dataDisplay:{[key:string]:any}[] = []
-  filters : {[key:string]:any} = {}
+  indexSetter:boolean = true
   currentInfos : {Ids:{[key:string]:any}, Index:number, detailOpened:boolean}[] = []
   ItemContainerTypes = ItemContainerTypes;
   RouteDisplayTypes = RouteDisplayTypes
@@ -42,17 +38,37 @@ export class DataDisplayComponent implements OnInit {
   subscribed = false;
   isRowChecked: boolean[] = [];
   checkedItems: ObjectEntry = { key: 'Ids', value: this.isRowChecked };
-  @Input() preFilters? : {[key:string]:string}
+
   constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute, private toast:ToastService) {}
   ngOnInit() {
+
+    if(!this.refControlleur)
+      {this.URLParser.GetControlleurSub(this.route).subscribe(name => {
+        console.log(this.ControllerName);
+        if(this.ControllerName != name)
+        {
+          this.ControllerName = name;
+          this.makeInit();
+          this.setFilters({});
+          console.log("subscribe")
+        }
+      })
+    }
+    else
+    {
+      this.ControllerName = this.refControlleur;
+      this.indexSetter = false;
+      this.makeInit()
+    }
   }
-  setProprieties()
-  {
+
+    makeInit(){
+
     this.selectedFunction = undefined;
 
     if (this.functionsSubscription)
           this.functionsSubscription.unsubscribe()
-    this.functionsSubscription = this.caller.Get<RouteResumeBundle[]>({}, this._ControllerName, "Info/Routes")
+    this.functionsSubscription = this.caller.Get<RouteResumeBundle[]>({}, this.ControllerName, "Info/Routes")
       .subscribe(data => {
         this.functions = data
         this.functions.forEach(fonction => fonction.paramsInfo = fonction.paramsInfo.sort(item => item.ind))
@@ -61,7 +77,7 @@ export class DataDisplayComponent implements OnInit {
 
     if (this.paramInfoSubscription)
           this.paramInfoSubscription.unsubscribe()
-    this.paramInfoSubscription = this.caller.Get<ParamInfoResume[]>({}, this._ControllerName, "Info/Proprieties")
+    this.paramInfoSubscription = this.caller.Get<ParamInfoResume[]>({}, this.ControllerName, "Info/Proprieties")
       .subscribe(data => {
         this.Proprieties = data.sort(item => item.ind);
         this.proprietiesResum = this.Proprieties.filter(prop => prop.isMain).map(prop => ({
@@ -73,24 +89,35 @@ export class DataDisplayComponent implements OnInit {
 
         this.IdsNames = this.Proprieties.filter(prop => [7,8].includes(prop.showTypeID)).map(prop => prop.paramAffecteds[0].name);
         //this.URLParser.GetSubscription("selected", this.route, false).subscribe(tempCurrent => this.setSelected(tempCurrent as number[][] ?? []));
-        if (this.paramsSubscription)
-          this.paramsSubscription.unsubscribe()
-        if (this.preFilters)
-        {
-          this.getData(this.preFilters, false)
-          return;
-        }
-        this.paramsSubscription = this.URLParser.GetSubscription("filters", this.route, true).subscribe(filters => {
-          console.log(filters);
-          this.filters = filters;
-          this.getData(filters, true)
-        });
+
       });
+
+      if(this.refControlleur)
+/*         this.URLParser.getFilters().subscribe(filters => this.setFilters(filters))
+      else */
+        this.setFilters(this.filters!)
   }
+
+  setFilters(filters: {[key:string]:any})
+  {
+    if(!this.ControllerName)
+      return
+
+    if (this.dataSubscription)
+      this.dataSubscription.unsubscribe()
+
+    this.dataSubscription = this.caller.Get<{[key:string]:any}[]>(filters, this.ControllerName, "GetAll")
+    .subscribe(data => {
+      this.dataDisplay = data;
+      if (this.indexSetter)
+        this.setIndex()
+    });
+  }
+
   getData(params : {[key:string]:any}, setIndex : boolean){
     if (this.dataSubscription)
       this.dataSubscription.unsubscribe()
-    this.dataSubscription = this.caller.Get<{[key:string]:any}[]>(params, this._ControllerName, "GetAll")
+    this.dataSubscription = this.caller.Get<{[key:string]:any}[]>(params, this.ControllerName, "GetAll")
     .subscribe(data => {
       this.dataDisplay = data;
       if (setIndex)
@@ -130,8 +157,8 @@ export class DataDisplayComponent implements OnInit {
       const Ids = toDictionary(this.IdsNames, idName => idName, idName => item[idName]);
       this.currentInfos.push({Ids:Ids, Index:i, detailOpened:isForOpenedDetail});
     }
-    if(isForOpenedDetail)
-      this.URLParser.ChangeURL("selected", this.currentInfos.map(info => info.Ids), this.route);
+    /* if(isForOpenedDetail)
+      this.URLParser.ChangeURL("selected", this.currentInfos.map(info => info.Ids), this.route); */
   }
   checkIndex(i:number, isForDetail:boolean) : boolean
   {
@@ -167,7 +194,7 @@ export class DataDisplayComponent implements OnInit {
     if(params == null)
       return
 
-    this.caller.CallAPI(routeType,params,this._ControllerName,routeName).subscribe({
+    this.caller.CallAPI(routeType,params,this.ControllerName,routeName).subscribe({
       next:(data:any)=>{
         this.toast.showToast("success", data+" lignes d'affectées!", "bottom-center", 4000)
       },

@@ -4,11 +4,11 @@ import { Entryies, ObjectEntry } from '../../../generalInterfaces';
 import { ParamInfoResume, defaultParamInfo } from '../../../DisplayItemsInterfaces';
 
 @Component({
-  selector: 'app-string-display-item',
-  templateUrl: './string-display-item.component.html',
-  styleUrls: ['./string-display-item.component.scss']
+  selector: 'app-check-box-display-item',
+  templateUrl: './check-box-display-item.component.html',
+  styleUrls: ['./check-box-display-item.component.scss']
 })
-export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
+export class CheckBoxDisplayItemComponent implements OnInit, DisplayItemTemplate {
   @Input() valuePairs : ObjectEntry = { key: '', value: null };
   @Output() push = new EventEmitter();
   @ViewChild('inputValue') input! : ElementRef;
@@ -19,14 +19,15 @@ export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)
-      this.input.nativeElement.value = this.valuePairs.value;
+      this.input.nativeElement.checked = (!!this.valuePairs.value);
   }
-  updateValue(value : string)
+  updateValue(value : boolean)
   {
     if (!value)
       this.valuePairs.value = null;
     else
-      this.valuePairs.value = value;
+      this.valuePairs.value = value ? 1 : 0;
+
     this.pushValue();
   }
   pushValue()
@@ -35,9 +36,10 @@ export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
   }
 
   isRequired(){
-    console.log("$$$$$")
-    /* this.paramInfoResume.paramAffecteds[0].validators.some(validator => validator.validatorTypeID == 1 ) */
+    console.log(this.paramInfoResume)
+    this.paramInfoResume.paramAffecteds[0].validators.some(validator => validator.validatorTypeID == 1 )
 
-    return this.paramInfoResume.paramAffecteds.some(paramAffected => paramAffected.isRequired);
- }
+/*     this.paramInfoResume.paramAffecteds.some(paramAffected => paramAffected.isRequired);
+ */  }
+
 }

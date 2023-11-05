@@ -18,9 +18,8 @@ export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
   constructor(private caller:APICallerService) {}
   ngOnInit(): void {
 
-    console.log(this.paramInfoResume)
     if(this.paramInfoResume.mapper)
-      this.caller.Get<{[key:string]:any}>({}, this.paramInfoResume.mapper.refController, "CBO").subscribe(data=>{this.listValeurPossible=data; console.log(this.listValeurPossible)})
+      this.caller.Get<{[key:string]:any}>({}, this.paramInfoResume.mapper.refController, "CBO").subscribe(data=>{this.listValeurPossible=data;})
 
 
 

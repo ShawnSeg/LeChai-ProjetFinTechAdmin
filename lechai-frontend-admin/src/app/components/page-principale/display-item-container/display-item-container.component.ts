@@ -30,33 +30,41 @@ export class DisplayItemContainerComponent implements OnInit {
   @Output() params = new EventEmitter();
   baseValues:{[Key:string]:object} = {}
   paramsValue:{[Key:string]:object} = {}
-  _ControllerName:string = "";
+  ControllerName = "";
+  @Input() refControlleur = "";
   @Input() ContainerType? : ItemContainerTypes;
   @Input() Ids? :{[Key:string]:object}
 /*   @Input() Proprieties? : ParamInfoResume[] */
-  @Input() multipleIds?: {[Key:string]:object}[]=[]
+  //@Input() multipleIds?: {[Key:string]:object}[]=[]
   @Input() Routes : RouteResumeBundle[] = []
   filterSubscription : Subscription | undefined
   propSubscription : Subscription | undefined
   dataSubscription : Subscription | undefined
-  @Input()
-  set ControllerName(name : string)
-  {
-    this._ControllerName = name;
-    this.setProprieties();
-  }
   @Input() DisplayItemInfos : ParamInfoResume[] = []
 
   ngOnInit()
   {
+    console.log(this.DisplayItemInfos)
 
+    if(!this.refControlleur)
+      {this.URLParser.GetControlleurSub(this.route).subscribe(name => {
+
+        if(this.ControllerName != name)
+        {
+          this.ControllerName = name;
+          this.makeInit();
+          console.log("subscribe")
+        }
+      })
+    }
+    else
+    {
+      this.ControllerName = this.refControlleur;
+      this.makeInit()
+    }
   }
 
-  setProprieties() {
-
-    console.log(this.multipleIds)
-
-
+  makeInit(){
     if (this.dataSubscription)
       this.dataSubscription.unsubscribe()
 
@@ -66,14 +74,14 @@ export class DisplayItemContainerComponent implements OnInit {
         break;
       case ItemContainerTypes.Proprieties:
         if (this.propSubscription)
-        this.propSubscription.unsubscribe()
+          this.propSubscription.unsubscribe()
 
         if (!!this.Ids)
-          this.propSubscription = this.caller.Get<{[key:string]:any}>(this.Ids, this._ControllerName, "GetDetailed")
+          this.propSubscription = this.caller.Get<{[key:string]:any}>(this.Ids, this.ControllerName, "GetDetailed")
             .subscribe(data => {
               this.baseValues = data;
              /*  this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind); */
-              Object.keys(this.Ids!).forEach(key => this.baseValues[key] = this.Ids![key])
+              //Object.keys(this.Ids!).forEach(key => this.baseValues[key] = this.Ids![key])
             });
         break;
 
@@ -85,7 +93,7 @@ export class DisplayItemContainerComponent implements OnInit {
           this.baseValues = data
           Object.keys(this.baseValues).forEach(key => this.paramsValue[key]=this.baseValues[key])
         });
-        this.dataSubscription = this.caller.Get<ParamInfoResume[]>({}, `/${this._ControllerName}/Info/Filters`)
+        this.dataSubscription = this.caller.Get<ParamInfoResume[]>({}, `/${this.ControllerName}/Info/Filters`)
             .subscribe(data => this.DisplayItemInfos = data.sort(item => item.ind))
         break;
     }
@@ -115,12 +123,6 @@ export class DisplayItemContainerComponent implements OnInit {
 
   intermediaire(param: ParamInfoResume)
   {
-    if(this.ContainerType == ItemContainerTypes.SingleFunction)
-    {
-      console.log(param)
-      console.log(param.showTypeID)
-    }
-
     return this.currentAffectedVarValue(param.name)
   }
 

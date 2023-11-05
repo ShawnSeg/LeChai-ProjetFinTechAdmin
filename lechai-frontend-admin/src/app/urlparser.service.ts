@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Observable, catchError, filter, map } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, filter, map } from 'rxjs';
 import { toDictionary, toDictionarySimple } from './generalInterfaces';
 import { __values } from 'tslib';
 interface base {
@@ -77,13 +77,40 @@ export class URLParserService {
   controllerNameVariableName = 'controllerName';
   currentSelectedVariableName = "currentSelected";
   knownParams : string[] = ["currentSelected", "controllerName"];
-  selectedController:string|null = "";
+  selectedController:string = "";
   oldFilters : {[key:string]:any}|null = null;
   currentSelectedLength : number = -2 //we check the lenght because the comparaison is strong ehouph for our needs
   currentSelectedIds : {Ids:{[key:string]:any}, Index:number}[] | null = []
   requestMade : boolean = false
+
+  private filtersSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
+
   constructor(private router : Router) {
   }
+
+  getFilters()
+  {
+    return this.filtersSubject.asObservable();
+  }
+  updateFilters(newFilters: any) {
+    this.filtersSubject.next(newFilters); // Émettez la nouvelle valeur
+  }
+
+
+  GetControlleur(route: ActivatedRoute) : string
+  {
+    return route.snapshot.paramMap.get(this.controllerNameVariableName)??""
+  }
+
+  GetControlleurSub(route: ActivatedRoute) : Observable <string>
+  {
+    return route.paramMap.pipe(
+      map(paramMap => paramMap.get(this.controllerNameVariableName)??"")
+/*       filter(value => value != this.selectedController),
+      map(value => this.selectedController = value) */
+    );
+  }
+
   GetSubscription(type : string, route : ActivatedRoute, always : boolean) : Observable<any>
   {
     return route.paramMap.pipe(

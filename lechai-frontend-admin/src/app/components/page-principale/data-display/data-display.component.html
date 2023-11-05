@@ -1,3 +1,5 @@
+<h1>{{ControllerName}}</h1>
+
 <div class="block">
 <div class="btnDiv" *ngFor="let funct of getRouteByType(RouteDisplayTypes.MULTIPLE)" (click)="toggleFunction(funct)">
   <button class="btn">{{funct.route.name}}</button>
@@ -19,7 +21,7 @@
   <app-display-item-container
     [DisplayItemInfos]="selectedFunction.paramsInfo"
     [ContainerType]="ItemContainerTypes.SingleFunction"
-    [ControllerName]="_ControllerName"
+    [refControlleur]="ControllerName"
     (params)="executeFunction($event, selectedFunction.route.name, selectedFunction.route.routeType)"
   ></app-display-item-container>
 </ng-container>
@@ -47,7 +49,7 @@
             [Ids]="currentInfosIds(i)"
             [DisplayItemInfos]="Proprieties"
             [ContainerType]="ItemContainerTypes.Proprieties"
-            [ControllerName]="_ControllerName"
+            [refControlleur]="ControllerName"
             (params)="executeFunction($event[0], $event[1], $event[2])"></app-display-item-container>
         </td>
       </tr>

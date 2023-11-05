@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { APICallerService } from '../../../apicaller.service';
 import { ActivatedRoute } from '@angular/router';
 import { URLParserService } from '../../../urlparser.service';
@@ -13,19 +13,26 @@ import { FilterResume } from '../../../DisplayItemsInterfaces';
 export class FiltresComponent implements OnInit {
 
   @ViewChild('fleche', { static: true }) fleche?: ElementRef;
-  @Input() ControllerName = "";
+  ControllerName = "";
   @ViewChild('filtersContainer') container! : DisplayItemContainerComponent;
   filterHidden = true;
   FilterResumes:FilterResume[] = []
   ItemContainerTypes = ItemContainerTypes;
-  constructor(private URLParser : URLParserService, private caller:APICallerService, private route : ActivatedRoute) {}
+  @Output() filters  = new EventEmitter<{[key:string]:any}>()
+
+  constructor(private URLParser : URLParserService, private caller:APICallerService, private route : ActivatedRoute) {
+  }
   ngOnInit()
   {
+    this.URLParser.GetControlleurSub(this.route).subscribe(name => this.ControllerName = name)
+
   }
   updateFilters(filters : {[key:string]:any})
   {
     this.FilterResumes = this.container.paramsByDisplayName();
     this.URLParser.ChangeURL("filters", filters, this.route);
+    this.URLParser.updateFilters(filters);
+    this.filters.emit(filters)
   }
   toggleHide() {
 

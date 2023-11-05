@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { URLParserService } from '../../../urlparser.service';
 import { ListeDeroulanteCustomComponent } from '../liste-deroulante-custom/liste-deroulante-custom.component';
+import { DataDisplayComponent } from '../data-display/data-display.component';
 export interface Controller{
   id:number,
   name:string,
@@ -20,7 +21,9 @@ export class ControllersComponent implements OnInit{
   selectedController:string = "";
   testObject = 0;
   controllerOk = false;
+  filters:  {[key:string]:any} = {}
   @ViewChild('listeDeroule') listeDeroule! : ListeDeroulanteCustomComponent;
+  @ViewChild('dataDisplay') dataDisplay! : DataDisplayComponent;
 
   /* _ControllerName:string = "";
 
@@ -33,8 +36,9 @@ export class ControllersComponent implements OnInit{
 
   constructor(private URLParser:URLParserService, private caller:APICallerService, private route : ActivatedRoute){}
   ngOnInit(): void {
+    this.selectedController = this.URLParser.GetControlleur(this.route)
     //this.URLParser.GetControllerName(this.route).subscribe(name => this.selectedController = name ?? "");
-    this.URLParser.GetSubscription("controller", this.route, true).subscribe(name => this.selectedController = name ?? "")
+    //this.URLParser.GetSubscription("controller", this.route, true).subscribe(name => this.selectedController = name ?? "")
     this.caller.Get<Controller[]>({}, "Info", "Controllers")
     .subscribe(data => {
 
@@ -43,26 +47,30 @@ export class ControllersComponent implements OnInit{
         this.controllersString[controller.name.toString()] = controller.name;
       });
       if (!this.selectedController || !this.controllers.some(controller => controller.name == this.selectedController))
-      {
-        this.URLParser.ChangeURL("controller", this.controllers[0].name, this.route);
-        this.listeDeroule.updateValue(this.controllers[0].name);
-      }
+        this.selectController(this.controllers[0].name)
       //this.URLParser.ChangeControlerRoute(this.controllers[0].name, this.route)
-      this.controllerOk = true;
     });
   }
   selectController(controllerName:string)
   {
+    this.controllerOk = false;
     //this.URLParser.ChangeControlerRoute(controllerName, this.route)
     this.URLParser.ChangeURL("controller", controllerName, this.route)
 
     if(controllerName != "")
       this.listeDeroule.updateValue(controllerName);
+
+    this.selectedController = controllerName;
+    this.controllerOk = true;
+
   }
   filteredControllers() : Controller[]
   {
     return this.controllers.filter(controller => controller.isMain)
   }
 
-
+  updateFilters(filters:  {[key:string]:any})
+  {
+    this.dataDisplay.setFilters(filters);
+  }
 }
