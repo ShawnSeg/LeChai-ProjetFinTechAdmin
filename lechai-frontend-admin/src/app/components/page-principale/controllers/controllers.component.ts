@@ -5,6 +5,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { URLParserService } from '../../../urlparser.service';
 import { ListeDeroulanteCustomComponent } from '../liste-deroulante-custom/liste-deroulante-custom.component';
 import { DataDisplayComponent } from '../data-display/data-display.component';
+import { ObjectEntry } from 'src/app/generalInterfaces';
 export interface Controller{
   id:number,
   name:string,

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DisplayItemTemplate } from '../../page-principale/display-item-container/display-item-container.component';
 import { Entryies, ObjectEntry } from '../../../generalInterfaces';
 import { ParamInfoResume, defaultParamInfo } from '../../../DisplayItemsInterfaces';
@@ -21,6 +21,7 @@ export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
     if (this.valuePairs.value != null)
       this.input.nativeElement.value = this.valuePairs.value;
   }
+
   updateValue(value : string)
   {
     if (!value)
@@ -33,11 +34,4 @@ export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
   {
     this.push.emit(this.valuePairs);
   }
-
-  isRequired(){
-    console.log("$$$$$")
-    /* this.paramInfoResume.paramAffecteds[0].validators.some(validator => validator.validatorTypeID == 1 ) */
-
-    return this.paramInfoResume.paramAffecteds.some(paramAffected => paramAffected.isRequired);
- }
 }

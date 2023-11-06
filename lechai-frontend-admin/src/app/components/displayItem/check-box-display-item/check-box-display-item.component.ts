@@ -16,17 +16,16 @@ export class CheckBoxDisplayItemComponent implements OnInit, DisplayItemTemplate
   constructor() {}
   ngOnInit(): void {
     /* console.log(this.paramInfoResume) */
+    console.log(this.valuePairs)
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)
       this.input.nativeElement.checked = (!!this.valuePairs.value);
+
   }
   updateValue(value : boolean)
   {
-    if (!value)
-      this.valuePairs.value = null;
-    else
-      this.valuePairs.value = value ? 1 : 0;
+    this.valuePairs.value = value ? 1 : 0;
 
     this.pushValue();
   }

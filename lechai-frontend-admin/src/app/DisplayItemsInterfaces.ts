@@ -1,4 +1,5 @@
 import { RouteTypes } from "./apicaller.service";
+import { ValidatorResume, ValidatorTypes } from "./validators";
 
 export interface ParamInfoResume{
   name:string,
@@ -8,7 +9,8 @@ export interface ParamInfoResume{
   showTypeID:number,
   mapper:MapperResume|null,
   ind:number,
-  paramAffecteds:ParamAffectedResume[]
+  paramAffecteds:ParamAffectedResume[],
+  showValue?: Object
 }
 export function defaultParamInfo() : ParamInfoResume
 {
@@ -27,13 +29,8 @@ export function defaultParamInfo() : ParamInfoResume
 export interface ParamAffectedResume{
   name:string,
   isRequired:boolean,
-  validators:ValidatorResume[]
-}
-
-export interface ValidatorResume{
-  valueToUse:any,
-  validatorTypeID:number,
-  message:string
+  validators:ValidatorResume[],
+  hasValue?:boolean
 }
 
 

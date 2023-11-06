@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ObjectEntry } from 'src/app/generalInterfaces';
 
 @Component({
   selector: 'app-liste-deroulante-custom',
@@ -8,18 +9,31 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class ListeDeroulanteCustomComponent {
   @Input() values: { [id: string]: any } = {}
   @Input() baseValue?: string;
-  @Output() selectedValue = new EventEmitter<string>();
+  @Output() selectedValue = new EventEmitter<ObjectEntry>();
+  @Input()
+  set setValue(values: { [id: string]: any } )
+  {
+    this.values = values
+
+    if(this.baseValue)
+      this.searchQuery = this.values[this.baseValue]
+  }
 
   searchQuery = '';
   showDropdown = false;
   filteredValues: { [id: string]: string } = {};
 
   ngOnInit(){
-    if(this.baseValue)
-    {
-      this.searchQuery = this.baseValue;
-    }
   }
+
+/*   ngAfterViewInit()
+  {
+    console.log(this.values)
+    console.log(this.baseValue)
+    if(this.baseValue)
+      this.searchQuery = this.values[this.baseValue]
+  }
+ */
 
   showValues() {
     this.filteredValues = this.values;
@@ -27,7 +41,12 @@ export class ListeDeroulanteCustomComponent {
   }
 
   filterValues() {
+
     this.filteredValues = {};
+
+    if(!this.searchQuery)
+      this.selectedValue.emit(undefined)
+
     for (const id in this.values) {
       if (this.values[id].toLowerCase().startsWith(this.searchQuery.toLowerCase())) {
         this.filteredValues[id] = this.values[id];
@@ -39,8 +58,12 @@ export class ListeDeroulanteCustomComponent {
   selectValue(id: string) {
     this.searchQuery = this.filteredValues[id];
     this.showDropdown = false;
-    console.log(id)
-    this.selectedValue.emit(id);
+    this.selectedValue.emit({key: id, value:this.searchQuery});
+  }
+
+  setBaseValue(id: string)
+  {
+    this.searchQuery = this.values[id];
   }
 
   getFilteredValueIds() {

@@ -3,9 +3,11 @@ import { URLParserService } from '../../../urlparser.service';
 import { APICallerService } from '../../../apicaller.service';
 import { ActivatedRoute } from '@angular/router';
 import { Entryies, ObjectEntry } from '../../../generalInterfaces';
-import { FilterResume, ParamInfoResume, RouteResumeBundle } from '../../../DisplayItemsInterfaces';
+import { FilterResume, ParamAffectedResume, ParamInfoResume, RouteResumeBundle } from '../../../DisplayItemsInterfaces';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subscription, VirtualTimeScheduler } from 'rxjs';
+import { ValidatorResume } from 'src/app/validators';
+import { validate } from 'src/app/validators';
 
 export enum ItemContainerTypes {
   Proprieties = 1,
@@ -28,7 +30,7 @@ export class DisplayItemContainerComponent implements OnInit {
   constructor(private URLParser : URLParserService, private caller:APICallerService, private route : ActivatedRoute) {}
   ItemContainerTypes = ItemContainerTypes;
   @Output() params = new EventEmitter();
-  baseValues:{[Key:string]:object} = {}
+  baseValues:{[Key:string]:object} | null = null
   paramsValue:{[Key:string]:object} = {}
   ControllerName = "";
   @Input() refControlleur = "";
@@ -41,6 +43,9 @@ export class DisplayItemContainerComponent implements OnInit {
   propSubscription : Subscription | undefined
   dataSubscription : Subscription | undefined
   @Input() DisplayItemInfos : ParamInfoResume[] = []
+  hasError: boolean = false;
+
+
 
   ngOnInit()
   {
@@ -64,12 +69,21 @@ export class DisplayItemContainerComponent implements OnInit {
     }
   }
 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes) {
+      // Handle changes to myInput here
+      console.log('myInput has changed:', changes);
+    }
+  }
+
   makeInit(){
     if (this.dataSubscription)
       this.dataSubscription.unsubscribe()
 
     switch (this.ContainerType) {
       case ItemContainerTypes.SingleFunction:
+        this.baseValues = {}
         /* this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind) */
         break;
       case ItemContainerTypes.Proprieties:
@@ -80,8 +94,9 @@ export class DisplayItemContainerComponent implements OnInit {
           this.propSubscription = this.caller.Get<{[key:string]:any}>(this.Ids, this.ControllerName, "GetDetailed")
             .subscribe(data => {
               this.baseValues = data;
+
              /*  this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind); */
-              //Object.keys(this.Ids!).forEach(key => this.baseValues[key] = this.Ids![key])
+              Object.keys(this.Ids!).forEach(key => this.paramsValue[key] = this.Ids![key])
             });
         break;
 
@@ -89,18 +104,30 @@ export class DisplayItemContainerComponent implements OnInit {
         if (this.filterSubscription)
           this.filterSubscription.unsubscribe()
 
-        this.filterSubscription = this.URLParser.GetSubscription("filters", this.route, false).subscribe(data => {
-          this.baseValues = data
-          Object.keys(this.baseValues).forEach(key => this.paramsValue[key]=this.baseValues[key])
-        });
+
         this.dataSubscription = this.caller.Get<ParamInfoResume[]>({}, `/${this.ControllerName}/Info/Filters`)
-            .subscribe(data => this.DisplayItemInfos = data.sort(item => item.ind))
+            .subscribe(data => {
+              this.DisplayItemInfos = data.sort(item => item.ind)
+
+              this.filterSubscription = this.URLParser.GetSubscription("filters", this.route, false).subscribe(data => {
+                this.baseValues = data
+                Object.keys(this.baseValues!).forEach(key => this.paramsValue[key]=this.baseValues![key])
+                this.pushParams();
+              });
+            })
         break;
     }
 
   }
-  updateFilter(valuePairs : Entryies)
+  updateFilter(valuePairs : Entryies, paramInfo : ParamInfoResume)
   {
+    this.hasError = paramInfo.paramAffecteds.some(param => !this.checkValidators(param, Array.isArray(valuePairs)? valuePairs.find(pair => {console.log(param); return pair.key == param.name;})?.value : valuePairs.value ))
+
+    if(this.hasError)
+    {
+      return
+    }
+
     if (Array.isArray(valuePairs))
       valuePairs.forEach(valuePair => this.updateObjectPair(valuePair))
     else
@@ -109,16 +136,59 @@ export class DisplayItemContainerComponent implements OnInit {
     if(this.ContainerType==ItemContainerTypes.Filters)
       this.pushParams()
   }
-  currentAffectedVarValues(paramName:string) : ObjectEntry[]
+
+  checkValidators(param: ParamAffectedResume, value: any):boolean
   {
-    const paramInfo = this.DisplayItemInfos.find(paramInfo => paramInfo.name === paramName)
-    if (paramInfo)
-      return paramInfo.paramAffecteds.map(affected => {return {key : affected.name, value: this.baseValues[affected.name]}});
-    return [{ key: paramName, value: null }];
+    let everythingOk:boolean = true;
+
+    if(param.isRequired && !(param.hasValue = value != null))
+    {
+      return false
+    }
+
+    for(let validator of param.validators)
+    {
+
+      if(validator.hasError = !validate(validator, value))
+      {
+        everythingOk = false
+      }
+    }
+
+    return everythingOk
   }
-  currentAffectedVarValue(paramName:string) : ObjectEntry
+
+  paramHasError(paramInfo: ParamInfoResume )
   {
-    return this.currentAffectedVarValues(paramName)[0] ;
+    let errorString: string[] = []
+    paramInfo.paramAffecteds.forEach(param => {
+      if(param.isRequired && param.hasValue === false)
+      {
+        errorString.push(param.name + " est requis");
+      }
+      param.validators.forEach(validator => { if(validator.hasError) errorString.push(validator.message)})
+    })
+    return errorString
+  }
+
+  currentAffectedVarValues(paramName:string, extentionName?: string) : ObjectEntry[]
+  {
+    let varValue = []
+    const paramInfo = this.DisplayItemInfos.find(paramInfo => paramInfo.name === paramName)
+
+/*     console.log(paramName)
+    console.log(this.baseValues)
+    console.log(paramInfo)
+    console.log(extentionName) */
+
+    if (paramInfo)
+      return paramInfo.paramAffecteds.map(affected => {return {key : (extentionName ? paramName + extentionName : affected.name) , value: this.baseValues![affected.name]}});
+
+    return [{ key: paramName+(extentionName??""), value: null }];
+  }
+  currentAffectedVarValue(paramName:string, extentionName?: string) : ObjectEntry
+  {
+    return this.currentAffectedVarValues(paramName, extentionName)[0];
   }
 
   intermediaire(param: ParamInfoResume)
@@ -135,6 +205,9 @@ export class DisplayItemContainerComponent implements OnInit {
   }
   pushParams()
   {
+    if(this.hasError)
+      return
+
     this.params.emit(this.paramsValue);
   }
   pushCancel()
@@ -143,12 +216,17 @@ export class DisplayItemContainerComponent implements OnInit {
   }
   pushRoute(route : RouteResumeBundle)
   {
+    if(this.hasError)
+      return
+
     this.params.emit([this.paramsValue, route.route.name, route.route.routeType])
   }
   paramsByDisplayName() : FilterResume[]
   {
     return this.DisplayItemInfos.filter(itemInfo => itemInfo.paramAffecteds.some(affected => affected.name in this.paramsValue))
-      .map(itemInfo => {return {name : itemInfo.name, type : itemInfo.showTypeID, params : itemInfo.paramAffecteds
-        .map(affected => affected.name in this.paramsValue ? this.paramsValue[affected.name] : null)}})
+      .map(itemInfo => {return {name : itemInfo.name, type : itemInfo.showTypeID, params : (itemInfo.showValue ? [itemInfo.showValue] : itemInfo.paramAffecteds
+        .map(affected => affected.name in this.paramsValue ? this.paramsValue[affected.name] : null))}})
   }
+
+
 }

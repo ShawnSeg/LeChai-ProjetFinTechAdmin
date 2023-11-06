@@ -190,6 +190,8 @@ export class DataDisplayComponent implements OnInit {
     return this.currentInfos.map(info=>info.Ids)
   }
   executeFunction(params:{[key:string]:any}|null, routeName:string, routeType:RouteTypes){
+    console.log(params)
+    console.log(routeName)
     this.selectedFunction = undefined;
     if(params == null)
       return

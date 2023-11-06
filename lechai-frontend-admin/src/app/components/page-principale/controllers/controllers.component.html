@@ -2,7 +2,7 @@
 <h1 class="controleur_titre">Controle des {{ selectedController }}</h1>
 
 <span class="listeControlleurs">
-  <app-liste-deroulante-custom #listeDeroule [baseValue]="selectedController" [values]="controllersString" (selectedValue)="selectController($event)"></app-liste-deroulante-custom>
+  <app-liste-deroulante-custom #listeDeroule [baseValue]="selectedController" [values]="controllersString" (selectedValue)="selectController($event.key)"></app-liste-deroulante-custom>
 </span>
 
 <div  class="controller_names_list">

@@ -29,7 +29,7 @@
 <table>
   <thead>
   <tr>
-    <th><input type="checkbox" #checkAll name="" id="checkAll" (change)="checkAllItems(checkAll.checked)"></th>
+    <th><input type="checkbox" #checkAll id="checkAll" (change)="checkAllItems(checkAll.checked)"></th>
     <th *ngFor="let prop of proprietiesResum" class="grandeur">{{ prop.name }}</th>
   </tr>
 </thead>

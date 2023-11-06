@@ -8,11 +8,16 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-  @ViewChild('footer', { static: true }) footer?: ElementRef;
-  private subscription: Subscription;
+  @ViewChild('footer') footer?: ElementRef;
+  private subscription?: Subscription;
 
   constructor(private footerPosition: FooterPositionService) {
     // Subscribe to changes in the isAbsolute property
+
+  }
+
+  ngAfterViewInit()
+  {
     this.subscription = this.footerPosition.isAbsolute$.subscribe(isAbsolute => {
       if (isAbsolute) {
         (this.footer?.nativeElement as HTMLElement).classList.add('absolute');
@@ -26,7 +31,7 @@ export class FooterComponent {
 
   ngOnDestroy() {
     // Don't forget to unsubscribe to prevent memory leaks
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
 }

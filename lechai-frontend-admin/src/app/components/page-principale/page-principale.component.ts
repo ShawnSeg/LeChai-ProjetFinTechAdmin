@@ -1,6 +1,5 @@
 import { identifierName } from '@angular/compiler';
 import { Component, Output, EventEmitter } from '@angular/core';
-import { TableProprety } from 'src/Interface';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { Route } from '@angular/router';

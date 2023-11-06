@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ClientInterface, TableProprety } from 'src/Interface';
 import { Services } from './services.service';
 import { Observable } from 'rxjs';
 import { Token } from '@angular/compiler';
