@@ -24,14 +24,24 @@ export class FiltresComponent implements OnInit {
   }
   ngOnInit()
   {
-    this.URLParser.GetControlleurSub(this.route).subscribe(name => this.ControllerName = name)
+    this.URLParser.GetControlleurSub(this.route).subscribe(name => {
+
+      if(this.ControllerName != name)
+      {
+        this.ControllerName = name;
+        this.FilterResumes = [];
+      }
+
+    })
 
   }
-  updateFilters(filters : {[key:string]:any})
+  updateFilters(filters : {[key:string]:any}, normalUpdate:boolean = true)
   {
-    this.FilterResumes = this.container.paramsByDisplayName();
-    this.URLParser.ChangeURL("filters", filters, this.route);
-    this.URLParser.updateFilters(filters);
+    console.log(normalUpdate)
+    this.FilterResumes = normalUpdate ? this.container.paramsByDisplayName() : [];
+
+    this.URLParser.ChangeURL("filters", filters, this.route, normalUpdate);
+    /* this.URLParser.updateFilters(filters); */
     this.filters.emit(filters)
   }
   toggleHide() {
@@ -53,5 +63,10 @@ export class FiltresComponent implements OnInit {
       }
     }
 
-}
+  }
+
+  refreshFiltres()
+  {
+    this.filters.emit(this.container.paramsValue);
+  }
 }

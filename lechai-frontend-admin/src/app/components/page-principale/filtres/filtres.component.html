@@ -2,15 +2,12 @@
 <div class="filtre_container">
   <div class="filter_header">
     <span class="filtre_resume">
-      <div *ngFor="let filterResume of FilterResumes">
-        <p>{{filterResume.name}} - {{filterResume.params[0]}}</p>
-
-      </div>
+      <p *ngFor="let filterResume of FilterResumes">{{filterResume.name}} - {{filterResume.params[0]}}</p>
     </span>
-    <button>Refresh</button>
-    <button>Reset</button>
-    <img src="assets/image/hideFiltre.png" alt="hideFiltre" (click)="toggleHide()" #fleche>
+    <button (click)="refreshFiltres()" class="btn">Refresh</button>
+    <button (click)="updateFilters({}, false)" class="btn">Reset</button>
+    <img src="assets/image/hideFiltre.png" alt="hideFiltre" (click)="toggleHide()" #fleche class="btn">
   </div>
-  <app-display-item-container [class.hide]="filterHidden" #filtersContainer (params)="updateFilters($event)" [ContainerType]="ItemContainerTypes.Filters"></app-display-item-container>
+  <app-display-item-container #filtersContainer [class.hide]="filterHidden" [ContainerType]="ItemContainerTypes.Filters" (params)="updateFilters($event)" ></app-display-item-container>
 </div>
 

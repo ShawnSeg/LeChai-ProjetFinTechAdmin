@@ -11,15 +11,29 @@ import { ParamInfoResume, defaultParamInfo } from '../../../DisplayItemsInterfac
 export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
   @Input() valuePairs : ObjectEntry = { key: '', value: null };
   @Output() push = new EventEmitter();
-  @ViewChild('inputValue') input! : ElementRef;
+  @ViewChild('inputValue') input? : ElementRef;
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
+  @Input() set baseParam(value: ObjectEntry)
+  {
+    this.valuePairs = value
+
+    if(this.input)
+      this.updateBaseValue();
+
+  }
+
   constructor() {}
   ngOnInit(): void {
     /* console.log(this.paramInfoResume) */
   }
   ngAfterViewInit() {
-    if (this.valuePairs.value != null)
-      this.input.nativeElement.value = this.valuePairs.value;
+
+    this.updateBaseValue()
+  }
+
+  updateBaseValue(){
+    if(this.valuePairs.value != null)
+      this.input!.nativeElement.value = this.valuePairs.value
   }
 
   updateValue(value : string)

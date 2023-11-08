@@ -13,5 +13,5 @@
   </span>
 
 </div>
-<app-filtres (filters)="updateFilters($event)"></app-filtres>
-<app-data-display #dataDisplay></app-data-display>
+<app-filtres #filtres (filters)="updateFilters($event)"></app-filtres>
+<app-data-display #dataDisplay (sucessFunction)="refreshFiltres()"></app-data-display>

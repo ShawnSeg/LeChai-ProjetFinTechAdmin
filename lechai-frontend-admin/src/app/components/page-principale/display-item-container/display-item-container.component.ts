@@ -28,7 +28,7 @@ export interface DisplayItemTemplate {
 })
 export class DisplayItemContainerComponent implements OnInit {
   constructor(private URLParser : URLParserService, private caller:APICallerService, private route : ActivatedRoute) {}
-  ItemContainerTypes = ItemContainerTypes;
+  types = ItemContainerTypes;
   @Output() params = new EventEmitter();
   baseValues:{[Key:string]:object} | null = null
   paramsValue:{[Key:string]:object} = {}
@@ -45,12 +45,8 @@ export class DisplayItemContainerComponent implements OnInit {
   @Input() DisplayItemInfos : ParamInfoResume[] = []
   hasError: boolean = false;
 
-
-
   ngOnInit()
   {
-    console.log(this.DisplayItemInfos)
-
     if(!this.refControlleur)
       {this.URLParser.GetControlleurSub(this.route).subscribe(name => {
 
@@ -58,7 +54,6 @@ export class DisplayItemContainerComponent implements OnInit {
         {
           this.ControllerName = name;
           this.makeInit();
-          console.log("subscribe")
         }
       })
     }
@@ -68,7 +63,6 @@ export class DisplayItemContainerComponent implements OnInit {
       this.makeInit()
     }
   }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
@@ -110,8 +104,9 @@ export class DisplayItemContainerComponent implements OnInit {
               this.DisplayItemInfos = data.sort(item => item.ind)
 
               this.filterSubscription = this.URLParser.GetSubscription("filters", this.route, false).subscribe(data => {
-                this.baseValues = data
-                Object.keys(this.baseValues!).forEach(key => this.paramsValue[key]=this.baseValues![key])
+                this.paramsValue = this.baseValues = data
+                /* Object.keys(this.baseValues!).forEach(key => this.paramsValue[key]=this.baseValues![key]) */
+
                 this.pushParams();
               });
             })
@@ -228,5 +223,8 @@ export class DisplayItemContainerComponent implements OnInit {
         .map(affected => affected.name in this.paramsValue ? this.paramsValue[affected.name] : null))}})
   }
 
+  is(type:ItemContainerTypes){
+    return this.ContainerType == type;
+  }
 
 }

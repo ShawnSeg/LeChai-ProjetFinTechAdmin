@@ -123,10 +123,13 @@ export class URLParserService {
   {
     return this.GetURLInstance(type, route, always);
   }
-  ChangeURL(type : string, value : any, route : ActivatedRoute)
+  ChangeURL(type : string, value : any, route : ActivatedRoute, makeRequest = true)
   {
-    this.requestMade = true;
-    this.parserTool[type].requested = true;
+    this.requestMade = makeRequest;
+
+    if(makeRequest)
+      this.parserTool[type].requested = true;
+
     this.parserTool[type].setter(this.router, value, route);
   }
   GetURLInstance(type : string, route : ActivatedRoute, always : boolean) : any

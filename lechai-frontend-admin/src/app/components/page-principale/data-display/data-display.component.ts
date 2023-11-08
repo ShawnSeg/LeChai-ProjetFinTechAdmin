@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { URLParserService } from '../../../urlparser.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -21,6 +21,7 @@ export class DataDisplayComponent implements OnInit {
   @Input() refControlleur = "";
   @ViewChild("selectedDetail") selectedDetailElem? : ElementRef;
   @Input() filters? : {[key:string]:any};
+  @Output() sucessFunction = new EventEmitter();
   IdsNames:string[] = []
   selectedFunction? : RouteResumeBundle
   functions: RouteResumeBundle[] = []
@@ -47,6 +48,7 @@ export class DataDisplayComponent implements OnInit {
         console.log(this.ControllerName);
         if(this.ControllerName != name)
         {
+          this.currentInfos = []
           this.ControllerName = name;
           this.makeInit();
           this.setFilters({});
@@ -190,8 +192,8 @@ export class DataDisplayComponent implements OnInit {
     return this.currentInfos.map(info=>info.Ids)
   }
   executeFunction(params:{[key:string]:any}|null, routeName:string, routeType:RouteTypes){
-    console.log(params)
-    console.log(routeName)
+/*     console.log(params)
+    console.log(routeName) */
     this.selectedFunction = undefined;
     if(params == null)
       return
@@ -199,6 +201,8 @@ export class DataDisplayComponent implements OnInit {
     this.caller.CallAPI(routeType,params,this.ControllerName,routeName).subscribe({
       next:(data:any)=>{
         this.toast.showToast("success", data+" lignes d'affectées!", "bottom-center", 4000)
+
+        this.sucessFunction.emit(data)
       },
       error:(error:HttpErrorResponse)=>{
         console.log(error.status)

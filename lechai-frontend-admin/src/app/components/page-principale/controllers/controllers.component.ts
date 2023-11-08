@@ -6,6 +6,7 @@ import { URLParserService } from '../../../urlparser.service';
 import { ListeDeroulanteCustomComponent } from '../liste-deroulante-custom/liste-deroulante-custom.component';
 import { DataDisplayComponent } from '../data-display/data-display.component';
 import { ObjectEntry } from 'src/app/generalInterfaces';
+import { FiltresComponent } from '../filtres/filtres.component';
 export interface Controller{
   id:number,
   name:string,
@@ -25,6 +26,7 @@ export class ControllersComponent implements OnInit{
   filters:  {[key:string]:any} = {}
   @ViewChild('listeDeroule') listeDeroule! : ListeDeroulanteCustomComponent;
   @ViewChild('dataDisplay') dataDisplay! : DataDisplayComponent;
+  @ViewChild('filtres') filtres! : FiltresComponent;
 
   /* _ControllerName:string = "";
 
@@ -73,5 +75,10 @@ export class ControllersComponent implements OnInit{
   updateFilters(filters:  {[key:string]:any})
   {
     this.dataDisplay.setFilters(filters);
+  }
+
+  refreshFiltres()
+  {
+    this.filtres.refreshFiltres()
   }
 }

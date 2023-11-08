@@ -1,20 +1,7 @@
-<h1>{{ControllerName}}</h1>
 
 <div class="block">
-<div class="btnDiv" *ngFor="let funct of getRouteByType(RouteDisplayTypes.MULTIPLE)" (click)="toggleFunction(funct)">
-  <button class="btn">{{funct.route.name}}</button>
-<!--   <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button>
-  <button class="btn">{{funct.route.name}}</button> -->
+<div class="btnDiv">
+  <button *ngFor="let funct of getRouteByType(RouteDisplayTypes.MULTIPLE)" (click)="toggleFunction(funct)" class="btn">{{funct.route.name}}</button>
 </div>
 
 <ng-container *ngIf="selectedFunction">

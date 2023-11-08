@@ -25,7 +25,6 @@
   background-color: rgb(255,250,234);
   border-radius: 10px;
   border: 1px solid black;
-  width: 10%;
   padding: 1.5em;
   cursor: pointer;
 }
@@ -48,12 +47,18 @@
 }
 
 table {
-  table-layout:fixed;
+  /* table-layout:fixed; */
   width: 98%;
   word-wrap: break-word;
   border-collapse: collapse;
   margin:auto;
   margin-top: 2em;
+}
+
+td:first-child
+{
+  width: 2rem;
+  text-align: center;
 }
 
 th, td{

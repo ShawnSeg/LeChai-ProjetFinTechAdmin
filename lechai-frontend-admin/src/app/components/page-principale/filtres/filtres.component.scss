@@ -51,14 +51,14 @@ $btnColor: rgb(255,250,234);
   border-bottom: 8px $borderCouleur solid;
   border-right: 8px $borderCouleur solid;
   border-radius: 10px;
-  div, section{
+/*   div{
     display: flex;
     flex-wrap: wrap;
     min-height: 50px;
     margin-bottom:2%;
     &.hide{
       display: none;
-    }
+    } */
     button{
       margin-right:2%;
       width:10%;
@@ -74,19 +74,22 @@ $btnColor: rgb(255,250,234);
       border:2px solid black;
       margin-right:2%;
     }
-  }
 
 }
 
-div, section{
+.filter_header{
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+
+}
+
+/* div{
   min-height: 50px;
   margin-bottom:2%;
   &.hide{
     display: none;
-  }
-  button{
+  } */
+/*   button{
     margin-right:2%;
     width:10%
   }
@@ -98,20 +101,16 @@ div, section{
     border:2px solid black;
     margin-right:2%;
   }
-}
-.test{
-  width:100%;
-}
-.divFiltres{
-  width:100%;
-}
+} */
+
 
 .hide{
   display:none
 }
 
 
-.filter_header{
-  width:100%;
+.btn{
+  align-self: center;
+  padding: 1rem;
 }
 
