@@ -14,6 +14,7 @@
     <app-date-display-item class="filtres" *ngSwitchCase="10" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-date-display-item>
     <app-image-display-item class="filtres" *ngSwitchCase="11" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-image-display-item>
     <app-description-display-item class="filtres" *ngSwitchCase="12" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-description-display-item>
+    <app-roue-couleur-display-item class="filtres" *ngSwitchCase="13" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-roue-couleur-display-item>
 
   <ng-container *ngFor="let errorMessage of paramHasError(paramInfo)">
     <p class="errMsg">*{{errorMessage}}</p>

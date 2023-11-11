@@ -14,6 +14,7 @@ export class NavComponent {
 
   nomAdmin: string|null = 'Alberto';
   connecter:boolean = false;
+  navBackgroundColor: string = '#FFCFDF';
 
   token$!: Observable<string | null>;
 
@@ -39,7 +40,10 @@ export class NavComponent {
     }); */
 
     /* this.connecter = this.connexion.checkToken(); */
+  }
 
+  onColorChange(event: any) {
+    this.navBackgroundColor = event.target.value;
   }
 
   deconnecter()

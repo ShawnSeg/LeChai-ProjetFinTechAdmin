@@ -46,7 +46,7 @@ $btnColor: rgb(255,250,234);
 .filtre_container{
   width:90%;
   margin-left:5%;
-  margin-top:4em;
+  margin-top:2em;
   padding: 1%;
   border-bottom: 8px $borderCouleur solid;
   border-right: 8px $borderCouleur solid;
@@ -67,10 +67,11 @@ $btnColor: rgb(255,250,234);
       border: 1px solid black;
     }
     img{
-      width:3%;
+      width:2%;
     }
     span{
       width:70%;
+      height: 3em;
       border:2px solid black;
       margin-right:2%;
     }
@@ -111,6 +112,6 @@ $btnColor: rgb(255,250,234);
 
 .btn{
   align-self: center;
-  padding: 1rem;
+  padding: .5rem;
 }
 

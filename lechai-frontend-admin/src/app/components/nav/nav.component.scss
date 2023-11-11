@@ -2,22 +2,20 @@
 
 .header{
   z-index: 2;
-  top:0;
-  background-color: #FFCFDF;
-  padding:0;
+  background-color:#FFCFDF;
   height:4em;
 }
 
 .titre{
   position: absolute;
   max-width:10%;
-  top:.3em;
+  top:.7em;
   left:1.2em;
 }
 
 .cercle{
   position: absolute;
-  background-color: #FFCFDF;
+  background-color:#FFCFDF;
   border-radius: 100%;
   position: absolute;
   left:47%;
@@ -34,15 +32,16 @@
 }
 
 .nomAdmin{
+  position: absolute;
+  right: 25%;
+  top: 1em;
   font-size: larger;
-  margin-left: 65%;
-  padding-top: 1em;
 }
 
 .lienCo{
   position: absolute;
-  margin-left: 90%;
-  margin-top: 1.3em;
+  right: 6%;
+  top: 1.2em;
   a{
     font-size: large;
     color: black;
@@ -52,11 +51,33 @@
 
 .lienDeco{
   position: absolute;
-  margin-left: 90%;
-  margin-top: -1.3em;
+  right: 6%;
+  top: 1.2em;
   a{
     font-size: large;
     color: black;
     text-decoration: none;
   }
+}
+
+.color-picker {
+  position: absolute;
+  margin-left: 15%;
+  margin-top: .6em;
+}
+
+#colorInput
+{
+  appearance: none;
+  background-color: transparent;
+  width: 40px;
+  height: 45px;
+  border: none;
+  cursor: pointer;
+}
+
+#colorInput::-webkit-color-swatch
+{
+  border-radius: 50%;
+  border: 2px solid black;
 }

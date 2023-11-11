@@ -1,14 +1,25 @@
+$btnColor: rgb(255,250,234);
+
+button{
+  margin-left: 1em;
+  background-color: $btnColor;
+  padding: .5em;
+  margin-top: 1em;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
 h1{
   text-align: center;
-  margin-top: 2em;
-  margin-bottom: 3em;
+  margin-bottom: 1em;
 }
 
 .listeControlleurs{
   position: absolute;
-  right: 10%;
-  margin-top: -5em;
-  width: 20%;
+  right: 4%;
+  margin-top: -3em;
+  width: 15%;
 
 }
 
@@ -18,7 +29,7 @@ div{
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  padding-bottom: 1em;
+  padding-bottom: .5em;
   border-bottom: 2px solid black;
 
   span:first-of-type{

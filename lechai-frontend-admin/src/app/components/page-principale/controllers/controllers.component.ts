@@ -81,4 +81,25 @@ export class ControllersComponent implements OnInit{
   {
     this.filtres.refreshFiltres()
   }
+
+  toggleFunction(/* funct: RouteResumeBundle */) {
+    /* if (this.selectedFunction === funct) {
+      this.selectedFunction = undefined;
+      this.toggleModalOverlayBackground(false);
+      return;
+    }
+    this.selectedFunction = funct; */
+    this.toggleModalOverlayBackground(false);
+  }
+
+  toggleModalOverlayBackground(isDarker: boolean) {
+    // Delay the background color change using a timeout
+    setTimeout(() => {
+      const modalOverlay = document.querySelector('.modal-overlay') as HTMLElement;
+      if (modalOverlay) {
+        modalOverlay.style.animationName = isDarker ? 'none' : 'fadeOut';
+        modalOverlay.style.backgroundColor = isDarker ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0)';
+      }
+    });
+  }
 }

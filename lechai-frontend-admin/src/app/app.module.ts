@@ -44,6 +44,7 @@ import { DescriptionDisplayItemComponent } from './components/displayItem/descri
 import { DateDisplayItemComponent } from './components/displayItem/date-display-item/date-display-item.component';
 import { ImageDisplayItemComponent } from './components/displayItem/image-display-item/image-display-item.component';
 import { CheckBoxDisplayItemComponent } from './components/displayItem/check-box-display-item/check-box-display-item.component';
+import { RoueCouleurDisplayItemComponent } from './components/displayItem/roue-couleur-display-item/roue-couleur-display-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +75,8 @@ import { CheckBoxDisplayItemComponent } from './components/displayItem/check-box
     DescriptionDisplayItemComponent,
     DateDisplayItemComponent,
     ImageDisplayItemComponent,
-    CheckBoxDisplayItemComponent
+    CheckBoxDisplayItemComponent,
+    RoueCouleurDisplayItemComponent
 
   ],
   imports: [
