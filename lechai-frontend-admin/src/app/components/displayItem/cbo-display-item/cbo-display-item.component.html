@@ -1,3 +1,14 @@
 <p>{{paramInfoResume.name}}</p>
+<div class="flex">
+  <app-liste-deroulante-custom #inputValue [setValue]="listValeurPossible" [baseValue]="valuePairs.value" (selectedValue)="updateValue($event)" class="appListe"> </app-liste-deroulante-custom>
+  <img *ngIf="displayItemInfos" src="../../../../assets/image/plus-solid.svg" alt="ajoutCBO" class="addCBO" (click)="insertCBO()">
+</div>
 
-<app-liste-deroulante-custom #inputValue [setValue]="listValeurPossible" [baseValue]="valuePairs.value" (selectedValue)="updateValue($event)"> </app-liste-deroulante-custom>
+<ng-container *ngIf="showInsert">
+  <app-display-item-container
+    [DisplayItemInfos]="displayItemInfos!"
+    [ContainerType]="ItemContainerTypes.SingleFunction"
+    [refControlleur]="paramInfoResume.mapper?.refController!"
+    (params)="pushRoute($event)"
+  ></app-display-item-container>
+</ng-container>

@@ -18,6 +18,7 @@ export interface DisplayItemTemplate {
   valuePairs : Entryies,
   paramInfoResume : ParamInfoResume,
   push : EventEmitter<Entryies>,
+  isUpdatable : boolean,
   updateValue(value : any) : void;
   pushValue() : void;
 }
@@ -44,11 +45,14 @@ export class DisplayItemContainerComponent implements OnInit {
   dataSubscription : Subscription | undefined
   @Input() DisplayItemInfos : ParamInfoResume[] = []
   hasError: boolean = false;
+  refPropreities : ParamInfoResume[] = []
 
   ngOnInit()
   {
+
     if(!this.refControlleur)
       {this.URLParser.GetControlleurSub(this.route).subscribe(name => {
+
 
         if(this.ControllerName != name)
         {
@@ -67,7 +71,7 @@ export class DisplayItemContainerComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
       // Handle changes to myInput here
-      console.log('myInput has changed:', changes);
+      /* console.log('myInput has changed:', changes); */
     }
   }
 
@@ -84,11 +88,13 @@ export class DisplayItemContainerComponent implements OnInit {
         if (this.propSubscription)
           this.propSubscription.unsubscribe()
 
+        this.refPropreities = this.DisplayItemInfos.filter(info => info.showTypeID == 2) // 2 = REF
+        console.log(this.refPropreities)
+
         if (!!this.Ids)
           this.propSubscription = this.caller.Get<{[key:string]:any}>(this.Ids, this.ControllerName, "GetDetailed")
             .subscribe(data => {
               this.baseValues = data;
-
              /*  this.DisplayItemInfos = this.Proprieties!.sort(item => item.ind); */
               Object.keys(this.Ids!).forEach(key => this.paramsValue[key] = this.Ids![key])
             });
@@ -101,12 +107,12 @@ export class DisplayItemContainerComponent implements OnInit {
 
         this.dataSubscription = this.caller.Get<ParamInfoResume[]>({}, `/${this.ControllerName}/Info/Filters`)
             .subscribe(data => {
-              this.DisplayItemInfos = data.sort(item => item.ind)
 
+              this.DisplayItemInfos = data.sort(item => item.ind)
+              this.baseValues = {};
               this.filterSubscription = this.URLParser.GetSubscription("filters", this.route, false).subscribe(data => {
                 this.paramsValue = this.baseValues = data
                 /* Object.keys(this.baseValues!).forEach(key => this.paramsValue[key]=this.baseValues![key]) */
-
                 this.pushParams();
               });
             })

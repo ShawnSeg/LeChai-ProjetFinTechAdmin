@@ -82,6 +82,7 @@ export class URLParserService {
   currentSelectedLength : number = -2 //we check the lenght because the comparaison is strong ehouph for our needs
   currentSelectedIds : {Ids:{[key:string]:any}, Index:number}[] | null = []
   requestMade : boolean = false
+  connectionURL : string = "/connexion";
 
   private filtersSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
@@ -145,5 +146,10 @@ export class URLParserService {
   ParseAll(paraMap : ParamMap): { [key: string]: any }
   {
     return toDictionary<string, any>(paraMap.keys, key => key == this.controllerNameVariableName ? null : key, (key) => paraMap.get(key));
+  }
+
+  noConnection()
+  {
+    this.router.navigate([this.connectionURL]);
   }
 }

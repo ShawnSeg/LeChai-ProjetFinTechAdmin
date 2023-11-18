@@ -1,21 +1,23 @@
 
 
 .header{
+  position: relative;
+  --heightNav: 4em;
   z-index: 2;
-  background-color:#FFCFDF;
-  height:4em;
+  background-color:var(--CouleurNav);
+  height:var(--heightNav);
 }
 
 .titre{
   position: absolute;
-  max-width:10%;
+  height: calc(var(--heightNav) - (.7em * 2));
   top:.7em;
   left:1.2em;
 }
 
 .cercle{
   position: absolute;
-  background-color:#FFCFDF;
+  background-color:var(--CouleurNav);
   border-radius: 100%;
   position: absolute;
   left:47%;
@@ -53,6 +55,7 @@
   position: absolute;
   right: 6%;
   top: 1.2em;
+  cursor: pointer;
   a{
     font-size: large;
     color: black;
@@ -66,18 +69,8 @@
   margin-top: .6em;
 }
 
-#colorInput
-{
-  appearance: none;
-  background-color: transparent;
-  width: 40px;
-  height: 45px;
-  border: none;
-  cursor: pointer;
-}
-
-#colorInput::-webkit-color-swatch
-{
-  border-radius: 50%;
-  border: 2px solid black;
+.roueCouleur{
+  position: absolute;
+  left: 12%;
+  margin-top: .5em;
 }

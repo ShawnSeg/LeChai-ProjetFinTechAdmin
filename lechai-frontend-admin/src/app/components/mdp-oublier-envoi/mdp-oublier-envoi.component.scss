@@ -33,7 +33,7 @@
   width:20%;
   margin-left:39%;
   position:absolute;
-  background-color: white;
+  background-color: var(--CouleurBackFiltreUpdate);
   top:-20%;
   padding:1%;
   border-radius: 10%;
@@ -54,17 +54,17 @@ p{
   border-radius: 20%;
   padding:2%;;
   border:none;
-  color:white;
+  color:black;
 }
 
 .btn-secondary{
   margin-left:45%;
   margin-right:3%;
-  background-color: gray;
+  background-color: var(--CouleurBoutonForm);
 }
 
 .btn-primary{
-  background-color: rgb(67, 106, 224);
+  background-color: var(--CouleurBoutonForm);
 }
 
 input{

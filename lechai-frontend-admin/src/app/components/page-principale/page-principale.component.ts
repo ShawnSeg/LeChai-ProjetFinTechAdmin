@@ -5,6 +5,8 @@ import { RoutingService } from 'src/app/services/routing.service';
 import { Route } from '@angular/router';
 import { Services } from 'src/app/services/services.service';
 import { Observable } from 'rxjs';
+import { Controller } from './controllers/controllers.component';
+import { APICallerService } from 'src/app/apicaller.service';
 
 @Component({
   selector: 'app-page-principale',
@@ -13,12 +15,16 @@ import { Observable } from 'rxjs';
 })
 export class PagePrincipaleComponent {
 
-  constructor(private footerPosition:FooterPositionService, private routing:RoutingService) {
+  controllers : Controller[] = [];
+  ifControllers : boolean = false;
+
+  constructor(private footerPosition:FooterPositionService, private caller:APICallerService) {
 
   }
 
   ngOnInit() {
     this.footerPosition.setIsAbsolute(false);
+
 
   }
 

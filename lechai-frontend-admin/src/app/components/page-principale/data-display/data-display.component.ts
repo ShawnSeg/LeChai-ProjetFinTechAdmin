@@ -10,6 +10,7 @@ import { ItemContainerTypes } from '../display-item-container/display-item-conta
 import { ObjectEntry, toDictionary, toDictionarySimple } from '../../../generalInterfaces';
 import { Subscription } from 'rxjs';
 import { ToastService } from 'src/app/services/toast.service';
+import { Services } from 'src/app/services/services.service';
 
 @Component({
   selector: 'app-data-display',
@@ -39,8 +40,9 @@ export class DataDisplayComponent implements OnInit {
   subscribed = false;
   isRowChecked: boolean[] = [];
   checkedItems: ObjectEntry = { key: 'Ids', value: this.isRowChecked };
+  @Input() inputedData:{[key:string]:any}[] = []
 
-  constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute, private toast:ToastService) {}
+  constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute, private toast:ToastService, private services: Services) {}
   ngOnInit() {
 
     if(!this.refControlleur)
@@ -119,13 +121,25 @@ export class DataDisplayComponent implements OnInit {
   getData(params : {[key:string]:any}, setIndex : boolean){
     if (this.dataSubscription)
       this.dataSubscription.unsubscribe()
+
+    if(this.inputedData)
+    {
+      this.setData(this.inputedData, setIndex)
+      return
+    }
     this.dataSubscription = this.caller.Get<{[key:string]:any}[]>(params, this.ControllerName, "GetAll")
     .subscribe(data => {
-      this.dataDisplay = data;
-      if (setIndex)
-        this.setIndex()
+      this.setData(data, setIndex);
     });
   }
+
+  setData(data: {[key:string]:any}[], setIndex: boolean)
+  {
+    this.dataDisplay = data;
+      if (setIndex)
+        this.setIndex()
+  }
+
   setSelected(tempCurrent : number[][])
   {
     this.currentInfos = tempCurrent.map(value =>
@@ -142,10 +156,12 @@ export class DataDisplayComponent implements OnInit {
   }
   getValue(params : string[], item : {[key:string]:any})
   {
-    return params.map(param => item[param]).join(', ');
+    return item[params.length > 1 ? params[1] : params[0]];
+    /* return params.map(param => item[param]).join(', '); */
   }
   toggleSelected(i : number, item :{[key:string]:any}, isForOpenedDetail:boolean, forceCheck?:boolean)
   {
+    console.log(item);
     const index = this.currentInfos.findIndex(info => info.Index == i);
     if ( index > -1) {
       if(forceCheck===true)
@@ -203,6 +219,9 @@ export class DataDisplayComponent implements OnInit {
         this.toast.showToast("success", data+" lignes d'affectées!", "bottom-center", 4000)
 
         this.sucessFunction.emit(data)
+
+        if(this.ControllerName == "Couleurs" && routeName == "UPDATE" && "Value" in params)
+          this.services.updateCssVariable(`--${this.dataDisplay[this.currentInfos.find(info => info.Ids["ID"] == params["ID"])?.Index!]["NomVariable"]}`, params["Value"]);
       },
       error:(error:HttpErrorResponse)=>{
         console.log(error.status)

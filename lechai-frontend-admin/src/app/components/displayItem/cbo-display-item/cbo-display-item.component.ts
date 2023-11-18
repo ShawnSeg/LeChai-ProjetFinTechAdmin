@@ -4,7 +4,7 @@ import { Entryies, ObjectEntry } from 'src/app/generalInterfaces';
 import { ParamInfoResume, defaultParamInfo } from 'src/app/DisplayItemsInterfaces';
 import { APICallerService } from 'src/app/apicaller.service';
 import { ListeDeroulanteCustomComponent } from '../../page-principale/liste-deroulante-custom/liste-deroulante-custom.component';
-
+import { ItemContainerTypes } from 'src/app/components/page-principale/display-item-container/display-item-container.component';
 @Component({
   selector: 'app-cbo-display-item',
   templateUrl: './cbo-display-item.component.html',
@@ -13,13 +13,21 @@ import { ListeDeroulanteCustomComponent } from '../../page-principale/liste-dero
 export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
   @Input() valuePairs : ObjectEntry = { key: '', value: null };
   @Output() push = new EventEmitter();
+  @Output() insert = new EventEmitter();
   @ViewChild('inputValue') input! : ListeDeroulanteCustomComponent;
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
+  @Input() isUpdatable: boolean = false;
   listValeurPossible:{[key:string]:any}={}
+  ItemContainerTypes = ItemContainerTypes;
+  displayItemInfos? : ParamInfoResume[] = undefined;
+  showInsert = false;
+
   constructor(private caller:APICallerService) {}
   ngOnInit(): void {
-    console.log(this.valuePairs)
-    if(this.paramInfoResume.mapper)
+
+    if(!this.paramInfoResume.mapper)
+      return
+
     this.caller.Get<{[key:string]:any}>({}, this.paramInfoResume.mapper.refController, "CBO").subscribe(data=>{
       this.listValeurPossible=data;
 
@@ -28,6 +36,10 @@ export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
           this.paramInfoResume.showValue = this.listValeurPossible[this.valuePairs.value]
           this.pushValue()
         }
+    })
+
+    this.caller.Get<ParamInfoResume[]>({}, this.paramInfoResume.mapper?.refController!, "InfoRoute/Insert").subscribe(data=>{
+      this.displayItemInfos = data;
     })
   }
 
@@ -50,5 +62,22 @@ export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
   pushValue()
   {
     this.push.emit(this.valuePairs);
+  }
+
+  insertCBO(){
+    this.showInsert = true;
+  }
+
+  pushRoute(params : {[key:string]:any})
+  {
+
+    this.showInsert = false;
+
+    if(!params || Object.keys(params).length == 0)
+      return;
+
+    this.caller.Post(params, this.paramInfoResume.mapper?.refController!, "Insert").subscribe(()=>{})
+
+    //this.insert.emit(true);
   }
 }

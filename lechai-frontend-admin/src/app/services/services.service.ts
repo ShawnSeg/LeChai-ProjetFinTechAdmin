@@ -59,6 +59,11 @@ export class Services {
     }, eightHoursInMilliseconds);
   }
 
+  updateCssVariable(nomVariable: string, value:string)
+  {
+    document.documentElement.style.setProperty(nomVariable, value)
+  }
+
 
 
   /* chargeInput(for: string, labelName: string, type: string, class: string, placeholder: string){

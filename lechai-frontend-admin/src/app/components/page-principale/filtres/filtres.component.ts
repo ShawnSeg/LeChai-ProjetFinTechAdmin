@@ -26,6 +26,8 @@ export class FiltresComponent implements OnInit {
   {
     this.URLParser.GetControlleurSub(this.route).subscribe(name => {
 
+      console.log(name);
+
       if(this.ControllerName != name)
       {
         this.ControllerName = name;

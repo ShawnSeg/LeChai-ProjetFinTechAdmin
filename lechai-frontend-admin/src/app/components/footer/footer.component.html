@@ -1,6 +1,8 @@
 
 <footer #footer>
 
+  <app-roue-couleur-display-item *ngIf="objectCouleur" [isUpdatable]="true" [valuePairs]="objectCouleur" [paramInfoResume]="ParamInfoCouleur" (push)="updateCouleurFoot($event.value)" class="roueCouleur"></app-roue-couleur-display-item>
+
   <div class="footer-container">
     <span>
       <p>Réseaux sociaux</p>

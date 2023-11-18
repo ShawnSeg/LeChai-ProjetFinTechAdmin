@@ -15,6 +15,7 @@ export class DescriptionDisplayItemComponent implements OnInit, DisplayItemTempl
   @Output() push = new EventEmitter();
   @ViewChild('inputValue') input! : ElementRef;
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
+  @Input() isUpdatable: boolean = false;
   constructor() {}
   ngOnInit(): void {
     /* console.log(this.paramInfoResume) */

@@ -14,6 +14,7 @@ export class DateDisplayItemComponent implements OnInit, DisplayItemTemplate{
   @Output() push = new EventEmitter();
   @ViewChild('inputValue') input! : ElementRef;
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
+  @Input() isUpdatable: boolean = false;
   constructor() {}
   ngOnInit(): void {
     /* console.log(this.paramInfoResume) */

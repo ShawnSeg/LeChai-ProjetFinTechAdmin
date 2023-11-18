@@ -1,3 +1,5 @@
+
+
 @keyframes fadeOut {
   from {
     opacity: 1;
@@ -13,31 +15,27 @@
   width: 100%;
 }
 
-.btnDiv{
-  margin-left: 4em;
-  margin-right: 3em;
-  margin-top: 1.5em;
-}
-
 .btn{
   margin-left: 1em;
-  background-color: rgb(255,250,234);
+  background-color: var(--CouleurBoutonAdmin);
   border-radius: 10px;
   border: 1px solid black;
   padding: 1em;
   cursor: pointer;
 }
 
-.btnFlex{
+.btnDiv{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
+  padding-top: 1em;
+  padding-left: 1em;
 }
 
 .addbtn{
   margin-left: 1em;
   margin-bottom: 1em;
-  background-color: rgb(255,250,234);
+  background-color: var(--CouleurBoutonAdmin);
   border-radius: 10px;
   border: 1px solid black;
   width: 15%;
@@ -54,7 +52,12 @@ table {
   margin-top: 1em;
 }
 
-td:first-child
+tbody
+{
+  background-color: var(--CouleurTableauAdmin);
+}
+
+.checkboxTD
 {
   width: 2rem;
   text-align: center;
@@ -68,7 +71,7 @@ th, td{
 }
 
 th{
-  background-color: rgb(255,250,234);
+  background-color: var(--CouleurEnteteTableauAdmin);
 }
 
 .imgProd{
@@ -107,4 +110,16 @@ th{
 
 .active {
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+}
+
+.colorInput
+{
+  appearance: none;
+  background-color: transparent;
+  width: 100px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  margin: auto;
 }

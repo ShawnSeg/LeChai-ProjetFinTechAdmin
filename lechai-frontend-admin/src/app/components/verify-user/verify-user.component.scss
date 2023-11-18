@@ -13,7 +13,7 @@
   position: relative;
   width: auto;
   height: auto;
-  background: rgb(255,250,234);
+  background: var(--CouleurBackForm);
   border: none;
   border-radius: 20px;
   display: flex;
@@ -99,7 +99,7 @@
   width: 100%;
   height: 40px;
   border-radius: 40px;
-  background: white;
+  background: var(--CouleurBoutonForm);
   border: 2px solid grey;
   outline: none;
   cursor: pointer;

@@ -1,20 +1,20 @@
 <div *ngIf="is(types.SingleFunction)" class="modal-background" (click)="pushCancel()"></div>
 <div [class.modal]="is(types.SingleFunction)" class="container">
 <div *ngIf="baseValues != null" class="paramInfoContainer" >
-  <span *ngFor="let paramInfo of DisplayItemInfos" [ngSwitch]="paramInfo.showTypeID">
+  <span *ngFor="let paramInfo of DisplayItemInfos" [ngSwitch]="paramInfo.showTypeID" class="spanDisplay">
     <!-- switch 1 none -->
-    <app-ref-display-item class="filtres" *ngSwitchCase="2" [valuePairs]="paramsValue" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-ref-display-item>
-    <app-cbo-display-item class="filtres" *ngSwitchCase="3" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-cbo-display-item>
-    <app-string-display-item class="filtres" *ngSwitchCase="4" [baseParam]="intermediaire(paramInfo)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-string-display-item>
-    <app-int-display-item class="filtres" *ngSwitchCase="5" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-int-display-item>
-    <app-float-display-item class="filtres" *ngSwitchCase="6" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-float-display-item>
-    <app-cbo-display-item class="filtres" *ngSwitchCase="7" [valuePairs]="currentAffectedVarValue(paramInfo.name, 'New')" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-cbo-display-item>
+    <!-- switch 2 none -->
+    <app-cbo-display-item class="filtres" *ngSwitchCase="3" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-cbo-display-item>
+    <app-string-display-item class="filtres" *ngSwitchCase="4" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-string-display-item>
+    <app-int-display-item class="filtres" *ngSwitchCase="5" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-int-display-item>
+    <app-float-display-item class="filtres" *ngSwitchCase="6" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-float-display-item>
+    <app-cbo-display-item class="filtres" *ngSwitchCase="7" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name, 'New')" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-cbo-display-item>
     <!--switch 8 none -->
-    <app-check-box-display-item class="filtres" *ngSwitchCase="9" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-check-box-display-item>
-    <app-date-display-item class="filtres" *ngSwitchCase="10" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-date-display-item>
-    <app-image-display-item class="filtres" *ngSwitchCase="11" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-image-display-item>
-    <app-description-display-item class="filtres" *ngSwitchCase="12" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-description-display-item>
-    <app-roue-couleur-display-item class="filtres" *ngSwitchCase="13" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-roue-couleur-display-item>
+    <app-check-box-display-item class="filtres" *ngSwitchCase="9" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-check-box-display-item>
+    <app-date-display-item class="filtres" *ngSwitchCase="10" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-date-display-item>
+    <app-image-display-item class="filtres" *ngSwitchCase="11" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-image-display-item>
+    <app-description-display-item class="filtres" *ngSwitchCase="12" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-description-display-item>
+    <app-roue-couleur-display-item class="filtres" *ngSwitchCase="13" [isUpdatable]="paramInfo.isUpdatable" [valuePairs]="currentAffectedVarValue(paramInfo.name)" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-roue-couleur-display-item>
 
   <ng-container *ngFor="let errorMessage of paramHasError(paramInfo)">
     <p class="errMsg">*{{errorMessage}}</p>
@@ -27,7 +27,17 @@
   <button (click)="pushCancel()" class="addbtn">Annuler</button>
   <button (click)="pushParams()" class="addbtn">Executer</button>
 </div>
-<div *ngIf="is(types.Proprieties)" class="btnFlex">
-  <button *ngFor="let route of Routes" (click)="pushRoute(route)" class="addbtn">{{route.route.name}}</button>
+<div *ngIf="is(types.Proprieties)">
+  <div class="btnFlex">
+    <button *ngFor="let route of Routes" (click)="pushRoute(route)" class="addbtn">{{route.route.name}}</button>
+  </div>
+
+  <div *ngIf="baseValues != null">
+    <span *ngFor="let paramInfo of refPropreities" class="showTypeRef">
+
+      <app-ref-display-item class="filtres" [valuePairs]="baseValues" [paramInfoResume]="paramInfo" (push)="updateFilter($event, paramInfo)"></app-ref-display-item>
+    </span>
+
+  </div>
 </div>
 </div>

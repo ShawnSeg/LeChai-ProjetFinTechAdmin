@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ToastService } from './services/toast.service';
+import { APICallerService } from './apicaller.service';
+import { Services } from './services/services.service';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +15,15 @@ export class AppComponent {
   toastType = "";
   toastPosition = "";
 
-  constructor(private toast: ToastService) {
+  constructor(private toast: ToastService, private caller : APICallerService, private services: Services) {
 
   }
 
   ngOnInit(): void {
+    this.caller.Get<{[key:string]:string}>({}, "Couleurs", "GetValues").subscribe(values =>{
+      Object.keys(values).forEach(key => this.services.updateCssVariable(`--${key}`, values[key]))
+    })
+
     this.toast.status.subscribe((msg: string) =>{
       this.toastType = localStorage.getItem("toastType") || "";
       this.toastPosition = localStorage.getItem("toastPosition") || "";

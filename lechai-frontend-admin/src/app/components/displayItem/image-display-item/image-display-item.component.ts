@@ -14,6 +14,7 @@ export class ImageDisplayItemComponent implements OnInit, DisplayItemTemplate{
   @Output() push = new EventEmitter();
   @ViewChild('inputValue') input! : ElementRef;
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
+  @Input() isUpdatable: boolean = false;
   str:string = "";
   constructor() {}
   ngOnInit(): void {

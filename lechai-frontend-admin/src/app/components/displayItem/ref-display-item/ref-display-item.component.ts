@@ -18,6 +18,8 @@ export class RefDisplayItemComponent implements OnInit {
   ngOnInit(): void {
     let tempFilters:{[key:string]:any} = {}
     let baseParam = this.paramInfoResume.mapper?.baseParameters;
+
+    console.log(this.valuePairs)
     if (baseParam)
       Object.keys(baseParam).forEach(key => tempFilters[key] = baseParam![key])
     let linkParam = this.paramInfoResume.mapper?.parametersToLink;
@@ -31,5 +33,10 @@ export class RefDisplayItemComponent implements OnInit {
   }
   pushValue()
   {
+  }
+
+  getValuePairs()
+  {
+    return this.valuePairs[this.paramInfoResume.name];
   }
 }

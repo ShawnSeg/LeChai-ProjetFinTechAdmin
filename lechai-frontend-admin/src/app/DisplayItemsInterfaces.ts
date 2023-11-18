@@ -4,6 +4,7 @@ import { ValidatorResume, ValidatorTypes } from "./validators";
 export interface ParamInfoResume{
   name:string,
   isMain:boolean,
+  isUpdatable: boolean,
   description:string,
   placeholder:string,
   showTypeID:number,
@@ -17,6 +18,7 @@ export function defaultParamInfo() : ParamInfoResume
   return {
     name: '',
     isMain: false,
+    isUpdatable: true,
     description: '',
     placeholder: '',
     showTypeID: 0,

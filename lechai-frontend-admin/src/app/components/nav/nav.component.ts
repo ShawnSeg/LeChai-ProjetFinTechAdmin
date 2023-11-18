@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
 import { Subscription } from 'rxjs';
 import { APICallerService } from 'src/app/apicaller.service';
+import { ParamInfoResume, defaultParamInfo } from 'src/app/DisplayItemsInterfaces';
+import { ObjectEntry } from 'src/app/generalInterfaces';
+import { Services } from 'src/app/services/services.service';
 
 @Component({
   selector: 'app-nav',
@@ -12,15 +15,17 @@ import { APICallerService } from 'src/app/apicaller.service';
 })
 export class NavComponent {
 
-  nomAdmin: string|null = 'Alberto';
+  nomAdmin: string|null = '';
   connecter:boolean = false;
-  navBackgroundColor: string = '#FFCFDF';
-
+  ParamInfoCouleur: ParamInfoResume = defaultParamInfo();
+  couleurNav: string = "";
+  objectCouleur? : ObjectEntry;
   token$!: Observable<string | null>;
+  idCouleurNav = 1;
 
   /* private subscription: Subscription; */
 
-  constructor(private router: Router, private toast: ToastService, private caller:APICallerService){
+  constructor(private router: Router, private toast: ToastService, private caller:APICallerService, private services: Services){
     /* this.subscription = this.connexion.isConnected$.subscribe(isConnected => {
       if (isConnected) {
         this.connecter = true
@@ -34,6 +39,11 @@ export class NavComponent {
 
     this.nomAdmin = this.caller.getUserName();
 
+    this.ParamInfoCouleur.showTypeID = 13;
+    this.caller.Get({ID:this.idCouleurNav}, "Couleurs", "GET").subscribe((couleur:any) => {
+      this.couleurNav = `--${couleur["NomVariable"]}`
+      this.objectCouleur = {key : this.couleurNav, value: couleur["Value"]}
+    })
 
       /* this.connexion.isConnected$.subscribe(isConnected => {
       this.connecter = isConnected;
@@ -42,9 +52,9 @@ export class NavComponent {
     /* this.connecter = this.connexion.checkToken(); */
   }
 
-  onColorChange(event: any) {
+/*   onColorChange(event: any) {
     this.navBackgroundColor = event.target.value;
-  }
+  } */
 
   deconnecter()
   {
@@ -52,6 +62,12 @@ export class NavComponent {
     this.router.navigate(["/connexion"]);
     this.toast.showToast("success", "Déconnexion réussi.", "bottom-center", 4000);
 
+  }
+
+  updateCouleurNav(value:string)
+  {
+    this.services.updateCssVariable(this.couleurNav, value);
+    this.caller.Put({ID: this.idCouleurNav, Value: value}, "Couleurs", "UPDATE").subscribe(()=>{});
   }
 
 }

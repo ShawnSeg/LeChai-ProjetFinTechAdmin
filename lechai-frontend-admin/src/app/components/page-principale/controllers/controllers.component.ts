@@ -7,11 +7,13 @@ import { ListeDeroulanteCustomComponent } from '../liste-deroulante-custom/liste
 import { DataDisplayComponent } from '../data-display/data-display.component';
 import { ObjectEntry } from 'src/app/generalInterfaces';
 import { FiltresComponent } from '../filtres/filtres.component';
+
 export interface Controller{
   id:number,
   name:string,
   isMain:boolean
 }
+
 @Component({
   selector: 'app-controllers',
   templateUrl: './controllers.component.html',
@@ -39,20 +41,35 @@ export class ControllersComponent implements OnInit{
 
   constructor(private URLParser:URLParserService, private caller:APICallerService, private route : ActivatedRoute){}
   ngOnInit(): void {
-    this.selectedController = this.URLParser.GetControlleur(this.route)
-    //this.URLParser.GetControllerName(this.route).subscribe(name => this.selectedController = name ?? "");
-    //this.URLParser.GetSubscription("controller", this.route, true).subscribe(name => this.selectedController = name ?? "")
+
+
+    if(!this.caller.isConnected())
+      this.URLParser.noConnection()
+
     this.caller.Get<Controller[]>({}, "Info", "Controllers")
     .subscribe(data => {
 
-      this.controllers = data;
-      data.forEach((controller) => {
+    this.controllers = data;
+
+    let control = this.URLParser.GetControlleur(this.route)
+
+    if (!control || !this.controllers.some(controller => controller.name == control))
+    {
+      this.selectController(this.controllers[0].name)
+    }
+    else{
+      this.selectedController = control;
+      this.controllerOk = true;
+    }
+    //this.URLParser.GetControllerName(this.route).subscribe(name => this.selectedController = name ?? "");
+    //this.URLParser.GetSubscription("controller", this.route, true).subscribe(name => this.selectedController = name ?? "")
+
+      this.controllers.forEach((controller) => {
         this.controllersString[controller.name.toString()] = controller.name;
       });
-      if (!this.selectedController || !this.controllers.some(controller => controller.name == this.selectedController))
-        this.selectController(this.controllers[0].name)
-      //this.URLParser.ChangeControlerRoute(this.controllers[0].name, this.route)
+
     });
+      //this.URLParser.ChangeControlerRoute(this.controllers[0].name, this.route)
   }
   selectController(controllerName:string)
   {
@@ -89,7 +106,7 @@ export class ControllersComponent implements OnInit{
       return;
     }
     this.selectedFunction = funct; */
-    this.toggleModalOverlayBackground(false);
+    this.toggleModalOverlayBackground(true);
   }
 
   toggleModalOverlayBackground(isDarker: boolean) {

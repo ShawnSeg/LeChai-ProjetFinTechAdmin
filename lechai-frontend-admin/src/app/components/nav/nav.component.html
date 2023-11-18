@@ -1,16 +1,12 @@
-<nav  [style.background-color]="navBackgroundColor" class="header">
+<nav class="header">
   <img src="assets/image/leChaiLogo.png" class="titre" alt="Titre">
-  <div [style.background-color]="navBackgroundColor" class="cercle">
+  <div class="cercle">
     <a routerLink="">
       <img class="logo"src="assets/image/logo.png" alt="logo">
     </a>
   </div>
 
-  <div class="color-picker">
-    <input type="color" id="colorInput" [(ngModel)]="navBackgroundColor"  (input)="onColorChange($event)">
-
-    <!-- <app-roue-couleur-display-item [backgroundColor]="navBackgroundColor" ></app-roue-couleur-display-item> -->
-  </div>
+  <app-roue-couleur-display-item *ngIf="objectCouleur" [isUpdatable]="true" [valuePairs]="objectCouleur" [paramInfoResume]="ParamInfoCouleur" (push)="updateCouleurNav($event.value)" class="roueCouleur"></app-roue-couleur-display-item>
 
   <ng-container *ngIf="nomAdmin; else notConnected">
     <p class="nomAdmin">Bonjour {{ nomAdmin }}!</p>

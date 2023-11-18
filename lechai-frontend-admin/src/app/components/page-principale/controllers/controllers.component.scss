@@ -1,8 +1,8 @@
-$btnColor: rgb(255,250,234);
+
 
 button{
   margin-left: 1em;
-  background-color: $btnColor;
+  background-color: var(--CouleurBoutonAdmin);
   padding: .5em;
   margin-top: 1em;
   cursor: pointer;
@@ -41,7 +41,7 @@ div{
 
     .selected
     {
-      color: #FFE649;
+      color: VAR(--CouleurSelectionMenu);
     }
 
     a{

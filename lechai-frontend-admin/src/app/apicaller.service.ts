@@ -45,6 +45,12 @@ export class APICallerService{
     localStorage.setItem("token", "");
     localStorage.setItem("name", "");
   }
+
+  isConnected()
+  {
+    return !!this.token
+  }
+
   ConnexionStepOne(userName:string, password:string): Observable<boolean>{
     return this.Post({"Email": userName, "Password": password}, this.controllerConnexionName, this.connexionRouteNameStepOne)
     .pipe(
@@ -92,7 +98,7 @@ export class APICallerService{
   Get<T>(params: { [key: string]: Object }, controllerName: string, routeName: string): Observable<T>;
   Get<T>(params: { [key: string]: Object }, routeURL: string): Observable<T>;
   Get<T>(params: { [key: string]: Object }, controllerOrRoute: string, routeName?: string): Observable<T>
-  { return this.http.get<T>(this.GetRoutePath(controllerOrRoute, routeName)+this.ParamsToURL(params), this.GetHeader());}
+  { console.log(this.GetRoutePath(controllerOrRoute, routeName)); return this.http.get<T>(this.GetRoutePath(controllerOrRoute, routeName)+this.ParamsToURL(params), this.GetHeader());}
 
   Post<T>(params: { [key: string]: Object }, controllerName: string, routeName: string): Observable<T>;
   Post<T>(params: { [key: string]: Object }, routeURL: string): Observable<T>;
@@ -102,7 +108,7 @@ export class APICallerService{
   Put<T>(params: { [key: string]: Object }, controllerName: string, routeName: string): Observable<T>;
   Put<T>(params: { [key: string]: Object }, routeURL: string): Observable<T>;
   Put<T>(params: { [key: string]: Object }, controllerOrRoute: string, routeName?: string): Observable<T>
-  { return this.http.put<T>(this.GetRoutePath(controllerOrRoute, routeName), params, this.GetHeader());}
+  { console.log(this.GetRoutePath(controllerOrRoute, routeName)); return this.http.put<T>(this.GetRoutePath(controllerOrRoute, routeName), params, this.GetHeader());}
 
   Delete<T>(params: { [key: string]: Object }, controllerName: string, routeName: string): Observable<T>;
   Delete<T>(params: { [key: string]: Object }, routeURL: string): Observable<T>;
@@ -140,6 +146,8 @@ export class APICallerService{
   {
     if (Object.keys(params).length == 0)
       return "";
+
+      console.log(params)
     return "?"+Object.keys(params).map(key => `${key}=${params[key].toString()}`).join("&");
   }
   GetHeader()
@@ -151,8 +159,4 @@ export class APICallerService{
       })
     };
   }
-
-
-
-
 }

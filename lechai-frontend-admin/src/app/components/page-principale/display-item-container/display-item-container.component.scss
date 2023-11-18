@@ -1,12 +1,8 @@
 .container{
-  background-color: #F1EFF1;
+  background-color: var(--CouleurBackFiltreUpdate);
   padding: 1em;
   border-radius: 10px;
   margin: 1em;
-}
-
-.ref{
-  width: 100%;
 }
 
 .paramInfoContainer{
@@ -18,17 +14,25 @@
   flex-wrap: wrap;
 }
 
+.spanDisplay{
+  width: fit-content;
+}
+
 .btnFlex{
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  margin-top: 2em;
+  justify-content: right;
+  padding-bottom: 1em;
+  border-bottom: solid 3px black;
+  margin-top: 1em;
+  padding-right: 2em;
+
 }
 
 .addbtn{
   margin-left: 1em;
   margin-bottom: 0.5em;
-  background-color: rgb(255,250,234);
+  background-color: var(--CouleurBoutonAdmin);
   border-radius: 10px;
   border: 1px solid black;
 
@@ -59,4 +63,8 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Couleur semi-transparente */
   z-index: 1; /* Mettez le z-index supérieur à celui du modal */
+}
+
+.showTypeRef{
+  width: 100%;
 }

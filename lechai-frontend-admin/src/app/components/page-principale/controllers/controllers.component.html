@@ -14,5 +14,8 @@
   </span>
 
 </div>
-<app-filtres #filtres (filters)="updateFilters($event)"></app-filtres>
-<app-data-display #dataDisplay (sucessFunction)="refreshFiltres()"></app-data-display>
+
+<ng-container *ngIf="controllerOk">
+  <app-filtres #filtres (filters)="updateFilters($event)"></app-filtres>
+  <app-data-display #dataDisplay (sucessFunction)="refreshFiltres()"></app-data-display>
+</ng-container>
