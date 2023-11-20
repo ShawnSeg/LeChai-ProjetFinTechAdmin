@@ -44,4 +44,10 @@
     </ng-container>
   </tbody>
 </table>
+
+  <div *ngIf="keysTotaux().length > 0" class="totaux">
+  <h2>Totaux :</h2>
+  <p *ngFor="let total of keysTotaux()">{{ total + " : " + totauxRapport[total] }}</p>
+  </div>
+
 </div>

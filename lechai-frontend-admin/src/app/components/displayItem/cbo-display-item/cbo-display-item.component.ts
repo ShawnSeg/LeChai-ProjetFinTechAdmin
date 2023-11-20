@@ -25,21 +25,38 @@ export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
   constructor(private caller:APICallerService) {}
   ngOnInit(): void {
 
+    this.getValues(this.valuePairs.value);
+
+    this.caller.Get<ParamInfoResume[]>({}, this.paramInfoResume.mapper?.refController!, "InfoRoute/Insert").subscribe(data=>{
+      this.displayItemInfos = data;
+    })
+  }
+
+  getValues(valueToBind: string | boolean | null)
+  {
     if(!this.paramInfoResume.mapper)
       return
 
     this.caller.Get<{[key:string]:any}>({}, this.paramInfoResume.mapper.refController, "CBO").subscribe(data=>{
       this.listValeurPossible=data;
 
-      if(this.valuePairs.value)
-        {
-          this.paramInfoResume.showValue = this.listValeurPossible[this.valuePairs.value]
-          this.pushValue()
-        }
-    })
+      if(valueToBind != null)
+      {
 
-    this.caller.Get<ParamInfoResume[]>({}, this.paramInfoResume.mapper?.refController!, "InfoRoute/Insert").subscribe(data=>{
-      this.displayItemInfos = data;
+        if(typeof valueToBind == "boolean")
+        {
+          let objectKeys = Object.keys(data);
+          let lastKey = objectKeys[objectKeys.length-1];
+/*           this.valuePairs.value = lastKey; */
+          this.paramInfoResume.showValue = data[lastKey];
+          this.input.selectValue(lastKey);
+        }
+        else
+        {
+          this.paramInfoResume.showValue = this.listValeurPossible[valueToBind];
+        }
+        this.pushValue()
+      }
     })
   }
 
@@ -76,7 +93,12 @@ export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
     if(!params || Object.keys(params).length == 0)
       return;
 
-    this.caller.Post(params, this.paramInfoResume.mapper?.refController!, "Insert").subscribe(()=>{})
+
+    this.caller.Post(params, this.paramInfoResume.mapper?.refController!, "Insert").subscribe(()=>{
+      this.getValues(true);
+    })
+
+
 
     //this.insert.emit(true);
   }

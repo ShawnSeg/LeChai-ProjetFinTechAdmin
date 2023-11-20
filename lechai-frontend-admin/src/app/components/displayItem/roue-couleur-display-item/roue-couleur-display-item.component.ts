@@ -48,7 +48,7 @@ export class RoueCouleurDisplayItemComponent implements OnInit, DisplayItemTempl
   }
   pushValue()
   {
-
+    console.log(this.valuePairs);
     this.push.emit(this.valuePairs);
   }
 

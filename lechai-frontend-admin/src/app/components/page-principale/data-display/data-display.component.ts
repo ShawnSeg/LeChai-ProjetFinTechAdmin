@@ -41,6 +41,7 @@ export class DataDisplayComponent implements OnInit {
   isRowChecked: boolean[] = [];
   checkedItems: ObjectEntry = { key: 'Ids', value: this.isRowChecked };
   @Input() inputedData:{[key:string]:any}[] = []
+  totauxRapport :{[key:string]:number} = {}
 
   constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute, private toast:ToastService, private services: Services) {}
   ngOnInit() {
@@ -88,8 +89,10 @@ export class DataDisplayComponent implements OnInit {
           name:prop.name,
           showTypeID: prop.showTypeID,
           params: prop.paramAffecteds.map(varsAffected => varsAffected.name)
+
         }));
 
+        this.setTotaux();
 
         this.IdsNames = this.Proprieties.filter(prop => [7,8].includes(prop.showTypeID)).map(prop => prop.paramAffecteds[0].name);
         //this.URLParser.GetSubscription("selected", this.route, false).subscribe(tempCurrent => this.setSelected(tempCurrent as number[][] ?? []));
@@ -115,6 +118,8 @@ export class DataDisplayComponent implements OnInit {
       this.dataDisplay = data;
       if (this.indexSetter)
         this.setIndex()
+
+      this.fillTotaux()
     });
   }
 
@@ -130,6 +135,7 @@ export class DataDisplayComponent implements OnInit {
     this.dataSubscription = this.caller.Get<{[key:string]:any}[]>(params, this.ControllerName, "GetAll")
     .subscribe(data => {
       this.setData(data, setIndex);
+      this.fillTotaux()
     });
   }
 
@@ -138,6 +144,37 @@ export class DataDisplayComponent implements OnInit {
     this.dataDisplay = data;
       if (setIndex)
         this.setIndex()
+  }
+
+  setTotaux()
+  {
+    this.totauxRapport = {}
+
+    if(!this.ControllerName.startsWith("Rapport_"))
+      return
+
+    this.Proprieties.forEach(prop => {
+      if(!prop.name.startsWith("total_"))
+        return
+
+      this.totauxRapport[prop.name] = 0
+    })
+  }
+
+  fillTotaux()
+  {
+    Object.keys(this.totauxRapport).forEach(total => {
+      this.totauxRapport[total] = 0;
+
+      this.dataDisplay.forEach(data => {
+        this.totauxRapport[total] += data[total];
+      })
+    })
+    console.log(this.totauxRapport)
+  }
+
+  keysTotaux(){
+    return Object.keys(this.totauxRapport);
   }
 
   setSelected(tempCurrent : number[][])
