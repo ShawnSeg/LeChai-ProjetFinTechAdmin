@@ -30,14 +30,7 @@ export class ControllersComponent implements OnInit{
   @ViewChild('dataDisplay') dataDisplay! : DataDisplayComponent;
   @ViewChild('filtres') filtres! : FiltresComponent;
 
-  /* _ControllerName:string = "";
 
-  @Input()
-  set ControllerName(name : string)
-  {
-    this._ControllerName = name;
-    console.log("!!!!!!!!!!!!!!")
-  } */
 
   constructor(private URLParser:URLParserService, private caller:APICallerService, private route : ActivatedRoute){}
   ngOnInit(): void {

@@ -2,3 +2,20 @@ img{
   aspect-ratio: 1;
   max-width: 5rem;
 }
+.flex
+{
+  display: flex;
+  align-items: center;
+}
+.addImg{
+  aspect-ratio: 1;
+  height: 1.5rem;
+  cursor: pointer;
+  margin-right: .5rem;
+  margin-left: .5rem;
+}
+
+[src=""]
+{
+  display: none;
+}

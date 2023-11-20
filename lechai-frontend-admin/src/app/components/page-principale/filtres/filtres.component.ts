@@ -26,7 +26,6 @@ export class FiltresComponent implements OnInit {
   {
     this.URLParser.GetControlleurSub(this.route).subscribe(name => {
 
-      console.log(name);
 
       if(this.ControllerName != name)
       {
@@ -39,7 +38,6 @@ export class FiltresComponent implements OnInit {
   }
   updateFilters(filters : {[key:string]:any}, normalUpdate:boolean = true)
   {
-    console.log(normalUpdate)
     this.FilterResumes = normalUpdate ? this.container.paramsByDisplayName() : [];
 
     this.URLParser.ChangeURL("filters", filters, this.route, normalUpdate);

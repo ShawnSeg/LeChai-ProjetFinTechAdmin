@@ -16,8 +16,7 @@ export class CheckBoxDisplayItemComponent implements OnInit, DisplayItemTemplate
   @Input() isUpdatable: boolean = false;
   constructor() {}
   ngOnInit(): void {
-    /* console.log(this.paramInfoResume) */
-    console.log(this.valuePairs)
+
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)
@@ -36,7 +35,6 @@ export class CheckBoxDisplayItemComponent implements OnInit, DisplayItemTemplate
   }
 
   isRequired(){
-    console.log(this.paramInfoResume)
     this.paramInfoResume.paramAffecteds[0].validators.some(validator => validator.validatorTypeID == 1 )
 
 /*     this.paramInfoResume.paramAffecteds.some(paramAffected => paramAffected.isRequired);

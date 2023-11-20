@@ -36,18 +36,18 @@ export class URLParserService {
       value : null,
       setter : function (router, value : any, route) {
         this.value = (value as {[key:string]:any}[]).map(entry => Object.keys(entry).map(key => entry[key]));
-        //console.log(this.value)
+
         router.navigate([], {relativeTo: route,
           queryParamsHandling: 'merge',
           queryParams: { currentSelected: this.value.length > 0 ? (this.value as any[][]).map(entry => entry.join(":")).join(",")  : null}
         });
       },
       getter : function (route) {
-        //console.log(this.value)
+
         if (this.value != null)
           return this.value;
         let ids = route.snapshot.queryParamMap.get(this.variableName);
-        //console.log(ids)
+
         if (ids == null)
           return []
         return this.value = ids.split(",").map(single => {

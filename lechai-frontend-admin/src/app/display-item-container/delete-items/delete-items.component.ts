@@ -15,7 +15,6 @@ export class DeleteItemsComponent {
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
   constructor() {}
   ngOnInit(): void {
-    console.log(this.paramInfoResume)
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)

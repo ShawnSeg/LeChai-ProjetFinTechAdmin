@@ -42,20 +42,23 @@ export class DataDisplayComponent implements OnInit {
   checkedItems: ObjectEntry = { key: 'Ids', value: this.isRowChecked };
   @Input() inputedData:{[key:string]:any}[] = []
   totauxRapport :{[key:string]:number} = {}
+  baseURL : string
 
-  constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute, private toast:ToastService, private services: Services) {}
+  constructor(private URLParser: URLParserService, private caller: APICallerService, private route : ActivatedRoute, private toast:ToastService, private services: Services) {
+    this.baseURL = caller.baseURL;
+  }
   ngOnInit() {
 
     if(!this.refControlleur)
       {this.URLParser.GetControlleurSub(this.route).subscribe(name => {
-        console.log(this.ControllerName);
+
         if(this.ControllerName != name)
         {
           this.currentInfos = []
           this.ControllerName = name;
           this.makeInit();
           this.setFilters({});
-          console.log("subscribe")
+
         }
       })
     }
@@ -170,7 +173,7 @@ export class DataDisplayComponent implements OnInit {
         this.totauxRapport[total] += data[total];
       })
     })
-    console.log(this.totauxRapport)
+
   }
 
   keysTotaux(){
@@ -198,7 +201,7 @@ export class DataDisplayComponent implements OnInit {
   }
   toggleSelected(i : number, item :{[key:string]:any}, isForOpenedDetail:boolean, forceCheck?:boolean)
   {
-    console.log(item);
+
     const index = this.currentInfos.findIndex(info => info.Index == i);
     if ( index > -1) {
       if(forceCheck===true)
@@ -245,8 +248,7 @@ export class DataDisplayComponent implements OnInit {
     return this.currentInfos.map(info=>info.Ids)
   }
   executeFunction(params:{[key:string]:any}|null, routeName:string, routeType:RouteTypes){
-/*     console.log(params)
-    console.log(routeName) */
+
     this.selectedFunction = undefined;
     if(params == null)
       return
@@ -261,7 +263,7 @@ export class DataDisplayComponent implements OnInit {
           this.services.updateCssVariable(`--${this.dataDisplay[this.currentInfos.find(info => info.Ids["ID"] == params["ID"])?.Index!]["NomVariable"]}`, params["Value"]);
       },
       error:(error:HttpErrorResponse)=>{
-        console.log(error.status)
+
         this.toast.showToast("error", "Erreur", "bottom-center", 4000)
       }
     })

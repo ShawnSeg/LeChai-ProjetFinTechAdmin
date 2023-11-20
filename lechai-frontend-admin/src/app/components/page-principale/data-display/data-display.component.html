@@ -25,7 +25,7 @@
       <tr>
         <td class="checkboxTD"><input type="checkbox" [checked]="checkIndex(i, false)" id="check{{i}}" (change)="toggleSelected(i, item, false)"></td>
         <td *ngFor="let prop of proprietiesResum" (click)="toggleSelected(i, item, true)" [ngSwitch]="prop.showTypeID" [class]="'showType-'+prop.showTypeID">
-          <img *ngSwitchCase="11" [src]="getValue(prop.params, item)" class="imgProd">
+          <img *ngSwitchCase="11" [src]="baseURL + '/GetImage/' + getValue(prop.params, item)" class="imgProd">
           <input type="color" *ngSwitchCase="13" [value]="getValue(prop.params, item)" class="colorInput">
           <span *ngSwitchDefault>{{ getValue(prop.params, item) }}</span>
         </td>

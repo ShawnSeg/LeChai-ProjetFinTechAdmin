@@ -18,7 +18,7 @@ export class StringDisplayItemComponent implements OnInit, DisplayItemTemplate {
 
   constructor() {}
   ngOnInit(): void {
-    /* console.log(this.paramInfoResume) */
+
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)

@@ -26,7 +26,7 @@ export class RoueCouleurDisplayItemComponent implements OnInit, DisplayItemTempl
 
   constructor() {}
   ngOnInit(): void {
-    /* console.log(this.paramInfoResume) */
+
   }
   ngAfterViewInit() {
 
@@ -48,7 +48,7 @@ export class RoueCouleurDisplayItemComponent implements OnInit, DisplayItemTempl
   }
   pushValue()
   {
-    console.log(this.valuePairs);
+
     this.push.emit(this.valuePairs);
   }
 

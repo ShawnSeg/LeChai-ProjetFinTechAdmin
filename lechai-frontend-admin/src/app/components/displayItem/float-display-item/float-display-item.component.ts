@@ -17,7 +17,7 @@ export class FloatDisplayItemComponent implements OnInit, DisplayItemTemplate{
   @Input() isUpdatable: boolean = false;
   constructor() {}
   ngOnInit(): void {
-    /* console.log(this.paramInfoResume) */
+
   }
   ngAfterViewInit() {
     if (this.valuePairs.value != null)

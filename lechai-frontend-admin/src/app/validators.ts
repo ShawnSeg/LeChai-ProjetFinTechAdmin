@@ -31,7 +31,7 @@ export function validate(validatorResum: ValidatorResume, value: any) : boolean
           return (value > validatorResum.valueToUse)
 
       case ValidatorTypes.REGEX:
-        console.log(validatorResum.valueToUse)
+
         return new RegExp(validatorResum.valueToUse).test(value)
 
       case ValidatorTypes.MAXOREQUAL:

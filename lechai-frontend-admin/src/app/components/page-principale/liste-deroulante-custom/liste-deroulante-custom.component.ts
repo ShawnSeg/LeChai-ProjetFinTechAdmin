@@ -26,15 +26,6 @@ export class ListeDeroulanteCustomComponent {
   ngOnInit(){
   }
 
-/*   ngAfterViewInit()
-  {
-    console.log(this.values)
-    console.log(this.baseValue)
-    if(this.baseValue)
-      this.searchQuery = this.values[this.baseValue]
-  }
- */
-
   showValues() {
     this.filteredValues = this.values;
     this.showDropdown = true;

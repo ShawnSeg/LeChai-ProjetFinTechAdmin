@@ -54,7 +54,7 @@ export class FooterComponent {
 
   updateCouleurFoot(value:string)
   {
-    console.log(value);
+
     this.services.updateCssVariable(this.couleurFoot, value);
     this.caller.Put({ID: this.idCouleurFoot, Value: value}, "Couleurs", "UPDATE").subscribe(()=>{});
   }

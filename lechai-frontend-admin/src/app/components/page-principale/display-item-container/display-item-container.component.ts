@@ -71,7 +71,7 @@ export class DisplayItemContainerComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
       // Handle changes to myInput here
-      /* console.log('myInput has changed:', changes); */
+
     }
   }
 
@@ -89,7 +89,6 @@ export class DisplayItemContainerComponent implements OnInit {
           this.propSubscription.unsubscribe()
 
         this.refPropreities = this.DisplayItemInfos.filter(info => info.showTypeID == 2) // 2 = REF
-        console.log(this.refPropreities)
 
         if (!!this.Ids)
           this.propSubscription = this.caller.Get<{[key:string]:any}>(this.Ids, this.ControllerName, "GetDetailed")
@@ -122,7 +121,7 @@ export class DisplayItemContainerComponent implements OnInit {
   }
   updateFilter(valuePairs : Entryies, paramInfo : ParamInfoResume)
   {
-    this.hasError = paramInfo.paramAffecteds.some(param => !this.checkValidators(param, Array.isArray(valuePairs)? valuePairs.find(pair => {console.log(param); return pair.key == param.name;})?.value : valuePairs.value ))
+    this.hasError = paramInfo.paramAffecteds.some(param => !this.checkValidators(param, Array.isArray(valuePairs)? valuePairs.find(pair => {return pair.key == param.name;})?.value : valuePairs.value ))
 
     if(this.hasError)
     {
@@ -176,11 +175,6 @@ export class DisplayItemContainerComponent implements OnInit {
   {
     let varValue = []
     const paramInfo = this.DisplayItemInfos.find(paramInfo => paramInfo.name === paramName)
-
-/*     console.log(paramName)
-    console.log(this.baseValues)
-    console.log(paramInfo)
-    console.log(extentionName) */
 
     if (paramInfo)
       return paramInfo.paramAffecteds.map(affected => {return {key : (extentionName ? paramName + extentionName : affected.name) , value: this.baseValues![affected.name]}});

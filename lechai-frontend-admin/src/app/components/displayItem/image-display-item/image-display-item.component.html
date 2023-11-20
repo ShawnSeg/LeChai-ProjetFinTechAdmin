@@ -1,6 +1,12 @@
 
-<img *ngIf="checkIfValide()" [src]="valuePairs.value">
+<div class="flex">
+  <img #imagePresente [src]="getURL()">
+  <img src="../../../../assets/image/add-image.svg" alt="ajoutImg" class="addImg" (click)="insertImg()">
 
-<p>{{paramInfoResume.name}}</p>
-<input  type="text" class="classInput" #inputValue (input)="updateValue(inputValue.value)"/>
+  <input type="file" #inputImage (change)="afficherImage($event)">
+</div>
+
+
+<!-- <p>{{paramInfoResume.name}}</p>
+<input type="text" class="classInput" #inputValue (input)="updateValue(inputValue.value)"/> -->
 
