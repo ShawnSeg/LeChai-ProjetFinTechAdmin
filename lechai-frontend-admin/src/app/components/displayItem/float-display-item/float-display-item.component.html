@@ -1,2 +1,2 @@
 <p>{{paramInfoResume.name}}</p>
-<input  type="number"  step=0.01 class="classInput" #inputValue (input)="updateValue(inputValue.value)"/>
+<input  type="number"  step=0.01 class="classInput" #inputValue (input)="updateValue(inputValue.value)" [readonly]="!isUpdatable"/>

@@ -3,7 +3,7 @@
   <img #imagePresente [src]="getURL()">
   <img src="../../../../assets/image/add-image.svg" alt="ajoutImg" class="addImg" (click)="insertImg()">
 
-  <input type="file" #inputImage (change)="afficherImage($event)">
+  <input type="file" #inputImage (change)="afficherImage($event)" [readOnly]="!isUpdatable">
 </div>
 
 

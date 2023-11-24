@@ -14,6 +14,7 @@ export class IntDisplayItemComponent implements OnInit, DisplayItemTemplate{
   @ViewChild('inputValue') input! : ElementRef;
   @Input() paramInfoResume: ParamInfoResume = defaultParamInfo();
   @Input() isUpdatable: boolean = false;
+
   constructor() {}
   ngOnInit(): void {
 
