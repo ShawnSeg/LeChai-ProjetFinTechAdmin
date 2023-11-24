@@ -171,19 +171,27 @@ export class DisplayItemContainerComponent implements OnInit {
     return errorString
   }
 
-  currentAffectedVarValues(paramName:string, extentionName?: string) : ObjectEntry[]
+  currentAffectedVarValues(paramName:string, extentionName?: string, defaultValue : any = null) : ObjectEntry[]
   {
     let varValue = []
     const paramInfo = this.DisplayItemInfos.find(paramInfo => paramInfo.name === paramName)
 
     if (paramInfo)
-      return paramInfo.paramAffecteds.map(affected => {return {key : (extentionName ? paramName + extentionName : affected.name) , value: this.baseValues![affected.name]}});
+      return paramInfo.paramAffecteds.map(affected =>
+    {
+      let valeur = this.baseValues![affected.name];
 
-    return [{ key: paramName+(extentionName??""), value: null }];
+      if(defaultValue != null && valeur == null && this.is(this.types.SingleFunction))
+        valeur = defaultValue;
+
+      return {key : (extentionName ? paramName + extentionName : affected.name) , value: valeur }
+    });
+
+    return [{ key: paramName+(extentionName??""), value: this.is(this.types.SingleFunction) ? defaultValue : null }];
   }
-  currentAffectedVarValue(paramName:string, extentionName?: string) : ObjectEntry
+  currentAffectedVarValue(paramName:string, extentionName?: string, defaultValue : any = null) : ObjectEntry
   {
-    return this.currentAffectedVarValues(paramName, extentionName)[0];
+    return this.currentAffectedVarValues(paramName, extentionName, defaultValue)[0];
   }
 
   intermediaire(param: ParamInfoResume)

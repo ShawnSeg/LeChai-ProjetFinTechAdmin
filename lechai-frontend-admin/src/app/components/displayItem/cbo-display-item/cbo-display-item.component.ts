@@ -25,6 +25,8 @@ export class CboDisplayItemComponent implements OnInit, DisplayItemTemplate{
   constructor(private caller:APICallerService) {}
   ngOnInit(): void {
 
+    console.log(this.valuePairs)
+
     this.getValues(this.valuePairs.value);
 
     this.caller.Get<ParamInfoResume[]>({}, this.paramInfoResume.mapper?.refController!, "InfoRoute/Insert").subscribe(data=>{

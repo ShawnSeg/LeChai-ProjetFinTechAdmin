@@ -247,12 +247,17 @@ export class DataDisplayComponent implements OnInit {
   {
     return this.currentInfos.map(info=>info.Ids)
   }
-  executeFunction(params:{[key:string]:any}|null, routeName:string, routeType:RouteTypes){
+  executeFunction(params:{[key:string]:any}|null, routeName:string, routeType:RouteTypes, addSelectedIds: boolean){
 
     this.selectedFunction = undefined;
     if(params == null)
       return
 
+    if(addSelectedIds)
+      params["selectedIds"] = this.getCurrentInfo();
+
+
+    console.log(params)
     this.caller.CallAPI(routeType,params,this.ControllerName,routeName).subscribe({
       next:(data:any)=>{
         this.toast.showToast("success", data+" lignes d'affectées!", "bottom-center", 4000)

@@ -22,6 +22,9 @@ export class CheckBoxDisplayItemComponent implements OnInit, DisplayItemTemplate
     if (this.valuePairs.value != null)
       this.input.nativeElement.checked = (!!this.valuePairs.value);
 
+    if (this.valuePairs.value == undefined)
+      this.updateValue(false)
+
   }
   updateValue(value : boolean)
   {

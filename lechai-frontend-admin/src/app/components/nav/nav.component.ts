@@ -66,7 +66,6 @@ export class NavComponent {
 
   updateCouleurNav(value:string)
   {
-
     this.services.updateCssVariable(this.couleurNav, value);
     this.caller.Put({ID: this.idCouleurNav, Value: value}, "Couleurs", "UPDATE").subscribe(()=>{});
   }

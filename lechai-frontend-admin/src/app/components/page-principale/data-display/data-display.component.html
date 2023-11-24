@@ -9,7 +9,7 @@
     [DisplayItemInfos]="selectedFunction.paramsInfo"
     [ContainerType]="ItemContainerTypes.SingleFunction"
     [refControlleur]="ControllerName"
-    (params)="executeFunction($event, selectedFunction.route.name, selectedFunction.route.routeType)"
+    (params)="executeFunction($event, selectedFunction.route.name, selectedFunction.route.routeType, true)"
   ></app-display-item-container>
 </ng-container>
 
@@ -38,7 +38,7 @@
             [DisplayItemInfos]="Proprieties"
             [ContainerType]="ItemContainerTypes.Proprieties"
             [refControlleur]="ControllerName"
-            (params)="executeFunction($event[0], $event[1], $event[2])"></app-display-item-container>
+            (params)="executeFunction($event[0], $event[1], $event[2], false)"></app-display-item-container>
         </td>
       </tr>
     </ng-container>
