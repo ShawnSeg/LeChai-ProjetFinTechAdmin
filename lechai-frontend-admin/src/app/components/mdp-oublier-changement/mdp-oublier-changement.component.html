@@ -1,0 +1,36 @@
+<section class="loginSection">
+  <div class="log-form-box">
+    <div class="log-form-value">
+      <form [formGroup]="signupForm">
+        <h2 class="log-title">Changer de mot de passe</h2>
+
+        <div class="log-inputbox">
+          <span (click)="hideShowPass()" class="fa eye-slash "></span>
+          <input formControlName="token" placeholder="Token" type="text" class="log-input" required>
+        </div>
+        <small *ngIf="signupForm.controls['token'].dirty && signupForm.hasError('required')" class="errorSignup">*Vous devez entrer le token qui vous a été envoyé</small>
+
+
+
+        <div class="log-inputbox">
+          <span (click)="hideShowPass()" class="fa eye-slash {{eyeIcon}}"></span>
+          <input formControlName="password" placeholder="Nouveau mot de passe" [type]="passType" class="log-input" required>
+        </div>
+        <small *ngIf="signupForm.controls['password'].dirty && signupForm.hasError('required', 'password')" class="errorSignup">*Le mot de passe n'est pas valide!</small>
+        <small *ngIf="signupForm.controls['password'].dirty && signupForm.hasError('pattern', 'password')" class="errorSignup">*Doit contenir 8 caractères minimum, une lettre, un chiffre, un caractère spéciale (!"/$?&*)</small>
+
+
+        <div class="log-inputbox">
+          <span (click)="hideShowPassV()" class="fa eye-slash {{eyeIconV}}"></span>
+          <input formControlName="validation" placeholder="Confirmer mot de passe" [type]="passType" class="log-input" required>
+        </div>
+        <small *ngIf="signupForm.controls['validation'].dirty && signupForm.hasError('required', 'validation')" class="errorSignup">*La validation de mot de passe n'est pas valide!</small>
+        <small *ngIf="signupForm.hasError('mismatch')" class="errorSignup">*Les mots de passe ne correspondent pas!</small>
+
+        <button (click)="onSignup()" type="submit" class="log-btn">Continuer</button>
+
+
+      </form>
+    </div>
+  </div>
+</section>

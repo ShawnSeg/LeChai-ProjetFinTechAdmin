@@ -46,7 +46,6 @@ constructor(private routingService:RoutingService, private toast:ToastService, p
       this.routingService.oublieMDP(this.resetPasswordEmail).subscribe({
         next: (data: any) => {
           // Handle successful response here
-          alert("yay")
           this.toggleForm();
           this.routingService.oublieMDP(this.resetPasswordEmail)
           this.router.navigate([`/mdpOublierChangement`]);

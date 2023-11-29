@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Services } from './services.service';
 import { Observable } from 'rxjs';
 import { Token } from '@angular/compiler';
+import { ToastService } from './toast.service';
+import { Router } from '@angular/router';
 
 export enum RouteTypes {
   GET = 1,
@@ -22,7 +24,7 @@ export class RoutingService {
   private routesPermises:String[] = []
 
 
-  constructor(private http: HttpClient, private connexion:Services) {
+  constructor(private http: HttpClient, private connexion:Services, private toast:ToastService, private route: Router) {
    }
 
   getAPIRoute<T>(params:{[Key:string]: Object}, routeURL: string)
@@ -84,7 +86,7 @@ export class RoutingService {
 
   envoiCourriel(sujet:String, message:String)
   {
-    const url = this.baseURL+"/Clients/ConnexionStepTwo";
+    const url = this.baseURL+"/Employes/ConnexionStepTwo";
 
     // Create a request body with the product ID to send to the backend
     const body = { sujet:sujet, contenu:message};
@@ -102,7 +104,7 @@ export class RoutingService {
 
   postChangementMDPAuthentifier(email:String, oldMDP:String, mdp:String)
   {
-    const url =this.baseURL+"/Clients/ChangePassword";
+    const url =this.baseURL+"/Employes/ChangePassword";
     const body = {
       Email:email,
       NewPassword:mdp,
@@ -120,7 +122,7 @@ export class RoutingService {
 
   postChangementMDP(mdp:String, token:String)
   {
-    const url =this.baseURL+"/Clients/RecuperationStepTwo";
+    const url =this.baseURL+"/Employes/RecuperationStepTwo";
     const body = {
       Token:token,
       NewPassword:mdp
@@ -136,7 +138,7 @@ export class RoutingService {
   }
 
   oublieMDP(email:string){
-    const url = this.baseURL+"/Clients/RecuperationStepOne";
+    const url = this.baseURL+"/Employes/RecuperationStepOne";
 
     // Create a request body with the product ID to send to the backend
     const body = { Email: email };
@@ -148,5 +150,40 @@ export class RoutingService {
     });
     // Make an HTTP POST request to add the product to the panier
     return this.http.post(url, body, {headers:headers});
+  }
+
+  refreshToken(){
+    const url = this.baseURL+"/RefreshToken";
+
+    let token = localStorage.getItem("token")
+    const httpOptions = {
+
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.get<string>(url, httpOptions);
+  }
+
+  callRefresh(){
+    if(localStorage.getItem("token"))
+    {
+      this.refreshToken().subscribe({
+        next: (data: any) => {
+          // Handle successful response here
+
+          localStorage.setItem("token", data)
+        },
+        error: (error: HttpErrorResponse) => {
+          // Handle error response here
+          localStorage.removeItem("token")
+          this.route.navigate([``]);
+          this.toast.showToast("error", "Vous avez été déconnecté à cause de manque d'activité. Veuillez-vous reconnecter.", "bottom-center", 4000)
+
+        }
+      })
+    }
   }
 }

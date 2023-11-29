@@ -32,10 +32,8 @@ import { DisplayItemContainerComponent } from './components/page-principale/disp
 import { StringDisplayItemComponent } from './components/displayItem/string-display-item/string-display-item.component';
 
 
-
 import { ListeDeroulanteCustomComponent } from './components/page-principale/liste-deroulante-custom/liste-deroulante-custom.component';
 
-import { DeleteItemsComponent } from './display-item-container/delete-items/delete-items.component';
 import { RefDisplayItemComponent } from './components/displayItem/ref-display-item/ref-display-item.component';
 import { CboDisplayItemComponent } from './components/displayItem/cbo-display-item/cbo-display-item.component';
 import { IntDisplayItemComponent } from './components/displayItem/int-display-item/int-display-item.component';
@@ -45,6 +43,7 @@ import { DateDisplayItemComponent } from './components/displayItem/date-display-
 import { ImageDisplayItemComponent } from './components/displayItem/image-display-item/image-display-item.component';
 import { CheckBoxDisplayItemComponent } from './components/displayItem/check-box-display-item/check-box-display-item.component';
 import { RoueCouleurDisplayItemComponent } from './components/displayItem/roue-couleur-display-item/roue-couleur-display-item.component';
+import { MdpOublierChangementComponent } from './components/mdp-oublier-changement/mdp-oublier-changement.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +54,7 @@ import { RoueCouleurDisplayItemComponent } from './components/displayItem/roue-c
     FooterComponent,
     ConnexionComponent,
     MdpOublierEnvoiComponent,
+    MdpOublierChangementComponent,
     VerifyUserComponent,
 /*     ProprietyTableComponent, */
 /*     RowsDataComponent, */
@@ -70,7 +70,6 @@ import { RoueCouleurDisplayItemComponent } from './components/displayItem/roue-c
     StringDisplayItemComponent,
     RefDisplayItemComponent,
     CboDisplayItemComponent,
-    DeleteItemsComponent,
     IntDisplayItemComponent,
     FloatDisplayItemComponent,
     DescriptionDisplayItemComponent,
