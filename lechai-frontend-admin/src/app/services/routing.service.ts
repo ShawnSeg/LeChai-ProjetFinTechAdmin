@@ -19,7 +19,7 @@ export enum RouteTypes {
 })
 export class RoutingService {
 
-  public baseURL = "https://localhost:5001";
+  public baseURL = "https://apilechai.azurewebsites.net";
 
   private routesPermises:String[] = []
 

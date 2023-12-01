@@ -18,7 +18,7 @@ export interface UserInfoBundle{
 })
 export class APICallerService{
 
-  public baseURL = "https://localhost:5001";
+  public baseURL = "https://apilechai.azurewebsites.net";
   //public baseURL = "https://localhost:7247";
   public token = "";
   public controllerConnexionName = "Employes";
